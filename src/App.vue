@@ -33,6 +33,7 @@ export default {
   color: #2c3e50;
   margin:0 auto;
   position: relative;
-  min-height: 100%
+  min-height: 100%;
+  background: rgba(36,45,211,0.3)
 }
 </style>

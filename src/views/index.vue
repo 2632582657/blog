@@ -1,6 +1,5 @@
 <template>
-  <div id="blog_index">
-    <div></div>
+  <div id="blog_index" >
   </div>
 </template>
 
@@ -15,7 +14,6 @@ export default {
     min-height: 100%;
     padding-bottom: 60px;
     div{
-      height: 1200px;
     }
   }
 </style>
