@@ -5,14 +5,14 @@
 </template>
 
 <script>
-    export default {
+export default {
 
-    }
+}
 </script>
 
 <style lang="scss" scoped>
   #blog_index{
-    min-height: 100%; 
+    min-height: 100%;
     padding-bottom: 60px;
     div{
       height: 1200px;

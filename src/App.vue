@@ -9,19 +9,19 @@
 <script>
 import Header from '@/components/header.vue'
 import Footer from '@/components/footer.vue'
-  export default {
-    data(){
-      return {
+export default {
+  data () {
+    return {
 
-      }
-    },
-    mounted(){
-    },
-    components:{
-      Header,
-      Footer
     }
+  },
+  mounted () {
+  },
+  components: {
+    Header,
+    Footer
   }
+}
 </script>
 
 <style lang="scss" scoped>
