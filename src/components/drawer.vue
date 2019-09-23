@@ -58,6 +58,7 @@ export default {
         overflow-x: hidden;
         overflow-y: auto;
         transition: all 0.5s ease;
+        z-index: 999;
         .my_avatar{
             width: 100%;
             max-width: 100%;

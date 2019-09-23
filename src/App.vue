@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="">
     <Header></Header>
     <router-view/>
     <!-- <Footer></Footer> -->
@@ -30,11 +30,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   margin:0 auto;
   position: relative;
   min-height: 100%;
-  background: rgba(36,45,211,0.3);
+  background: rgba(36,45,211,0.3) url('assets/images/bg.jpg') repeat;
   // transform: translateX(50%);
 }
 </style>

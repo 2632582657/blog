@@ -22,6 +22,7 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+	box-sizing: border-box;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -59,9 +60,9 @@ a,
 a:active,
 a:focus,
 a:hover,
-a:visited {text-decoration: none}
+a:visited {text-decoration: none !important}
 input{-webkit-appearance:none;} input[type='radio']{-webkit-appearance:radio;} input[type='submit'],input[type='reset'],input[type='button'],input{-webkit-appearance:none;}
 
 
-.theme-bgcolor{}
-.theme_text{}
+.cur{cursor: pointer;}
+

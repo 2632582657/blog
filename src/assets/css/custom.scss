@@ -1,0 +1,18 @@
+
+
+// $primary: #9932cc !default;
+$primary: rgb(34,34,34) !default;
+$success: #99CC00 !default;
+$secondary:rgb(153, 162, 170);
+$info: #0099CC !default;
+$warning: #FF9900 !default;
+$danger: #FF0033 !default;
+// $shamrock: #2cb5ad !default;
+$theme-colors: (
+  "primary":    $primary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+);
+@import "../../../node_modules/bootstrap/scss/bootstrap";
