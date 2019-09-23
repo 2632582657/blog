@@ -2,7 +2,7 @@
   <div id="app">
     <Header></Header>
     <router-view/>
-    <Footer></Footer>
+    <!-- <Footer></Footer> -->
   </div>
 </template>
 
@@ -34,6 +34,7 @@ export default {
   margin:0 auto;
   position: relative;
   min-height: 100%;
-  background: rgba(36,45,211,0.3)
+  background: rgba(36,45,211,0.3);
+  // transform: translateX(50%);
 }
 </style>

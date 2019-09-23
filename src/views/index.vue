@@ -1,11 +1,13 @@
 <template>
   <div id="blog_index" >
+    
   </div>
 </template>
 
 <script>
-export default {
 
+export default {
+  
 }
 </script>
 
