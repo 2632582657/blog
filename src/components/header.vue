@@ -38,12 +38,12 @@ export default {
   data(){
     return{
       menuLink:[
-        {icon:"fa-institution",title:"首页",url:"#"},
-        {icon:"fa-image",title:"相册",url:"#"},
-        {icon:"fa-pencil",title:"学习",url:"#"},
-        {icon:"fa-paper-plane",title:"随笔",url:"#"},
-        {icon:"fa-users",title:"友链",url:"#"},
-        {icon:"fa-graduation-cap",title:"关于",url:"#"},
+        {icon:"fa-institution",title:"首页",url:"/"},
+        {icon:"fa-image",title:"相册",url:"album"},
+        {icon:"fa-pencil",title:"学习",url:"study"},
+        {icon:"fa-paper-plane",title:"随笔",url:"life"},
+        {icon:"fa-users",title:"友链",url:"/friendChain"},
+        {icon:"fa-graduation-cap",title:"关于",url:"/about"},
       ],
       isShowDrawer:false
     }

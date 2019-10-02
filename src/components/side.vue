@@ -26,23 +26,23 @@
     </div>
     <div class="card d-xl-block d-none">
       <div class="sj_card_body sj_card_info text-left">
-        <div class="py-3">
+        <div class="py-2">
           <i class="fa fa-fw fa-qq text-info mr-2"></i>
           2632582657
         </div>
-        <div class="py-3">
+        <div class="py-2">
           <i class="fa fa-fw fa-weixin text-success mr-2"></i>
           shi2632582657
         </div>
-        <div class="py-3">
+        <div class="py-2">
           <i class="fa fa-fw fa-envelope text-warning mr-2"></i>
           2632582657@qq.com
         </div>
-        <div class="py-3">
+        <div class="py-2">
           <i class="fa fa-fw fa-github mr-2"></i>
           2632582657
         </div>
-        <div class="py-3">
+        <div class="py-2">
           <i class="fa fa-fw mr-2 fa-commenting text-info"></i>
           帅比一个
         </div>
@@ -52,7 +52,9 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name:"side"
+};
 </script>
 
 <style lang="scss" scoped>
@@ -101,6 +103,7 @@ export default {};
   }
   .sj_card_info > div {
     border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
   }
 }
 </style>
