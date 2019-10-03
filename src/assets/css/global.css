@@ -66,3 +66,6 @@ input{-webkit-appearance:none;} input[type='radio']{-webkit-appearance:radio;} i
 
 .cur{cursor: pointer;}
 
+.f12{
+	font-size: 12px !important;
+}
