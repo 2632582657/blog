@@ -69,3 +69,9 @@ input{-webkit-appearance:none;} input[type='radio']{-webkit-appearance:radio;} i
 .f12{
 	font-size: 12px !important;
 }
+.f14{
+	font-size: 14px !important;
+}
+.f16{
+	font-size: 16px !important;
+}

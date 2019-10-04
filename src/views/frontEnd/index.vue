@@ -14,16 +14,16 @@
           </ol>
           <div class="carousel-inner h-100">
             <div class="carousel-item active overflow-hidden h-100">
-              <img class="d-block w-100" style="max-height:400px" src="../assets/images/1000048.jpg" >
+              <img class="d-block w-100" style="max-height:400px" src="../../assets/images/1000048.jpg" >
               <div class="carousel-caption d-none d-md-none d-xl-block d-lg-none ">
                 <h5>文章标题</h5>
               </div>
             </div>
             <div class="carousel-item overflow-hidden">
-              <img class="d-block w-100" style="max-height:400px" src="../assets/images/1000048.jpg">
+              <img class="d-block w-100" style="max-height:400px" src="../../assets/images/1000048.jpg">
             </div>
             <div class="carousel-item overflow-hidden">
-              <img class="d-block w-100" style="max-height:400px" src="../assets/images/1000736.jpg">
+              <img class="d-block w-100" style="max-height:400px" src="../../assets/images/1000736.jpg">
             </div>
           </div>
           <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -44,8 +44,8 @@
 </template>
 
 <script>
-import Card from '../components/card'
-import Side from '../components/side'
+import Card from '../../components/card'
+import Side from '../../components/side'
 export default {
   components:{
     Card,

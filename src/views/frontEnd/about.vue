@@ -1,11 +1,11 @@
 <template>
   <div id="blog_about" class="container-fluid p-0">
     <div class="about_bg">
-      <img src="../assets/images/1000630.jpg" class="w-100" alt />
-      <img src="../assets/images/about__bg_di.png" alt class="about_di" />
+      <img src="../../assets/images/1000630.jpg" class="w-100" alt />
+      <img src="../../assets/images/about__bg_di.png" alt class="about_di" />
       <div class="about_info w-100">
         <div>
-          <img src="../assets/images/avatar.jpg" class="rounded-circle border border-info mr-4" />
+          <img src="../../assets/images/avatar.jpg" class="rounded-circle border border-info mr-4" />
         </div>
         <div class="about_author">
           <p class="author_name">
@@ -63,10 +63,10 @@
                 <span class="d-block small mt-1 proof" @click="isSeeProof">{{isSee?"查看":"关闭"}}</span>
                 <div v-show="!isSee" class="row">
                   <div class="col-12 col-xl-6 col-lg-6 col-md-6">
-                    <img src="../assets/images/pingzheng.png" class="proof_img" />
+                    <img src="../../assets/images/pingzheng.png" class="proof_img" />
                   </div>
                   <div class="col-12 col-xl-6 col-lg-6 col-md-6">
-                    <img src="../assets/images/pingzheng.png" class="proof_img" />
+                    <img src="../../assets/images/pingzheng.png" class="proof_img" />
                   </div>
                 </div>
               </div>
@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import Comments from "../components/comments"
+import Comments from "../../components/comments"
 export default {
   name: "about",
   data() {

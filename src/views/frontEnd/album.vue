@@ -1,13 +1,9 @@
 <template>
   <div id="blog_album" class="container p-0 pt-xl-3">
-    <div class="album_head overflow-hidden">
-      <img src="../assets/images/1000048.jpg" class="w-100" alt />
-      <h2 class="z1">相册</h2>
-      <p class="z1">留意生活，发现美好......</p>
-    </div>
+    <PageHead :componentName="componentName"></PageHead>
     <div class="row album_body m-0 pt-xl-3 pt-lg-3 pt-md-3 pb-5 px-3 border-0">
       <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 mb-3 album_item">
-        <img src="../assets/images/1000048.jpg" class="w-100 h-100" />
+        <img src="../../assets/images/1000048.jpg" class="w-100 h-100" />
         <div class="album_mask text-left font-weight-bold">
           <p class="m-0">
             国庆，记一次回乡
@@ -29,7 +25,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 mb-3 album_item">
-        <img src="../assets/images/1000048.jpg" class="w-100 h-100" />
+        <img src="../../assets/images/1000048.jpg" class="w-100 h-100" />
         <div class="album_mask text-left font-weight-bold">
           <p class="m-0">
             国庆，记一次回乡
@@ -51,7 +47,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 mb-3 album_item">
-        <img src="../assets/images/1000048.jpg" class="w-100 h-100" />
+        <img src="../../assets/images/1000048.jpg" class="w-100 h-100" />
         <div class="album_mask text-left font-weight-bold">
           <p class="m-0">
             国庆，记一次回乡
@@ -77,53 +73,26 @@
 </template>
 
 <script>
-export default {};
+import PageHead from "../../components/pageHead"
+export default {
+  name:"album",  //相册
+  data(){
+    return{
+      componentName:{
+        title:"相册",
+        introduce:"留意生活，发现美好......"
+      }
+    }
+  },
+  components:{
+    PageHead
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-@media screen and(max-width:575px){
-    #blog_album{
-        .album_head{
-            height: 220px !important;
-            img{
-                height: 100%;
-            }
-        }
-    }
-  }
 #blog_album {
   overflow: hidden;
-  .album_head {
-    max-height: 300px;
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    .z1 {
-      z-index: 1;
-      color: #fff;
-    }
-    img {
-      position: absolute;
-      transition: all 1.5s ease;
-    }
-    &:hover img {
-      transform: scale(1.1);
-    }
-    &::after {
-      content: "";
-      width: 150%;
-      height: 4.375rem;
-      background: #fff;
-      left: -25%;
-      bottom: -2rem;
-      border-radius: 100%;
-      position: absolute;
-      z-index: 9;
-    }
-  }
   .album_body {
     background: #fff;
     .album_item {

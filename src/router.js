@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from './views/index.vue'
-import Album from './views/album.vue'
-import Study from './views/study.vue'
-import Life from './views/life.vue'
-import FriendChain from './views/friendChain.vue'
-import About from './views/about.vue'
+import Index from './views/frontEnd/index.vue'
+import Album from './views/frontEnd/album.vue'
+import Study from './views/frontEnd/study.vue'
+import Life from './views/frontEnd/life.vue'
+import FriendChain from './views/frontEnd/friendChain.vue'
+import About from './views/frontEnd/about.vue'
 Vue.use(Router)
 
 export default new Router({
