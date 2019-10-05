@@ -94,7 +94,7 @@ export default {
 #blog_album {
   overflow: hidden;
   .album_body {
-    background: #fff;
+    background: rgba(255, 255, 255, 0.5);
     .album_item {
       &:hover .album_mask {
         left: 0.5rem;

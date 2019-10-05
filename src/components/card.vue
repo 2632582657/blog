@@ -1,5 +1,5 @@
 <template>
-  <div id="blog_card_box">
+  <div id="blog_card_box" @click="toDetail">
     <div class="blog_card">
       <div class="card_author d-flex">
         <div class="position-relative">
@@ -50,7 +50,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods:{
+    toDetail(){
+      this.$router.push("detail")
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>

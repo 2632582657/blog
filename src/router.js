@@ -6,6 +6,7 @@ import Study from './views/frontEnd/study.vue'
 import Life from './views/frontEnd/life.vue'
 import FriendChain from './views/frontEnd/friendChain.vue'
 import About from './views/frontEnd/about.vue'
+import Detail from './views/frontEnd/detail.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -40,6 +41,11 @@ export default new Router({
       name:"about",
       path:"/about",
       component:About
+    },
+    {
+      name:"detail",
+      path:"/detail",
+      component:Detail
     }
   ]
 })
