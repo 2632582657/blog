@@ -9,8 +9,9 @@
       <div class="menu_z col-xl-6 col-lg-6 col-md-6 d-xl-blcok d-lg-block d-md-block d-sm-none d-none h-100" >
         <ul class="d-flex justify-content-between align-items-center h-100">
           <li class="link_vertical" v-for="(item,i) in menuLink" :key="i">
-            <a :href="item.url" class="text-primary">
-              <span><i :class="[{fa:true},item.icon]"></i> {{item.title}} </span></a>
+            <router-link :to="item.url" class="text-primary">
+              <span><i :class="[{fa:true},item.icon]"></i> {{item.title}} </span>
+            </router-link>
           </li>
         </ul>
       </div>
@@ -85,6 +86,9 @@ export default {
     margin: 0 auto;
     box-shadow: 0 1px 3px rgba(26, 26, 26, .1);
     background: rgb(216, 245, 246);
+    z-index: 999;
+    position: fixed;
+    top: 0;
     .menu_z{
       z-index: 9;
     }

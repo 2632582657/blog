@@ -5,6 +5,12 @@
         <Side></Side>
       </div>
       <div class="col-xl-8 col-lg-8 col-md-8 py-0 p-sm-0 p-md-3 p-xl-4 p-lg-4">
+        <div class=" bg-white">
+            <div class="author_box">
+                
+            </div>
+
+        </div>
       </div>
     </div>
   </div>

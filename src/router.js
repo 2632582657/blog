@@ -7,6 +7,19 @@ import Life from './views/frontEnd/life.vue'
 import FriendChain from './views/frontEnd/friendChain.vue'
 import About from './views/frontEnd/about.vue'
 import Detail from './views/frontEnd/detail.vue'
+// 后台管理
+import AdminLogin from "./views/system/adminLogin.vue"
+import AdminIndex from "./views/system/adminIndex.vue"
+import Release from "./views/system/release.vue"
+import Crm from "./views/system/crm.vue"
+import Arm from "./views/system/arm.vue"
+import Cm from "./views/system/cm.vue"
+
+const routerPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return routerPush.call(this, location).catch(error=> error)
+}
+
 Vue.use(Router)
 
 export default new Router({
@@ -20,7 +33,7 @@ export default new Router({
     {
       name:"album",
       path:'/album',
-      component:Album
+      component:Album,
     },
     {
       name:"study",
@@ -46,6 +59,39 @@ export default new Router({
       name:"detail",
       path:"/detail",
       component:Detail
+    },
+    {
+      name:"adminLogin",
+      path:"/admin",
+      component:AdminLogin
+    },
+    {
+      name:"adminIndex",
+      path:"/adminIndex",
+      component:AdminIndex,
+      children:[
+        {
+          name:"release",
+          path:"release",
+          component:Release
+        },
+        {
+          name:"crm",
+          path:"crm",
+          component:Crm
+        },
+        {
+          name:"arm",
+          path:"arm",
+          component:Arm
+        },
+        {
+          name:"cm",
+          path:"cm",
+          component:Cm
+        }
+      ]
     }
+    
   ]
 })

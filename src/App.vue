@@ -58,6 +58,7 @@ export default {
   min-height: 100%;
   background: rgba(36, 45, 211, 0.3) url("assets/images/bg.jpg") repeat;
   // transform: translateX(50%);
+  margin-top: 42px;
   .topback {
     position: fixed;
     bottom: 50px;

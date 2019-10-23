@@ -50,7 +50,7 @@
         </div>
       </div>
       <div class="row mx-3 w-100 comment_border pt-4">
-        <div class="col-12">
+        <div class="col-12 p-0 px-xl-3 px-lg-3 px-md-3 px-sm-3">
           <ul>
             <li v-for="item in 3" :key="item" :class="item>1?'pt-3 comment_border':''">
               <div class="d-flex justify-content-between align-items-center">

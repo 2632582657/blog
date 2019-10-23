@@ -75,3 +75,8 @@ input{-webkit-appearance:none;} input[type='radio']{-webkit-appearance:radio;} i
 .f16{
 	font-size: 16px !important;
 }
+.elli{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
