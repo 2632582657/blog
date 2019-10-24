@@ -28,7 +28,7 @@
         </tbody>
       </table>
     </div>
-    <nav aria-label="Page navigation example">
+    <!-- <nav aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item">
           <a class="page-link" href="#" aria-label="Previous">
@@ -52,16 +52,29 @@
           </a>
         </li>
       </ul>
-    </nav>
+    </nav> -->
+    <Pagination  :result=result @func=func />
   </div>
 </template>
 
 <script>
 import AdminSide from "../system/adminSide";
+import Pagination from "@/components/pagination.vue"
 export default {
   name: "arm", //文章管理
+  data(){
+    return{
+      result:{current_page:1,page_count:15},
+    }
+  },
+  methods:{
+    func(page){
+      this.result.current_page=page
+    }
+  },
   components: {
-    AdminSide
+    AdminSide,
+    Pagination
   }
 };
 </script>

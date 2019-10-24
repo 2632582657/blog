@@ -87,7 +87,11 @@
                       </div>
                       <span class="badge text-white bg-info cur px-2 py-1">回复</span>
                     </div>
-                    <div class="ml-5 mb-3 text-primary comment_detail">评论评论评论评论评论评论评论评论评论评论</div>
+                    
+                    <div class="ml-5 mb-3 text-primary comment_detail">
+                      <div class=" text-info">@ 苏墨璃</div>
+                      评论评论评论评论评论评论评论评论评论评论
+                    </div>
                   </div>
                 </div>
               </div>

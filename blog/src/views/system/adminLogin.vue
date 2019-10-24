@@ -5,9 +5,9 @@
         <div class="col-12 col-xl-6 col-lg-6 col-md-6 offset-xl-3 offset-lg-3 offset-md-3 bg-white py-4 rounded">
           <h2 class="admin_tip mb-4 text-info">欢迎站长来到后台管理系统，请验证身份</h2>
           <div class="row m-0 d-flex flex-column px-xl-5 px-lg-5 px-md-5">
-            <input type="text" name="userName" placeholder="请输入用户名" class=" admin_input mb-3" />
-            <input type="password" name="password" placeholder="请输入密码" class=" admin_input mb-3" />
-            <button class="btn btn-info">验证</button>
+            <input type="text" name="userName" placeholder="请输入用户名" class=" admin_input mb-3" v-model="userName" />
+            <input type="password" name="passWord" placeholder="请输入密码" class=" admin_input mb-3" v-model="passWord" />
+            <button class="btn btn-info" @click="submit">验证</button>
           </div>
         </div>
       </div>
@@ -17,7 +17,29 @@
 
 <script>
 export default {
-  name: "adminLogin"
+  name: "adminLogin",
+  data(){
+    return{
+      userName:"",
+      passWord:""
+    }
+  },
+  created(){
+  },
+  methods:{
+    submit(){
+      this.$http({
+        url:'adminLogin',
+        method:'post',
+        data:{
+          userName:this.userName,
+          passWord:this.passWord
+        }
+      }).then((res)=>{
+        console.log(res)
+      })
+    }
+  }
 };
 </script>
 
