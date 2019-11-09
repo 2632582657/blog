@@ -10,13 +10,13 @@ var pool=mysql.createPool({
 var query=function(sql,options,callback){
     pool.getConnection(function(err,conn){
         if(err){
-            callback(err,null,null);
+            callback(err,null);
         }else{
-            conn.query(sql,options,function(err,results,fields){
+            conn.query(sql,options,function(err,results){
                 //释放连接  
                 conn.release();
                 //事件驱动回调  
-                callback(err,results,fields);
+                callback(err,results);
             });
         }
     });

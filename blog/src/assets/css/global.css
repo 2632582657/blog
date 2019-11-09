@@ -20,7 +20,7 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font: inherit;
+	/* font: inherit; */
 	vertical-align: baseline;
 	box-sizing: border-box;
 }
@@ -63,7 +63,23 @@ a:hover,
 a:visited {text-decoration: none !important}
 input{-webkit-appearance:none;} input[type='radio']{-webkit-appearance:radio;} input[type='submit'],input[type='reset'],input[type='button'],input{-webkit-appearance:none;}
 
-
+::-webkit-scrollbar{
+	width: 5px;
+	height: 5px;
+}
+::-webkit-scrollbar-track {
+    background-color: transparent;
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em
+}
+::-webkit-scrollbar-thumb {
+    background-color: #d8f5f6;
+    background-image: -webkit-linear-gradient(45deg,rgba(255,255,255,.4) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.4) 50%,rgba(255,255,255,.4) 75%,transparent 75%,transparent);
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em
+}
 .cur{cursor: pointer;}
 
 .f12{

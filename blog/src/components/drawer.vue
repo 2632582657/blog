@@ -1,7 +1,7 @@
 <template>
   <div id="blog_drawer" :class="'d-xl-none d-lg-none d-md-none'+(!isShowDrawer?' drawer_out':'')" style="width:70vw;height:100vh">
       <div class="my_avatar">
-          <img src="../assets/images/avatar.jpg">
+          <img src="../assets/images/avatar2.jpg">
       </div>
       <p class="nick_name">时间旅客</p>
       <p class="my_link mb-3">

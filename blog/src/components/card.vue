@@ -3,7 +3,7 @@
     <div class="blog_card">
       <div class="card_author d-flex">
         <div class="position-relative">
-          <img src="../assets/images/avatar.jpg" />
+          <img src="../assets/images/avatar2.jpg" />
           <i class="fa fa-vimeo"></i>
         </div>
         <div class="ml-3 text-left d-flex flex-column justify-content-between">

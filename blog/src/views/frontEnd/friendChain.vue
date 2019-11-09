@@ -15,7 +15,7 @@
           <h3 class="link_title text-info">博客信息</h3>
           <ul class="text-info mx-5">
             <li>名称：时间旅客</li>
-            <li>邮箱：2632582657@qq.com</li>
+            <li>邮箱：MjYzMjU4MjY1N0BxcS5jb20=</li>
             <li>网址：http://shiqinggang.cn</li>
             <li>介绍：山野一闲人</li>
           </ul>
@@ -30,7 +30,7 @@
                 <div class="friend_box p-2">
                   <div class="friend_card mb-2 pb-2 d-flex">
                     <img
-                      src="../../assets/images/avatar.jpg"
+                      src="../../assets/images/avatar2.jpg"
                       width="50"
                       height="50"
                       class="rounded-circle mr-2"

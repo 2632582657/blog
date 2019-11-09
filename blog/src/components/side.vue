@@ -4,7 +4,7 @@
       <div class="sj_card_bg"></div>
       <div class="sj_card_body pt-1 position-relative">
         <div class="sj_card_avatar">
-          <img src="../assets/images/avatar.jpg" width="56" height="56" class="rounded-circle" />
+          <img src="../assets/images/avatar2.jpg" width="56" height="56" class="rounded-circle" />
           <i class="fa fa-vimeo vimeo"></i>
         </div>
         <a href="#" class="sj_card_name d-block mb-3 font-weight-bold">Moe_Nya</a>
@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <div class="card d-xl-block d-none">
+    <div  class="card d-xl-block d-lg-block d-none mb-3">
       <div class="sj_card_body sj_card_info text-left">
         <div class="py-2">
           <i class="fa fa-fw fa-qq text-info mr-2"></i>
@@ -48,6 +48,34 @@
         </div>
       </div>
     </div>
+    <!-- <div v-if="this.$route.meta.showLabel" class="card d-xl-block d-lg-block mb-3">
+      <div class="sj_card_body sj_card_info text-left">
+        <div class="py-2 cur">
+          <i class="fa text-info mr-2"></i>
+          vue(2)
+        </div>
+        <div class="py-2 cur">
+          <i class="fa text-success mr-2"></i>
+          node(1)
+        </div>
+        <div class="py-2 cur">
+          <i class="fa text-warning mr-2"></i>
+          html5(3)
+        </div>
+        <div class="py-2 cur">
+          <i class="fa  mr-2"></i>
+          css3(1)
+        </div>
+        <div class="py-2 cur">
+          <i class="fa  mr-2 text-info"></i>
+          flutter(1)
+        </div>
+        <div class="py-2 cur font-weight-bold">
+          <i class="fa  mr-2 text-info"></i>
+          查看全部...
+        </div>
+      </div>
+    </div> -->
   </div>
 </template>
 

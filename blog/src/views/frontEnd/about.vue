@@ -1,18 +1,18 @@
 <template>
   <div id="blog_about" class="container-fluid p-0">
     <div class="about_bg">
-      <img src="../../assets/images/1000630.jpg" class="w-100" alt />
+      <img :src="ABOUT_URL+aboutImg_index+'.jpg'" class="w-100 h-75" alt />
       <img src="../../assets/images/about__bg_di.png" alt class="about_di" />
       <div class="about_info w-100">
         <div>
-          <img src="../../assets/images/avatar.jpg" class="rounded-circle border border-info mr-4" />
+          <img src="../../assets/images/avatar2.jpg" width="128" height="128" class="rounded-circle border border-info mr-4" />
         </div>
         <div class="about_author">
           <p class="author_name">
             时间旅客
-            <i class="fa fa-send" title="换肤"></i>
+            <i class="fa fa-send text-warning" title="换肤" @click="changeAboutImg_index()"></i>
           </p>
-          <p class="author_info">前端工程师......没什么拿得出手的才艺...就是一个普通人，偶尔有点文艺...</p>
+          <p class="author_info ">前端工程师......没什么拿得出手的才艺...就是一个普通人，偶尔有点文艺...</p>
         </div>
       </div>
     </div>
@@ -99,10 +99,17 @@ export default {
         { title: "职业", info: "前端攻城狮" },
         { title: "物种", info: "紫阳" }
       ],
-      isSee: true
+      isSee: true,
+      aboutImg_index:1
     };
   },
   methods: {
+    changeAboutImg_index(){
+      this.aboutImg_index+=1
+      if( this.aboutImg_index>15){
+        this.aboutImg_index=1
+      }
+    },
     isSeeProof() {
       this.isSee = !this.isSee;
     }

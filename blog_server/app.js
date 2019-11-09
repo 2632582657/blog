@@ -7,13 +7,13 @@ var session = require('express-session');
 var cors = require("cors");
 var bodyParser=require('body-parser');
 var md5 = require('md5');
-console.log(md5(md5(123456)))
+
 
 var index = require('./routes/index');
 
 var app = express();
 app.use(cors({
-  origin:["http://localhost:8080","http://127.0.0.1:8080"],
+  origin:["http://www.sjlk.com","http://www.sjlk.com:81"],
   credentials:true
 }))
 app.set('views', path.join(__dirname, 'views'));

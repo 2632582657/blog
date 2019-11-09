@@ -1,12 +1,11 @@
 <template>
-  <div id="blog_study" class="container mt-2">
+  <div id="blog_study" class="container">
     <div class="row h-100">
-      <div class="col-xl-4 col-lg-4 col-md-4 py-0 p-sm-0 p-md-3 p-xl-4 p-lg-4">
+      <div class="col-xl-4 col-lg-4 col-md-4 pt-2">
         <Side></Side>
       </div>
-      <div class="col-xl-8 col-lg-8 col-md-8 py-0 p-sm-0 p-md-3 p-xl-4 p-lg-4">
+      <div class="col-xl-8 col-lg-8 col-md-8 pt-2">
         <!-- 卡片 -->
-        <Card></Card>
         <Card></Card>
       </div>
     </div>

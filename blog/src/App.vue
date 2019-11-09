@@ -9,7 +9,7 @@
       class="topback cur"
       alt
     />
-    <Header></Header>
+    <Header v-if="!this.$route.meta.showHeader"></Header>
     <router-view />
     <!-- <Footer></Footer> -->
   </div>
@@ -21,13 +21,20 @@ import Footer from "@/components/footer.vue";
 export default {
   data() {
     return {
-      scrolltop: 0
+      scrolltop: 0,
+      isShowHeader:false
     };
   },
   created() {
     this.setScrollLisener();
+    this.setRoute(this.$route.path);
   },
   mounted() {},
+  watch:{
+    $route(route){
+      this.setRoute(route.path)
+    }
+  },
   methods: {
     setScrollLisener() {
       var that = this;
@@ -58,7 +65,7 @@ export default {
   min-height: 100%;
   background: rgba(36, 45, 211, 0.3) url("assets/images/bg.jpg") repeat;
   // transform: translateX(50%);
-  margin-top: 42px;
+  // margin-top: 42px;
   .topback {
     position: fixed;
     bottom: 50px;

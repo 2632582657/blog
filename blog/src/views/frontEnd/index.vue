@@ -1,10 +1,10 @@
 <template>
-  <div id="blog_index"  class=" container mt-4">
-    <div class="row h-100">
-      <div class="col-xl-4 col-lg-4 col-md-4 py-0 p-sm-0 p-md-3 p-xl-4 p-lg-4">
+  <div id="blog_index"  class=" container mt-0">
+    <div class="row h-100 pt-2">
+      <div class="col-xl-4 col-lg-4 ">
         <Side></Side>
       </div>
-      <div class="col-xl-8 col-lg-8 col-md-8 py-0 p-sm-0 p-md-3 p-xl-4 p-lg-4">
+      <div class="col-xl-8 col-lg-8 ">
         <!-- fixed me  轮播自适应图片 -->
         <div id="carouselExampleIndicators" class="carousel slide carousel-fade mb-4 overflow-hidden"  data-ride="carousel">
           <ol class="carousel-indicators">

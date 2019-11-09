@@ -9,7 +9,6 @@ import './assets/css/global.css'
 import 'font-awesome/css/font-awesome.min.css'
 import './assets/css/custom.scss'
 Vue.config.productionTip = false
-
 Vue.use(Utils)
 
 new Vue({
