@@ -56,9 +56,9 @@
           >发表</button>
         </div>
       </div>
-      <div class="row mx-3 w-100 comment_border">
+      <div class="row mx-3 w-100 ">
         <div class="col-12 pt-3 px-xl-3 px-lg-3 px-md-3 px-sm-3">
-          <div v-for="(item,i) in commentList" :key="i">
+          <div v-for="(item,i) in commentList" :key="i" class="">
             <div
               v-if="!item.parent_id && !item.reply_user_id"
               :class="i>1?'pt-3 comment_border':''"
@@ -87,7 +87,7 @@
                 </div>
                 <div class="ml-5">
                   <div
-                    class="mb-3 text-primary comment_detail"
+                    class="mb-2 text-primary comment_detail"
                     v-text="item.status?item.content : '等待站长审核后显示...'"
                   ></div>
                   <div v-for="(citem,ci) in commentList" :key="ci">
@@ -111,7 +111,7 @@
                         >回复</span>
                       </div>
                       <div class="ml-5 mb-3 text-primary comment_detail">
-                        <div class="text-info" v-text="'回复了'+citem.reply_name"></div>
+                        <div class="text-info" v-if="citem.user_id!==citem.reply_user_id" v-text="'回复了'+citem.reply_name"></div>
                         <span>{{citem.status?citem.content : '等待站长审核后显示...'}}</span>
                       </div>
                     </div>
@@ -119,6 +119,10 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div v-if="commentList && commentList.length===0" class="mb-5 text-center text-info">
+            <i class="fa fa-hand-o-up"></i>
+            暂无评论~ 快来抢沙发吧~
           </div>
         </div>
       </div>
@@ -146,14 +150,16 @@ export default {
       cur: null
     };
   },
+  props:{
+    articleId:Object
+  },
   created() {
     if (localStorage.getItem("commentator")) {
       let commentator = JSON.parse(localStorage.getItem("commentator"));
       this.comment.userName = commentator.name;
       this.comment.email = commentator.email;
     }
-    this.getComment(10002, res => {
-      console.log(res.data);
+    this.getComment(this.articleId.id, res => {
       this.commentList = res.data;
     });
   },
@@ -177,7 +183,8 @@ export default {
       this.comment.parentId = parentId;
       this.comment.replyUserId = replyUserId;
       this.replyName = replyName;
-      console.log(this.comment);
+      document.getElementById("myTextarea").focus();
+      
     },
     getComment(articleId, callback) {
       this.$http("getComment", { params: { articleId: articleId } }, res => {
@@ -235,7 +242,7 @@ export default {
         data.parentId = this.comment.parentId;
         data.replyUserId = this.comment.replyUserId;
       }
-      data.articleId = 10002;
+      data.articleId = this.articleId.id;
       this.$http("addComment", { method: "post", data: data }, res => {
         if (res.data.code === 200) {
           alert(res.data.message);

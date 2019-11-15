@@ -76,7 +76,7 @@
         <span class="fa fa-warning"></span> 暂无结果
       </div>
     </div>
-    <Pagination v-if="userList.length!==0" :result="result" @func="func" />
+    <Pagination :control={center:1} v-if="userList.length!==0" :result="result" @func="func" />
     <div
       class="modal fade"
       id="updateBox"

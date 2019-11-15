@@ -1,29 +1,21 @@
 <template>
-  <div id="blog_index"  class=" container mt-0">
+  <div id="blog_index"  class=" container mt-0 ">
     <div class="row h-100 pt-2">
       <div class="col-xl-4 col-lg-4 ">
         <Side></Side>
       </div>
       <div class="col-xl-8 col-lg-8 ">
         <!-- fixed me  轮播自适应图片 -->
-        <div id="carouselExampleIndicators" class="carousel slide carousel-fade mb-4 overflow-hidden"  data-ride="carousel">
+        <div id="carouselExampleIndicators" :class="'carousel slide carousel-fade ' + (articleList.length!==0 ? 'mb-4' : '')"  data-ride="carousel">
           <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <li data-target="#carouselExampleIndicators" :data-slide-to="i" :class="activeIndex===i?'active':''"  v-for="(item,i) in hotList " :key="i"></li>
           </ol>
-          <div class="carousel-inner h-100">
-            <div class="carousel-item active overflow-hidden h-100">
-              <img class="d-block w-100" style="max-height:400px" src="../../assets/images/1000048.jpg" >
+          <div class="carousel-inner overflow-hidden h-100">
+            <div :class="'carousel-item overflow-hidden h-100 '+(activeIndex===i ? 'active' : '') " v-for="(item,i) in hotList" :key="i" @click="toDetail(item.id)">
+              <img class="d-block w-100 " style="max-height:380px" :src="item.cover" >
               <div class="carousel-caption d-none d-md-none d-xl-block d-lg-none ">
-                <h5>文章标题</h5>
+                <h5 v-text="item.title" class="mb-0"></h5>
               </div>
-            </div>
-            <div class="carousel-item overflow-hidden">
-              <img class="d-block w-100" style="max-height:400px" src="../../assets/images/1000048.jpg">
-            </div>
-            <div class="carousel-item overflow-hidden">
-              <img class="d-block w-100" style="max-height:400px" src="../../assets/images/1000736.jpg">
             </div>
           </div>
           <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -36,20 +28,86 @@
           </a>
         </div>
         <!-- 卡片 -->
-        <Card></Card>
-        <Card></Card>
+        <Card v-for="(item,i) in articleList" :key="i" :articleInfo=item></Card>
+        <div v-if="articleList && articleList.length===0">
+          <div class="card" style="opacity:.9">
+            <div class="card-body text-info">
+              <i class=" fa fa-calendar-o"></i>
+              暂无文章
+            </div>
+          </div>
+        </div>
+        <Pagination class="w-100" :control={center:1,sm:1} :result="result" @func="func" v-if="articleList.length!==0 && articleList.length>10"  />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Card from '../../components/card'
-import Side from '../../components/side'
+import Card from '../../components/card';
+import Side from '../../components/side';
+import Pagination from "@/components/pagination.vue";
 export default {
+  data(){
+    return{
+      articleList:[],
+      hotList:[],
+      activeIndex:0,
+      result:{},
+      // keyword:this.$route.query.keyword
+    }
+  },
+  created(){
+    this.getArticle(null,(res)=>{
+      this.articleList=res.data.articleInfo;
+      this.result=res.data.page
+    })
+    this.$http('hot',(res)=>{
+      if(res.data.code===200){
+        this.hotList=res.data.data
+      }
+    })
+  },
+  watch:{
+    keyword(val,newVal){
+      console.log(val,newVal,111)
+    },
+    $route(route){
+      console.log(route)
+      if(route.query.keyword){
+        this.$http('getArticle',{params:{search:1,title:route.query.keyword}},(res)=>{
+          if(res.data.code===200){
+            this.articleList=res.data.data.articleInfo
+          } 
+        })
+      }
+    }
+  },
+  methods:{
+    func(page){
+      this.getArticle({page:page},(res)=>{
+        this.articleList=res.data.articleInfo;
+        this.result=res.data.page;
+      })
+    },
+    getArticle(params,callback){
+      this.$http('getArticle',{params:params},(res)=>{
+        if(res.data.code===200){
+          callback(res.data)
+        }
+      })
+    },
+    toDetail(id){
+      this.$router.push({
+        path: "/detail",
+        query: { id:id }
+      });
+    }
+  },
   components:{
     Card,
-    Side
+    Side,
+    Pagination
   }
 }
 </script>
@@ -57,7 +115,7 @@ export default {
 <style lang="scss" scoped>
   #blog_index{
     min-height: 100%;
-    padding-bottom: 60px;
+    // padding-bottom: 60px;
   }
 
 </style>

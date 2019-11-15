@@ -4,9 +4,6 @@ let util = {
     install: Vue => {
         Vue.prototype.ABOUT_URL='http://127.0.0.1:81/images/about_img/about_';
         Vue.prototype.AVATAR_URL='http://127.0.0.1:81/images/avatar_img/avatar_';
-
-
-
         axios.defaults.baseURL = 'http://api.sjlk.com';
         axios.defaults.withCredentials = true;
         Vue.prototype.$=$;

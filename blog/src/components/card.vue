@@ -1,5 +1,5 @@
 <template>
-  <div id="blog_card_box" @click="toDetail">
+  <div id="blog_card_box" @click="toDetail" class="cur">
     <div class="blog_card">
       <div class="card_author d-flex">
         <div class="position-relative">
@@ -7,42 +7,44 @@
           <i class="fa fa-vimeo"></i>
         </div>
         <div class="ml-3 text-left d-flex flex-column justify-content-between">
-          <a href="#" class="uname text-primary">Moe_Nya</a>
-          <p class="time text-secondary pb-0">2019- 9 -31</p>
+          <a href="#" class="uname text-primary">时间</a>
+          <p class="time text-secondary pb-0" v-text="articleInfo.create_time"></p>
         </div>
       </div>
       <div class="card_content row m-0 mt-3 h-100">
         <div
-          class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 p-0 position-relative overflow-hidden"
+          class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 p-0 position-relative h-100 overflow-hidden"
         >
           <!-- <img src="../assets/images/1000048.jpg" class=" h-100 img_hover" /> -->
-          <div class="img_hover"></div>
-          <span class="content_tag bg-info">
-            <a href="#">随笔</a>
+          <div
+            class="img_hover"
+            :style="`background: url(${articleInfo.cover}) no-repeat center center;background-size: cover`"
+          ></div>
+          <span class="content_tag bg-info" :title="articleInfo.category_name">
+            <a href="javascript:;" v-text="articleInfo.category_name"></a>
           </span>
         </div>
         <div
-          class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 pt-3 px-0 px-xl-3 px-lg-3 px-md-3 px-sm-3 px-3"
+          class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7 pt-2 px-0 px-xl-3 px-lg-3 px-md-3 px-sm-3 px-3 h-100"
         >
-          <a href="#" class="d-block w-100 h-100">
-            <h3 class="title mb-2 text-primary strong">博客主页换音乐啦~~</h3>
-            <p class="content text-secondary">
-              这首歌是AniFace的《夜 萤火虫和你》，超好听ww
-              我本来想直接用Hermit插件的代码来放到侧边栏，但是并不是很顺利，出了bug，所以就直接去网易云买了单曲然后下载下来放在博客上。
-              还是要在PC端页面上才能看到哦
-            </p>
-          </a>
+          <div class="w-100 h-100">
+            <h3 class="title mb-2 text-primary strong" v-text="articleInfo.title"></h3>
+            <div class="content text-secondary" v-html="articleInfo.content"></div>
+          </div>
         </div>
       </div>
       <div class="card_zan w-100 mt-2 text-left">
         <span class="text-secondary cur">
-          <i class="fa fa-eye"></i> 71
+          <i class="fa fa-eye"></i>
+          {{articleInfo.hot}}
         </span>
         <span class="text-secondary ml-5 cur">
-          <i class="fa fa-commenting-o"></i> 2
+          <i class="fa fa-commenting-o"></i>
+          {{articleInfo.comment_count}}
         </span>
         <span class="text-secondary ml-5 cur">
-          <i class="fa fa-heart-o"></i> 1
+          <i class="fa fa-heart-o"></i>
+          {{articleInfo.support}}
         </span>
       </div>
     </div>
@@ -51,9 +53,19 @@
 
 <script>
 export default {
-  methods:{
-    toDetail(){
-      this.$router.push("detail")
+  data() {
+    return {};
+  },
+  props: {
+    articleInfo: Object
+  },
+  created() {},
+  methods: {
+    toDetail() {
+      this.$router.push({
+        path: "/detail",
+        query: { id: this.articleInfo.id }
+      });
     }
   }
 };
@@ -72,6 +84,7 @@ export default {
   position: relative;
   overflow: hidden;
   border-radius: 4px;
+  // min-height: 255px;
   .blog_card {
     .card_author {
       width: 100%;
@@ -90,7 +103,7 @@ export default {
         margin-right: -2%;
       }
       .uname {
-        font-size: 18px;
+        font-size: 16px;
       }
       .time {
         font-size: 12px;
@@ -98,7 +111,7 @@ export default {
       }
     }
     .card_content {
-      height: 135px !important;
+      height: 120px !important;
       background: #fff;
       border-radius: 4px;
       text-align: left;
@@ -111,8 +124,6 @@ export default {
         transition: all 1.5s ease;
         width: 100%;
         height: 100%;
-        background: url("../assets/images/1000048.jpg") no-repeat center center;
-        background-size: cover;
       }
       .content_tag {
         max-width: 30%;
@@ -127,12 +138,13 @@ export default {
         z-index: 101px;
         overflow: hidden;
         font-size: 12px;
-        text-overflow: ellipsis;
-        word-break: break-all;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        opacity: .8;
+        // text-overflow: ellipsis;
+        // word-break: break-all;
+        // display: -webkit-box;
+        // -webkit-line-clamp: 1;
+        // -webkit-box-orient: vertical;
+        white-space: nowrap;
+        opacity: 0.8;
         a {
           color: #fff;
         }
@@ -157,6 +169,7 @@ export default {
         -webkit-line-clamp: 4;
         -webkit-box-orient: vertical;
         letter-spacing: 1px;
+        max-height: 75px;
       }
     }
   }

@@ -92,7 +92,7 @@
         <span class="fa fa-warning"></span> 暂无结果
       </div>
     </div>
-    <Pagination v-if="commentList.length!==0" :result="result" @func="func" />
+    <Pagination :control={center:1} v-if="commentList.length!==0" :result="result" @func="func" />
   </div>
 </template>
 

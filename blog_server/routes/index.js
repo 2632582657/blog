@@ -5,7 +5,8 @@ var article=require('./article');
 var user=require('./users');
 var comment=require('./comment');
 var cate=require('./cate');
-var flink=require('./flink')
+var flink=require('./flink');
+var common=require('./common');
 var multer  = require('multer');
 var path = require('path');
 var UUID=require('uuid');
@@ -47,6 +48,7 @@ router.get('/getCate',(req,res)=>{
 router.get('/getLabel',(req,res)=>{
   cate.getLabel(req,res)
 })
+//文章模块
 router.post('/release',upload.single('cover'),(req,res)=>{
   article.release(req,res)
 })
@@ -61,6 +63,12 @@ router.put('/updateArticle/:articleId(\\d+)',upload.single('cover'), function (r
 });
 router.get('/deleteArticle',(req,res)=>{
   article.deleteArticleOfId(req,res)
+})
+router.get('/hot',(req,res)=>{
+  article.hot(req,res)
+})
+router.get('/zan/:articleId(\\d+)',(req,res)=>{
+  article.zan(req,res)
 })
 //用户模块
 router.get('/getUser',(req,res)=>{
@@ -102,5 +110,8 @@ router.put('/updateFlinkStatus/:flinkId(\\d+)',(req,res)=>{
 router.post('/addFlink',(req,res)=>{
   flink.addFlink(req,res)
 })
-
+//首页请求
+router.get('/getAllCount',(req,res)=>{
+  common.getAllCount(req,res)
+})
 module.exports = router;

@@ -15,9 +15,9 @@ adminLogin = (req, res) => {
                 throw err;
             }
             if (result.length === 0) {
-                res.status(403).json({
+                res.json({
                     code: 403,
-                    message: "查询结果失败"
+                    message: "用户名或密码错误"
                 })
             } else {
                 req.session.user = {

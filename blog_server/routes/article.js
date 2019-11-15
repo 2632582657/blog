@@ -31,7 +31,6 @@ release = (req, res) => {
     })
 }
 getArticleOfId=(req,res)=>{
-    console.log(req.params.articleId)
     if(!req.params.articleId){
         res.status(403).json({
             code:403,
@@ -39,27 +38,62 @@ getArticleOfId=(req,res)=>{
         })
         return;
     }
-    let sql=`SELECT id,title,content,cover,category_id,date_format( create_time, '%Y-%m-%d %H:%i:%S' ) as create_time FROM sj_article WHERE id=?`;
-    query(sql,req.params.articleId,(err,result)=>{
-        if(err){
-            util.handleError(res,err);
+    function getArticle(sql,params,fn) {
+        return new Promise(function (resolve, reject) {
+            query(sql,params,(err, result) => {
+                if (err) {
+                    util.handleError(res, err);
+                    reject(err);
+                }
+                fn(result);
+                resolve();
+            });
+        });
+    } 
+    // let sqlSupport=`UPDATE sj_article SET support=? WHERE id=?`;
+    (async function(){
+        try {
+            let sql=
+            `SELECT 
+                a.id,
+                a.title,
+                a.content,
+                a.cover,
+                a.category_id,
+                date_format( a.create_time, '%Y-%m-%d %H:%i:%S' ) as create_time,
+                a.hot,
+                a.support,
+                cate.name AS category_name
+            FROM 
+                sj_article AS a
+            LEFT JOIN sj_category AS cate ON a.category_id = cate.id 
+            WHERE a.id=?`;
+            let sqlHot=`UPDATE sj_article SET hot=? WHERE id=?`;
+            let articleInfo;
+            await getArticle(sql,req.params.articleId,(result)=>{
+                articleInfo=result
+            })
+            await getArticle(sqlHot,[articleInfo[0].hot+1,req.params.articleId],(resultHot)=>{
+                if(articleInfo.length>0){
+                    res.json({
+                        code:200,
+                        message:'success',
+                        data:articleInfo[0]
+                    })
+                }else{
+                    res.status(500).json({
+                        code:500,
+                        message:"No results found"
+                    })
+                } 
+            })
+            
+        } catch (error) {
+            console.log(error)
         }
-        if(result.length>0){
-            res.json({
-                code:200,
-                message:'success',
-                data:result[0]
-            })
-        }else{
-            res.status(500).json({
-                code:500,
-                message:"No results found"
-            })
-        }  
-    })
+    })();
 }
 getArticleOfCate = (req, res) => {
-    console.log(req.query.search)
     if(req.query.adm){
         // util.needLogin(req,res)
     }
@@ -98,22 +132,24 @@ getArticleOfCate = (req, res) => {
                 date_format(a.create_time,'%Y-%m-%d %H:%i:%S' ) as create_time,
                 a.hot,
                 a.support,
-                a.category_id
-                ${!req.query.adm ? ",LEFT(a.content,50) AS content," : ','}
+                a.category_id,
+                cate.name as category_name,
+                ${!req.query.adm ? "a.cover," : ''}
+                ${!req.query.adm ? "LEFT(a.content,120) AS content," : ''}
                 COUNT(c.id) AS comment_count
             FROM 
                 sj_article AS a 
-            LEFT JOIN 
-                sj_comment AS c ON a.id = c.article_id
+            LEFT JOIN sj_comment AS c ON a.id = c.article_id
+            LEFT JOIN sj_category AS cate ON a.category_id = cate.id 
             WHERE 
                 ${keyStr}
             GROUP BY
                 a.id
             ORDER BY 
-                a.create_time
+                a.create_time DESC
             LIMIT
                 ?,10`;
-        arr2.push((page - 1) * 10)
+        console.log(arr);
         query(searchCount,arr,(err,result)=>{
             if(err){util.handleError(res,err)}
             query(searchSql,[...arr,(page - 1) * 10],(dErr,dResult)=>{
@@ -161,24 +197,27 @@ getArticleOfCate = (req, res) => {
             date_format(a.create_time,'%Y-%m-%d %H:%i:%S' ) as create_time,
             a.hot,
             a.support,
-            a.category_id
-            ${!req.query.adm ? ",LEFT(a.content,50) AS content," : ','}
+            a.category_id,
+            a.cover,
+            cate.name as category_name
+            ${!req.query.adm ? ",LEFT(a.content,120) AS content," : ','}
             COUNT(c.id) AS comment_count
         FROM 
             sj_article AS a 
-        LEFT JOIN 
-            sj_comment AS c ON a.id = c.article_id
+        LEFT JOIN sj_comment AS c ON a.id = c.article_id
+        LEFT JOIN sj_category AS cate ON a.category_id = cate.id 
         WHERE 
             ${str}
         GROUP BY
             a.id
         ORDER BY 
-            a.create_time
+            a.create_time DESC
         LIMIT
             ?,10`;
         try {
             let resultCount=await getArticleOfPage(csql,cateArr);
             let result=await getArticleOfPage(sql,[...cateArr,(page-1)*10]);
+            
             res.json({
                 code:200,
                 message:'success',
@@ -194,63 +233,6 @@ getArticleOfCate = (req, res) => {
             console.log(err);
         }    
     })();
-    // function getArticleOfPage(sql, params) {
-    //     return new Promise(function (resolve, reject) {
-    //         query(sql,params, (err, result) => {
-    //             if (err){
-    //                 util.handleError(res,err)
-    //             }
-    //             resolve(result);
-    //             reject(err);
-    //         });
-    //     });
-    // }  
-    // let csql = `SELECT COUNT(id) AS count FROM sj_article WHERE ${req.query.cateId ? "category_id=?":"category_id IS NULL"}`
-    // let sql =
-    //             `SELECT 
-    //             a.id,
-    //             a.title,
-    //             date_format(a.create_time,'%Y-%m-%d %H:%i:%S' ) as create_time,
-    //             a.hot,
-    //             a.support,
-    //             a.category_id
-    //             ${!req.query.adm ? ",LEFT(a.content,50) AS content," : ','}
-    //             COUNT(c.id) AS comment_count
-    //         FROM 
-    //             sj_article AS a 
-    //         LEFT JOIN 
-    //             sj_comment AS c ON a.id = c.article_id
-    //         WHERE 
-    //             ${req.query.cateId ? "category_id=?":"category_id IS NULL"}
-    //         GROUP BY
-    //             a.id
-    //         ORDER BY 
-    //             a.create_time
-    //         LIMIT
-    //             ?,10`;
-    // let cateArr=[];
-    // let pageArr=[(page - 1) * 10];
-    // if(req.query.cateId){
-    //     cateArr.push(req.query.cateId);
-    //     pageArr.unshift(req.query.cateId)
-    // }
-    // Promise.all([getArticleOfPage(csql,cateArr), getArticleOfPage(sql,pageArr)])
-    //     .then(result=>{
-    //         console.log(2)
-    //         res.json({
-    //             code:200,
-    //             message:"success",
-    //             data:{
-    //                 articleInfo:result[1],
-    //                 page:{
-    //                     currentPage:parseInt(page),
-    //                     pageCount:Math.ceil(result[0][0].count / 10)
-    //                 }
-    //             }
-    //         })
-    //     }).catch(err=>{
-    //         console.log(err);
-    //     }) 
 },
 updateArticleOfId=(req,res)=>{
     // util.needLogin(req,res);
@@ -361,10 +343,48 @@ deleteArticleOfId=(req,res)=>{
         }
     })
 }
+hot=(req,res)=>{
+    let sql=`SELECT id, title, category_id, cover FROM sj_article WHERE category_id IS NOT NULL ORDER BY hot DESC LIMIT 5`;
+    query(sql,(err,result)=>{
+        if(err){util.handleError(res,err)}
+        res.json({
+            code:200,
+            message:'success',
+            data:result
+        })
+    })
+}
+zan=(req,res)=>{
+    console.log(req.query)
+    if(!req.params.articleId){
+        res.status(403).json({
+            code:403,
+            message:"Failed to get article ID"
+        })
+        return;
+    }
+    let sql=`UPDATE sj_article SET support=? WHERE id=?`;
+    query(sql,[parseInt(req.query.support)+1,req.params.articleId],(err,result)=>{
+        if(err){util.handleError(res,err)}
+        if(result.affectedRows>0){
+            res.json({
+                code:200,
+                message:'success'
+            })
+        }else{
+            res.json({
+                code:403,
+                message:'系统错误 点赞失败'
+            })
+        }
+    })
+}
 module.exports = {
     release,
     getArticleOfId,
     getArticleOfCate,
     updateArticleOfId,
-    deleteArticleOfId
+    deleteArticleOfId,
+    hot,
+    zan
 }

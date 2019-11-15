@@ -114,7 +114,7 @@
         </li>
       </ul>
     </nav>-->
-    <Pagination :result="result" @func="func" v-if="articleList.length!==0" />
+    <Pagination :control={center:1} :result="result" @func="func" v-if="articleList.length!==0" />
   </div>
 </template>
 

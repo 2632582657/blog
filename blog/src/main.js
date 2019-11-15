@@ -8,6 +8,12 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './assets/css/global.css'
 import 'font-awesome/css/font-awesome.min.css'
 import './assets/css/custom.scss'
+import APlayer from '@moefe/vue-aplayer';
+
+Vue.use(APlayer, {
+  defaultCover: 'https://github.com/u3u.png',
+  productionTip: true,
+});
 Vue.config.productionTip = false
 Vue.use(Utils)
 

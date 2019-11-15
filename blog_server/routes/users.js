@@ -49,7 +49,7 @@ getUser = (req, res) => {
           data: {
             userList: rResult,
             page: {
-              currentPage: page,
+              currentPage: parseInt(page),
               pageCount: Math.ceil(result[0].count / 10)
             }
           }
@@ -69,7 +69,7 @@ getUser = (req, res) => {
           data: {
             userList: rResult,
             page: {
-              currentPage: page,
+              currentPage: parseInt(page),
               pageCount: Math.ceil(result[0].count / 10)
             }
           }

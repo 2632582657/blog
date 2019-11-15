@@ -26,28 +26,28 @@
           <h3 class="link_title text-info">乐园</h3>
           <div class="container mt-4">
             <div class="row m-0">
-              <div class="col-12 col-xl-4 col-lg-4 col-md-6 px-2 mb-2">
+              <div class="col-12 col-xl-4 col-lg-4 col-md-6 px-2 mb-2" v-for="(item,i) in flinkList" :key="i">
                 <div class="friend_box p-2">
                   <div class="friend_card mb-2 pb-2 d-flex">
                     <img
-                      src="../../assets/images/avatar2.jpg"
+                      :src="item.avatar_link ? item.avatar_link : AVATAR_URL+item.avatar+'.png'"
                       width="50"
                       height="50"
                       class="rounded-circle mr-2"
                     />
                     <div class="d-flex flex-column justify-content-between">
-                      <div>芜桐</div>
-                      <a href="#" class="visit_btn" target="_blank">访问</a>
+                      <div v-text="item.name"></div>
+                      <a :href="item.address" class="visit_btn" target="_blank">访问</a>
                     </div>
                   </div>
-                  <div class="f14 introduce cur" title="一棵树是童话镇，半朵雪花安余笙">一棵树是童话镇，半朵雪花安余笙</div>
+                  <div class="f14 introduce cur" :title="item.info ? item.info : '这个人很懒~没有介绍哦'" v-text="item.info ? item.info : '这个人很懒~没有介绍哦'"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Comments></Comments>
+      <Comments :articleId={id:10002}></Comments>
     </div>
   </div>
 </template>
@@ -59,7 +59,29 @@ export default {
   name: "friendChain",
   data(){
     return{
-      componentName:{title:"友人",introduce:""}
+      componentName:{title:"友人",introduce:""},
+      flinkList:[],
+      banFlink:[]
+    }
+  },
+   created(){
+    this.getFlink((res)=>{
+      res.data.forEach((item,i)=>{
+        if(res.data[i].status){
+          this.flinkList.push(res.data[i]);
+        }else{
+          this.banFlink.push(res.data[i])
+        }
+      })
+    })
+  },
+  methods:{
+    getFlink(callback){
+      this.$http("getFlink", res => {
+        if (res.data.code === 200) {
+          callback(res.data);
+        }
+      });
     }
   },
   components: {
@@ -74,8 +96,8 @@ export default {
   .link_info {
     background: rgba(255, 255, 255, 0.7);
     .link_bg{
-      background:url("../../assets/images/1.png") no-repeat 100% 0%;
-      background-size: auto 100%;
+      // background:url("../../assets/images/1.png") no-repeat 100% 0%;
+      // background-size: auto 100%;
     }
     .link_box {
       ul {

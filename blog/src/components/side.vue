@@ -7,18 +7,18 @@
           <img src="../assets/images/avatar2.jpg" width="56" height="56" class="rounded-circle" />
           <i class="fa fa-vimeo vimeo"></i>
         </div>
-        <a href="#" class="sj_card_name d-block mb-3 font-weight-bold">Moe_Nya</a>
+        <a href="#" class="sj_card_name d-block mb-3 font-weight-bold">时间旅客</a>
         <div class="row sj_card_content pt-2">
           <div class="col-4">
-            <p class="num text-info">108</p>
+            <p class="num text-info" v-text="count.articleCount"></p>
             <p class="text text-secondary">文章</p>
           </div>
-          <div class="col-4">
-            <p class="num text-info">18</p>
+          <div class="col-4" @click="toAlbum()">
+            <p class="num text-info" v-text="count.albumCount"></p>
             <p class="text text-secondary">相册</p>
           </div>
           <div class="col-4">
-            <p class="num text-info">66</p>
+            <p class="num text-info" v-text="count.leaveMsgCount"></p>
             <p class="text text-secondary">留言</p>
           </div>
         </div>
@@ -40,7 +40,7 @@
         </div>
         <div class="py-2">
           <i class="fa fa-fw fa-github mr-2"></i>
-          2632582657
+          https://github.com/2632582657
         </div>
         <div class="py-2">
           <i class="fa fa-fw mr-2 fa-commenting text-info"></i>
@@ -81,7 +81,24 @@
 
 <script>
 export default {
-  name:"side"
+  name:"side",
+  data(){
+    return{
+      count:{}
+    }
+  },
+  created(){
+    this.$http('getAllCount',(res)=>{
+      if (res.data.code===200) {
+        this.count=res.data.data;
+      }
+    })
+  },
+  methods:{
+    toAlbum(){
+      this.$router.push({path:'/album'})
+    }
+  }
 };
 </script>
 
@@ -115,6 +132,7 @@ export default {
     }
     .sj_card_name {
       transition: all 0.3s linear;
+      letter-spacing: 2px
     }
     .sj_card_content {
       p {

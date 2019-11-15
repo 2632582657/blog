@@ -19,7 +19,7 @@
             </a>
           </li>
       </ul>
-      <p class="record">© 2019 时间旅客</p>
+      <!-- <p class="record">© 2019 时间旅客</p> -->
   </div>
 </template>
 

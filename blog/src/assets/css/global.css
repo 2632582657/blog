@@ -23,12 +23,15 @@ time, mark, audio, video {
 	/* font: inherit; */
 	vertical-align: baseline;
 	box-sizing: border-box;
-}
-/* HTML5 display-role reset for older browsers */
+} 
+
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+/* p{
+	margin-bottom: 0 !important;
+} */
 body {
 	/* font-family:"Microsoft Yahei','simsun','arial','tahoma"; */
 	color: #333;
@@ -61,8 +64,6 @@ a:active,
 a:focus,
 a:hover,
 a:visited {text-decoration: none !important}
-input{-webkit-appearance:none;} input[type='radio']{-webkit-appearance:radio;} input[type='submit'],input[type='reset'],input[type='button'],input{-webkit-appearance:none;}
-
 ::-webkit-scrollbar{
 	width: 5px;
 	height: 5px;
@@ -91,8 +92,24 @@ input{-webkit-appearance:none;} input[type='radio']{-webkit-appearance:radio;} i
 .f16{
 	font-size: 16px !important;
 }
+.f18{
+	font-size: 18px !important;
+}
 .elli{
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+.all_pt{
+	padding-bottom: 128px;
+	/* margin-bottom: 128px; */
+  }
+.zan{
+	color: rgb(255, 133, 173);
+}
+.article_content>p{
+	line-height: 24px !important;
+}
+#blog_card_box .blog_card .card_content .content>p{
+	margin-bottom: 0 !important;
 }

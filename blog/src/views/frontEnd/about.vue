@@ -5,14 +5,17 @@
       <img src="../../assets/images/about__bg_di.png" alt class="about_di" />
       <div class="about_info w-100">
         <div>
-          <img src="../../assets/images/avatar2.jpg" width="128" height="128" class="rounded-circle border border-info mr-4" />
+          <img
+            src="../../assets/images/avatar2.jpg"
+            class="rounded-circle mr-3 about_avatar"
+          />
         </div>
         <div class="about_author">
           <p class="author_name">
             时间旅客
             <i class="fa fa-send text-warning" title="换肤" @click="changeAboutImg_index()"></i>
           </p>
-          <p class="author_info ">前端工程师......没什么拿得出手的才艺...就是一个普通人，偶尔有点文艺...</p>
+          <p class="author_info">前端工程师......没什么拿得出手的才艺...就是一个普通人，偶尔有点文艺...</p>
         </div>
       </div>
     </div>
@@ -77,7 +80,7 @@
       <div class="container py-3 hobby">
         <div class="row">
           <div class="col-12">
-            <Comments></Comments>
+            <Comments :articleId="{id:10001}"></Comments>
           </div>
         </div>
       </div>
@@ -86,7 +89,7 @@
 </template>
 
 <script>
-import Comments from "../../components/comments"
+import Comments from "../../components/comments";
 export default {
   name: "about",
   data() {
@@ -100,28 +103,56 @@ export default {
         { title: "物种", info: "紫阳" }
       ],
       isSee: true,
-      aboutImg_index:1
+      aboutImg_index: 1
     };
   },
   methods: {
-    changeAboutImg_index(){
-      this.aboutImg_index+=1
-      if( this.aboutImg_index>15){
-        this.aboutImg_index=1
+    changeAboutImg_index() {
+      this.aboutImg_index += 1;
+      if (this.aboutImg_index > 15) {
+        this.aboutImg_index = 1;
       }
     },
     isSeeProof() {
       this.isSee = !this.isSee;
     }
   },
-  components:{
-      Comments
+  components: {
+    Comments
   }
 };
 </script>
 
 <style lang="scss" scoped>
-
+@media screen and (min-width: 768px) and (max-width: 991px) {
+}
+@media screen and (min-width: 576px) and (max-width: 767px) {
+}
+@media screen and(max-width:575px) {
+  #blog_about {
+    .about_bg {
+      .about_info {
+        top: 25% !important;
+        padding: 0 8% !important;
+        .about_avatar {
+          width: 64px !important;
+          height: 64px !important;
+        }
+        .about_author {
+          .author_name {
+            margin-bottom: 0;
+            font-size: 20px !important;
+            font-weight: 400;
+          }
+          .author_info {
+            font-size: 12px !important;
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}
 #blog_about {
   .about_bg {
     // max-height: 400px;
@@ -130,7 +161,7 @@ export default {
       width: 100%;
       position: absolute;
       left: 0;
-      bottom: 0;
+      bottom: -2px;
     }
     .about_info {
       position: absolute;
@@ -139,6 +170,10 @@ export default {
       display: flex;
       justify-content: center;
       padding: 0 15%;
+      .about_avatar {
+        width: 128px;
+        height: 128px;
+      }
       .about_author {
         text-align: left;
         color: #fff;

@@ -59,7 +59,8 @@ export default {
         language: "zh_CN",
         plugins: "lists link image paste help wordcount",
         toolbar:
-          "undo redo |  formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image media table | removeformat",
+          // "undo redo |  formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image media table code",
+          "bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent blockquote | undo redo | link unlink image code | removeformat",
         branding: false,
         height: 800,
         images_upload_handler: function(blobInfo, success, failure) {

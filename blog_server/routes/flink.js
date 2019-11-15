@@ -75,7 +75,7 @@ getFlink = (req, res) => {
                         data: {
                             flinkList: result,
                             page: {
-                                currentPage: page,
+                                currentPage: parseInt(page),
                                 pageCount: Math.ceil(pageObj[0].count / 10)
                             }
                         }
@@ -112,7 +112,7 @@ getFlink = (req, res) => {
                             data: {
                                 flinkList: result,
                                 page: {
-                                    currentPage: page,
+                                    currentPage: parseInt(page),
                                     pageCount: Math.ceil(pageObj[0].count / 10)
                                 }
                             }

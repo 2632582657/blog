@@ -1,47 +1,90 @@
 <template>
   <div id="blog_album" class="container p-0 pt-xl-3">
     <PageHead :componentName="componentName"></PageHead>
-    <div class="row album_body m-0 pt-xl-3 pt-lg-3 pt-md-3 pt-3 pb-5 px-3 border-0">
-      <div v-for="item in 4" :key="item" class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 mb-3 album_item">
-        <img src="../../assets/images/1000048.jpg" class="w-100 h-100" />
-        <div class="album_mask text-left font-weight-bold">
-          <p class="m-0">
-            国庆，记一次回乡
-            <span class="time d-block text-secondary">
-              <i></i> 2019-9-30
-            </span>
-          </p>
-          <div class="card_zan w-100 mt-2 small">
-            <span class="text-secondary cur">
-              <i class="fa fa-eye"></i> 71
-            </span>
-            <span class="text-secondary ml-3 cur">
-              <i class="fa fa-commenting-o"></i> 2
-            </span>
-            <span class="text-secondary ml-3 cur">
-              <i class="fa fa-heart-o"></i> 1
-            </span>
+    <div class="row album_body m-0 pt-xl-3 pt-lg-3 pt-md-3 pt-3 mb-5 px-3 border-0">
+      <div>
+        <div
+          v-for="(item,i) in ablumList"
+          :key="i"
+          @click="toDetail(item.id)"
+          class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 mb-3 album_item"
+        >
+          <img :src="item.cover" class="w-100 h-100" />
+          <div class="album_mask text-left font-weight-bold">
+            <p class="m-0">
+              {{item.title}}
+              <span class="time d-block text-secondary">
+                <i></i>
+                {{item.create_time}}
+              </span>
+            </p>
+            <div class="card_zan w-100 mt-2 small">
+              <span class="text-secondary cur">
+                <i class="fa fa-eye"></i>
+                {{item.hot}}
+              </span>
+              <span class="text-secondary ml-3 cur">
+                <i class="fa fa-commenting-o"></i>
+                {{item.comment_count}}
+              </span>
+              <span class="text-secondary ml-3 cur">
+                <i class="fa fa-heart-o"></i>
+                {{item.support}}
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <Pagination class="w-100" :control={center:1,sm:1} :result="result" @func="func" v-if="ablumList.length!==0 && ablumList.length>10" />
+    </div>    
   </div>
 </template>
 
 <script>
-import PageHead from "../../components/pageHead"
+import PageHead from "../../components/pageHead";
+import Pagination from "@/components/pagination.vue";
 export default {
-  name:"album",  //相册
-  data(){
-    return{
-      componentName:{
-        title:"相册",
-        introduce:"一句话影集......"
-      }
+  name: "album", //相册
+  data() {
+    return {
+      componentName: {
+        title: "相册",
+        introduce: "一句话影集......"
+      },
+      ablumList: [],
+      result: {}
+    };
+  },
+  created() {
+    this.getAblum({ page: 1, cateId: 10001 }, res => {
+      this.ablumList = res.data.articleInfo;
+      this.result = res.data.page;
+    });
+  },
+  methods: {
+    func(page) {
+      this.getAblum({ page: page, cateId: 10001 }, res => {
+        this.ablumList = res.data.articleInfo;
+        this.result = res.data.page;
+      });
+    },
+    getAblum(params, callback) {
+      this.$http("getArticle", { params: params }, res => {
+        if (res.data.code === 200) {
+          callback(res.data);
+        }
+      });
+    },
+    toDetail(id){
+      this.$router.push({
+        path: "/detail",
+        query: { id:id }
+      });
     }
   },
-  components:{
-    PageHead
+  components: {
+    PageHead,
+    Pagination
   }
 };
 </script>

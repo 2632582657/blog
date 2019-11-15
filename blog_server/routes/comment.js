@@ -54,7 +54,7 @@ getComment = (req, res) => {
                     data: {
                         commentList: result,
                         page: {
-                            currentPage: page,
+                            currentPage: parseInt(page),
                             pageCount: Math.ceil(resultCount[0].count / 10)
                         }
                     }
@@ -114,7 +114,7 @@ getComment = (req, res) => {
                         data: {
                             commentList: result,
                             page: {
-                                currentPage: page,
+                                currentPage: parseInt(page),
                                 pageCount: Math.ceil(resultCount[0].count / 10)
                             }
                         }

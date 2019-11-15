@@ -19,7 +19,7 @@ export default {
         { icon: "fa-folder", title: "管理文章", path: "/admin/arm" },
         { icon: "fa-group ", title: "用户管理", path: "/admin/crm" },
         { icon: "fa-comments", title: "评论管理", path: "/admin/cm" },
-        { icon: "fa-comments", title: "友链管理", path: "/admin/frm" }
+        { icon: "fa-link", title: "友链管理", path: "/admin/frm" }
       ],
       navActive:0
     };

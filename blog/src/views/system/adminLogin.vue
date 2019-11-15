@@ -21,11 +21,19 @@
               class="admin_input mb-3"
               v-model="passWord"
             />
+            <div class="form-group form-check text-left">
+              <input type="checkbox"  class="form-check-input" v-model="remember" id="exampleCheck1"  />
+              <label class="form-check-label small text-secondary" for="exampleCheck1">记住密码</label>
+            </div>
             <button class="btn btn-info" @click="submit">验证</button>
           </div>
         </div>
       </div>
     </div>
+    <span class="to_index">
+      <i class="fa fa-mail-reply text-warning"></i>
+      返回首页
+    </span>
   </div>
 </template>
 
@@ -35,25 +43,39 @@ export default {
   data() {
     return {
       userName: "",
-      passWord: ""
+      passWord: "",
+      remember:false
     };
   },
   created() {},
   methods: {
     submit() {
-      if (this.userName !== "" && this.passWord !== "") {
-        this.$http('adminLogin',{
+      if (this.userName === "") {
+        this.$toast("请输入用户名");
+        return;
+      }
+      if (this.passWord === "") {
+        this.$toast("请输入密码");
+        return;
+      }
+      this.$http(
+        "adminLogin",
+        {
           method: "post",
           data: {
             userName: this.userName,
             passWord: this.passWord
           }
-        },(res)=>{
-          if(res.data.code===200){
-            this.$router.push({path:"/admin/system"})
+        },
+        res => {
+          if (res.data.code === 200) {
+            this.$router.push({ path: "/admin/system" });
+          } else {
+            this.$toast(res.data.message);
+            return;
           }
-        })
-      }
+        }
+      );
     }
   }
 };
@@ -65,6 +87,7 @@ export default {
   height: 100vh;
   background: url("../../assets/images/1000048.jpg") no-repeat center;
   background-size: cover;
+  position: relative;
   .admin_tip {
     color: #fff;
     font-size: 24px;
@@ -78,6 +101,13 @@ export default {
     font-size: 12px;
     outline: none;
     line-height: 26px;
+  }
+  .to_index {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    color: #fff;
+    cursor: pointer;
   }
 }
 </style>

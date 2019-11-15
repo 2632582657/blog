@@ -7,7 +7,7 @@
 <script>
 import AdminSide from "../system/adminSide";
 export default {
-  name: "cm", //评论管理
+  name: "cm",
   components: {
     AdminSide
   }
