@@ -25,7 +25,7 @@ Router.prototype.push = function push(location) {
 
 Vue.use(Router)
 
-export default new Router({
+const router= new Router({
   mode: 'history',
   routes: [
     {
@@ -84,13 +84,18 @@ export default new Router({
       name:"admin",
       path:"/admin",
       component:Admin,
+      meta:{
+        showHeader:true,
+        auth:true
+      },
       children:[
         {
           name:"system",
           path:"system",
           component:System,
           meta:{
-            showHeader:true
+            showHeader:true,
+            auth:true
           }
         },
         {
@@ -98,7 +103,8 @@ export default new Router({
           path:"release",
           component:Release,
           meta:{
-            showHeader:true
+            showHeader:true,
+            auth:true
           }
         },
         {
@@ -106,7 +112,8 @@ export default new Router({
           path:"crm",
           component:Crm,
           meta:{
-            showHeader:true
+            showHeader:true,
+            auth:true
           }
         },
         {
@@ -114,7 +121,8 @@ export default new Router({
           path:"arm",
           component:Arm,
           meta:{
-            showHeader:true
+            showHeader:true,
+            auth:true
           }
         },
         {
@@ -122,7 +130,8 @@ export default new Router({
           path:"edit",
           component:Edit,
           meta:{
-            showHeader:true
+            showHeader:true,
+            auth:true
           },
         },
         {
@@ -130,7 +139,8 @@ export default new Router({
           path:"cm",
           component:Cm,
           meta:{
-            showHeader:true
+            showHeader:true,
+            auth:true
           }
         },
         {
@@ -138,11 +148,26 @@ export default new Router({
           path:"frm",
           component:Frm,
           meta:{
-            showHeader:true
+            showHeader:true,
+            auth:true
           }
         }
       ]
     }
-    
-  ]
+  ],
+  
 })
+router.beforeEach((to,from,next)=>{
+  if(to.meta.auth){
+    if(localStorage.getItem('user')){
+      next()
+    }else{
+      alert('需要登录才能进入哦~')
+      next({path:'/adminLogin'})   
+    }
+  }else{
+    next()
+  }
+})
+
+export default router

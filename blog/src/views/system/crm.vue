@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row mb-3">
-      <div class="col-12 col-md-4 px-2 mb-3">
+      <div class="col-12 col-md-4 px-2 mb-2">
         <input
           type="text"
           maxlength="15"
@@ -76,7 +76,7 @@
         <span class="fa fa-warning"></span> 暂无结果
       </div>
     </div>
-    <Pagination :control={center:1} v-if="userList.length!==0" :result="result" @func="func" />
+    <Pagination :control={center:1} v-if="userList&&userList.length!==0" :result="result" @func="func" />
     <div
       class="modal fade"
       id="updateBox"
@@ -152,7 +152,7 @@ export default {
   name: "crm", //客户管理
   data() {
     return {
-      result: { currentPage: 1, pageCount: 15 },
+      result: {},
       userList: [],
       userInfo: {
         name: "",

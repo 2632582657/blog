@@ -1,5 +1,5 @@
-import axios from 'axios'
-import $ from 'jquery'
+import axios from 'axios';
+import $ from 'jquery';
 let util = {
     install: Vue => {
         Vue.prototype.ABOUT_URL='http://127.0.0.1:81/images/about_img/about_';

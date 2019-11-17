@@ -1,5 +1,5 @@
 <template>
-  <nav aria-label="Page navigation example " class="mt-3">
+  <nav v-if="result.pageCount>1" aria-label="Page navigation example " class="mt-3">
     <ul :class="'pagination  '+(control.sm ? 'pagination-sm ':' ')+(control.center? 'justify-content-center' :'justify-content-end') ">
       <li v-show="result.pageCount!==0" :class="'page-item '+(result.currentPage===1?'disabled':'')" @click="handlePageClick(result.currentPage-1)">
         <a class="page-link text-info" href="#">&lt;</a>

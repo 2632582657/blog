@@ -110,8 +110,11 @@ router.put('/updateFlinkStatus/:flinkId(\\d+)',(req,res)=>{
 router.post('/addFlink',(req,res)=>{
   flink.addFlink(req,res)
 })
-//首页请求
+//其他请求
 router.get('/getAllCount',(req,res)=>{
   common.getAllCount(req,res)
+})
+router.get('/getUp',(req,res)=>{
+  common.getUpRate(req,res)
 })
 module.exports = router;

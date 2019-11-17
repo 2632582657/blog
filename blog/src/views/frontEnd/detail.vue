@@ -53,9 +53,11 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body p-0 p-2 d-flex justify-content-around">
-            <img src="../../assets/images/zhifubao_code.jpg" width="200">
-            <img src="../../assets/images/weixin_code.png" width="200">
+          <div class="modal-body  d-flex justify-content-around">
+            <div class="row">
+              <img src="../../assets/images/zhifubao_code.jpg" class="col-6">
+              <img src="../../assets/images/weixin_code.png" class="col-6">
+            </div>
           </div>
         </div>
       </div>
@@ -83,6 +85,7 @@ export default {
       this.zan=true
     }
     this.getArticle(this.id, res => {
+      console.log(res)
       this.article = res.data;
     });
   },
@@ -161,10 +164,7 @@ export default {
   .article_content {
     font: 14px 宋体, arial narrow, HELVETICA !important;
     line-height: 1.5;
-  }
-  p {
-    line-height: 24px !important;
-    color: red !important;
+    // overflow-x: scroll;
   }
   .article_handle {
     border-top: 1px solid #dddcdb;

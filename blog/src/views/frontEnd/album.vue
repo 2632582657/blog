@@ -1,8 +1,8 @@
 <template>
   <div id="blog_album" class="container p-0 pt-xl-3">
     <PageHead :componentName="componentName"></PageHead>
-    <div class="row album_body m-0 pt-xl-3 pt-lg-3 pt-md-3 pt-3 mb-5 px-3 border-0">
-      <div>
+    <div class="row album_body m-0 pt-xl-3 pt-lg-3 pt-md-3 pt-3 mb-5 px-3 border-0" :style="ablumList && ablumList.length===0?'min-height:50vh' :''">
+      <div :class="ablumList && ablumList.length===0? 'w-100' : ''">
         <div
           v-for="(item,i) in ablumList"
           :key="i"
@@ -34,9 +34,24 @@
             </div>
           </div>
         </div>
+        <div v-if="ablumList && ablumList.length===0" class="w-100 mb-3">
+          <div class="card" style="opacity:.9">
+            <div class="card-body text-info">
+              <i class="fa fa-calendar-o"></i>
+              暂无文章
+            </div>
+          </div>
+        </div>
       </div>
-      <Pagination class="w-100" :control={center:1,sm:1} :result="result" @func="func" v-if="ablumList.length!==0 && ablumList.length>10" />
-    </div>    
+
+      <Pagination
+        class="w-100"
+        :control="{center:1,sm:1}"
+        :result="result"
+        @func="func"
+        v-if="ablumList&&ablumList.length!==0"
+      />
+    </div>
   </div>
 </template>
 
@@ -75,10 +90,10 @@ export default {
         }
       });
     },
-    toDetail(id){
+    toDetail(id) {
       this.$router.push({
         path: "/detail",
-        query: { id:id }
+        query: { id: id }
       });
     }
   },

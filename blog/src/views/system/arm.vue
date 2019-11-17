@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row mb-3">
-      <div class="col-12 col-md-6 px-2 mb-3">
+      <div class="col-12 col-md-6 px-2 mb-2">
         <input
           type="text"
           minlength="5"
@@ -114,7 +114,7 @@
         </li>
       </ul>
     </nav>-->
-    <Pagination :control={center:1} :result="result" @func="func" v-if="articleList.length!==0" />
+    <Pagination :control={center:1} :result="result" @func="func" v-if="articleList&&articleList.length!==0" />
   </div>
 </template>
 

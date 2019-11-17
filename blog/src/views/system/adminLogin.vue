@@ -12,14 +12,14 @@
               name="userName"
               placeholder="请输入用户名"
               class="admin_input mb-3"
-              v-model="userName"
+              v-model="admin.userName"
             />
             <input
               type="password"
               name="passWord"
               placeholder="请输入密码"
               class="admin_input mb-3"
-              v-model="passWord"
+              v-model="admin.passWord"
             />
             <div class="form-group form-check text-left">
               <input type="checkbox"  class="form-check-input" v-model="remember" id="exampleCheck1"  />
@@ -30,7 +30,7 @@
         </div>
       </div>
     </div>
-    <span class="to_index">
+    <span class="to_index" title="点我返回首页哦~" @click="toIndex()">
       <i class="fa fa-mail-reply text-warning"></i>
       返回首页
     </span>
@@ -42,19 +42,28 @@ export default {
   name: "adminLogin",
   data() {
     return {
-      userName: "",
-      passWord: "",
+      admin:{
+        userName: "",
+        passWord: "",
+      },
       remember:false
     };
   },
-  created() {},
+  created() {
+    if(localStorage.getItem("rememberLogin")){
+      this.admin=JSON.parse(localStorage.getItem("rememberLogin"))
+    }
+    if(localStorage.getItem('remember')){
+      this.remember=true;
+    }
+  },
   methods: {
     submit() {
-      if (this.userName === "") {
+      if (this.admin.userName === "") {
         this.$toast("请输入用户名");
         return;
       }
-      if (this.passWord === "") {
+      if (this.admin.passWord === "") {
         this.$toast("请输入密码");
         return;
       }
@@ -62,13 +71,16 @@ export default {
         "adminLogin",
         {
           method: "post",
-          data: {
-            userName: this.userName,
-            passWord: this.passWord
-          }
+          data: this.admin
         },
         res => {
           if (res.data.code === 200) {
+            localStorage.setItem('user',JSON.stringify(res.data.data));
+            if(this.remember){
+              localStorage.setItem("rememberLogin",JSON.stringify(this.admin));
+              localStorage.setItem("remember",JSON.stringify(1));
+            }
+            this.$toast("欢迎站长");
             this.$router.push({ path: "/admin/system" });
           } else {
             this.$toast(res.data.message);
@@ -76,6 +88,9 @@ export default {
           }
         }
       );
+    },
+    toIndex(){
+      this.$router.push({path:'/index'})
     }
   }
 };

@@ -72,6 +72,7 @@ getArticleOfId=(req,res)=>{
             let articleInfo;
             await getArticle(sql,req.params.articleId,(result)=>{
                 articleInfo=result
+                console.log(result)
             })
             await getArticle(sqlHot,[articleInfo[0].hot+1,req.params.articleId],(resultHot)=>{
                 if(articleInfo.length>0){

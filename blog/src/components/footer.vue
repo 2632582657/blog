@@ -3,7 +3,7 @@
         <div class=" row">
           <div class=" col small" style="color:#c5ccd2">
             <div>
-               版权所有 ©2018-2019 <a href="#" class="text-white">时间旅客</a>
+               版权所有 ©2018-2019 <span class="text-white cur" title="站长入口" @click="toAdmin()">时间旅客</span>
             </div>
             <div>本博客已萌萌哒运行了天</div>
           </div>
@@ -18,6 +18,11 @@ export default {
   },
   mounted () {
 
+  },
+  methods:{
+    toAdmin(){
+      this.$router.push({path:'/adminLogin'})
+    }
   }
 }
 </script>

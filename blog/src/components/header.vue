@@ -31,7 +31,7 @@
           </div>
       </div>
     </div>
-    <Drawer :menuData="menuLink" :isShowDrawer="isShowDrawer"></Drawer>
+    <Drawer :menuData="menuLink" :isShowDrawer="isShowDrawer" @fn=fn></Drawer>
   </div>
   
 </template>
@@ -49,9 +49,12 @@ export default {
         {icon:"fa-users",title:"友链",url:"/friendChain"},
         {icon:"fa-graduation-cap",title:"关于",url:"/about"},
       ],
-      isShowDrawer:false,
       keyword:''
     }
+  },
+  props:{
+    isShowDrawer:Boolean,
+    showHeader:Function,
   },
    components:{
     Drawer
@@ -61,7 +64,8 @@ export default {
   },
   methods:{
     showDrawer(){
-      this.isShowDrawer=!this.isShowDrawer
+      // this.isShowDrawer=!this.isShowDrawer
+      this.$emit('showHeader')
     },
     search(){
       if(!this.keyword){
@@ -69,6 +73,9 @@ export default {
       }else{
         this.$router.push({path:'/index',query:{keyword:this.keyword}})
       }
+    },
+    fn(bool){
+      this.$emit('showHeader',bool)
     }
   }
 }
@@ -117,7 +124,7 @@ export default {
     background: #fff;
     cursor: pointer;
     transition: all .3s ease;
-    z-index: 999;
+    z-index: 1051;
     opacity: 0.9;
     &:hover{
       opacity: 1;

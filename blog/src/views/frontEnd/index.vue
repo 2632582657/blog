@@ -37,7 +37,7 @@
             </div>
           </div>
         </div>
-        <Pagination class="w-100" :control={center:1,sm:1} :result="result" @func="func" v-if="articleList.length!==0 && articleList.length>10"  />
+        <Pagination class="w-100" :control={center:1,sm:1} :result="result" @func="func" v-if="articleList&&articleList.length!==0"  />
       </div>
     </div>
   </div>
@@ -54,7 +54,7 @@ export default {
       hotList:[],
       activeIndex:0,
       result:{},
-      // keyword:this.$route.query.keyword
+      keyword:this.$route.query.keyword
     }
   },
   created(){
@@ -67,11 +67,15 @@ export default {
         this.hotList=res.data.data
       }
     })
+    if(this.keyword){
+        this.$http('getArticle',{params:{search:1,title:this.keyword}},(res)=>{
+          if(res.data.code===200){
+            this.articleList=res.data.data.articleInfo
+          } 
+        })
+      }
   },
   watch:{
-    keyword(val,newVal){
-      console.log(val,newVal,111)
-    },
     $route(route){
       console.log(route)
       if(route.query.keyword){

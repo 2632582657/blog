@@ -14,9 +14,9 @@
       </div>
       <ul class="m_menu">
           <li v-for="(item,i) in menuData" :key="i">
-            <a :href="item.url">
+            <router-link :to="item.url" >
               <span><i :class="[{fa:true},item.icon]"></i> {{item.title}}</span>
-            </a>
+            </router-link>
           </li>
       </ul>
       <!-- <p class="record">© 2019 时间旅客</p> -->
@@ -30,13 +30,16 @@ export default {
 
         }
     },
-    props:{menuData:Array,isShowDrawer:Boolean},
+    props:{menuData:Array,isShowDrawer:Boolean,fn:Function},
     mounted(){
         
     },
     watch:{
         isShowDrawer(value){
             console.log(value)
+        },
+        $route(route){
+            this.$emit('fn',false)
         }
     }
 }
@@ -58,7 +61,7 @@ export default {
         overflow-x: hidden;
         overflow-y: auto;
         transition: all 0.5s ease;
-        z-index: 999;
+        z-index: 1051;
         .my_avatar{
             width: 100%;
             max-width: 100%;

@@ -6,12 +6,12 @@
         <span class="font-weight-bold  d-none d-sm-inline-block d-md-inline-block d-lg-inline-block d-xl-inline-block">时间旅客后台管理系统</span>
       </div>
       <div class="small pr-2 pr-sm-3 pr-md-4 pr-lg-4 pr-xl-4">
-        <span class="mr-2">欢迎站长：时间旅客</span>
-        <span @click="get" class="cur">退出</span>
+        <span class="mr-2 cur" v-text="'欢迎站长：'+user.name"></span>
+        <span @click="logout()" class="cur">退出</span>
       </div>
     </div>
     <AdminSide @func=func></AdminSide>
-    <div class="row mx-0 py-0 bg-white h-100  adm_m">
+    <div class="row mx-0 py-0 bg-white h-100 adm_m">
       <div class="col-12 p-0">
         <div class="show_title w-100 text-left font-weight-bold px-3 mb-3 shadow" v-text="title"></div>
          <router-view class="px-3"></router-view>
@@ -26,12 +26,14 @@ export default {
   name: "adminIndex",
   data(){
     return{
-      title:'首页'
+      title:'首页',
+      user:JSON.parse(localStorage.getItem('user'))
     }
   },
   methods:{
-    get(){
-      
+    logout(){
+      localStorage.removeItem('user')
+      this.$router.push({path:'/adminLogin'})
     },
     func(title){
       this.title=title
@@ -67,7 +69,7 @@ export default {
     left: 0;
   }
   .adm_m{
-    margin-top: 42px;
+    padding-top: 42px !important;
   }
   .show_title{
     height: 40px;
