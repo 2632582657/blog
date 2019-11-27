@@ -69,7 +69,7 @@
             >
               <th scope="row" v-text="item.id"></th>
               <td class="elli" v-text="item.title"></td>
-              <td v-text="cateTurn(item.category_id)"></td>
+              <td v-text="item.category_name"></td>
               <td class="small" v-text="item.create_time"></td>
               <td v-text="item.hot"></td>
               <td v-text="item.support"></td>
@@ -89,31 +89,6 @@
         </div>
       </div>
     </div>
-    <!-- <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-            <span class="sr-only">Previous</span>
-          </a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">1</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">3</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-            <span class="sr-only">Next</span>
-          </a>
-        </li>
-      </ul>
-    </nav>-->
     <Pagination :control={center:1} :result="result" @func="func" v-if="articleList&&articleList.length!==0" />
   </div>
 </template>
@@ -153,15 +128,15 @@ export default {
     });
   },
   methods: {
-    cateTurn(id){
-      let cateName;
-      this.cate.forEach((item,i)=>{
-        if(id===item.id){
-          cateName=item.name
-        }
-      })
-      return cateName;
-    },
+    // cateTurn(id){
+    //   let cateName;
+    //   this.cate.forEach((item,i)=>{
+    //     if(id===item.id){
+    //       cateName=item.name
+    //     }
+    //   })
+    //   return cateName;
+    // },
     //分页器触发这个方法 每次点击都会请求当前页的数据 根据下面保存的当前分类下标获取当前分类id
     func(page) {
       // this.result.current_page = page;
@@ -194,10 +169,8 @@ export default {
       if (this.articleList[i].category_id) {
         if (confirm("确定要删除吗")) {
           this.$http(
-            "deleteArticle?adm=1",
-            { params: { articleId: this.articleList[i].id } },
+            `deleteArticle/${this.articleList[i].id}?adm=1`,
             res => {
-              console.log(res);
               if (res.data.code === 200) {
                 this.$toast("删除成功");
                 this.articleList.splice(i, 1);

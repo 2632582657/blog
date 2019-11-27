@@ -2,7 +2,6 @@ var md5 = require('md5');
 var query = require('../pool.js');
 
 adminLogin = (req, res) => {
-    // console.log(md5(md5(req.body.passWord)))
     if (!req.body.userName && !req.body.passWord) {
         res.status(403).json({
             code: 403,

@@ -5,7 +5,7 @@ const path=require('path');
 const fs = require('fs');
 
 release = (req, res) => {
-    // util.needLogin()
+    util.needLogin(req,res);
     var data = req.body;
     if (JSON.stringify(data) == "{}") {
         res.status(500).json({
@@ -31,6 +31,10 @@ release = (req, res) => {
     })
 }
 getArticleOfId=(req,res)=>{
+    if(req.query.adm){
+        util.needLogin(req,res);
+        return;
+    }
     if(!req.params.articleId){
         res.status(403).json({
             code:403,
@@ -50,7 +54,6 @@ getArticleOfId=(req,res)=>{
             });
         });
     } 
-    // let sqlSupport=`UPDATE sj_article SET support=? WHERE id=?`;
     (async function(){
         try {
             let sql=
@@ -72,7 +75,6 @@ getArticleOfId=(req,res)=>{
             let articleInfo;
             await getArticle(sql,req.params.articleId,(result)=>{
                 articleInfo=result
-                console.log(result)
             })
             await getArticle(sqlHot,[articleInfo[0].hot+1,req.params.articleId],(resultHot)=>{
                 if(articleInfo.length>0){
@@ -96,7 +98,8 @@ getArticleOfId=(req,res)=>{
 }
 getArticleOfCate = (req, res) => {
     if(req.query.adm){
-        // util.needLogin(req,res)
+        util.needLogin(req,res);
+        return;
     }
     let page = req.query.page ? req.query.page : 1;
     if (page < 1) {
@@ -150,7 +153,6 @@ getArticleOfCate = (req, res) => {
                 a.create_time DESC
             LIMIT
                 ?,10`;
-        console.log(arr);
         query(searchCount,arr,(err,result)=>{
             if(err){util.handleError(res,err)}
             query(searchSql,[...arr,(page - 1) * 10],(dErr,dResult)=>{
@@ -235,8 +237,9 @@ getArticleOfCate = (req, res) => {
         }    
     })();
 },
+// todo 改promise的格式
 updateArticleOfId=(req,res)=>{
-    // util.needLogin(req,res);
+    util.needLogin(req,res);
     if(!req.params.articleId){
         res.status(403).json({
             code:403,
@@ -301,7 +304,6 @@ updateArticleOfId=(req,res)=>{
     let sql=`UPDATE sj_article SET ${str} WHERE id=?`;
     Promise.all([seleCover(sql,paramsArr)])
     .then(result=>{
-        console.log(result[0].affectedRows)
         if(result[0].affectedRows>0){
             res.json({
                 code:200,
@@ -316,33 +318,64 @@ updateArticleOfId=(req,res)=>{
     })
 
 }
-deleteArticleOfId=(req,res)=>{
+deleteArticleOfId=(req,res)=>{1 
     if(req.query.adm){
-        // util.needLogin(req,res)
+        util.needLogin(req,res);
+        return;
     }
-    if(!req.query.articleId){
+    if(req.params.articleId===10001 || req.params.articleId===10002){
         res.status(403).json({
             code:403,
-            message:'article id does not exist.'
+            message:'此类文章不可删除'
         })
     }
-    let sql="DELETE FROM sj_article WHERE id=?"
-    query(sql,req.query.articleId,(err,result)=>{
-        if(err){
-            util.handleError(res,err)
-        }
-        if(result.affectedRows>0){
-            res.json({
-                code:200,
-                message:'success'
+    function deleteArticle(sql,params,callback){
+        return new Promise(function(resolve,reject){
+            query(sql,params,(err,result)=>{
+                if(err){
+                    util.handleError(res,err)
+                }
+                callback(result)
+                resolve()
             })
-        }else{
-            res.status(500).json({
-                code:500,
-                message:'delete error'
+        })
+    }
+    let sqlCover=`SELECT category_id, cover FROM sj_article WHERE id=? `;
+    let sql="DELETE FROM sj_article WHERE id=?";
+    (async function(){
+        try {         
+            await deleteArticle(sqlCover,req.params.articleId,(coverResult)=>{              
+                if(coverResult.length===0){
+                    res.json({
+                        code:500,
+                        message:'查询不到删除的内容'
+                    })
+                    return;
+                }else{
+                    let url=path.join(__dirname, `../public/images/${path.basename(coverResult[0].cover)}`);
+                    deleteArticle(sql,req.params.articleId,(deleteResult)=>{    
+                        if(deleteResult.affectedRows>0){
+                            res.json({
+                                code:200,
+                                message:'success'
+                            })
+                            fs.unlinkSync(url);
+                        }else{
+                            res.status(500).json({
+                                code:500,
+                                message:'delete error'
+                            })
+                        }          
+                    })
+                }
             })
+            
+        } catch (error) {
+            if(error){
+                console.log(error)
+            }
         }
-    })
+    })()
 }
 hot=(req,res)=>{
     let sql=`SELECT id, title, category_id, cover FROM sj_article WHERE category_id IS NOT NULL ORDER BY hot DESC LIMIT 5`;
@@ -356,7 +389,6 @@ hot=(req,res)=>{
     })
 }
 zan=(req,res)=>{
-    console.log(req.query)
     if(!req.params.articleId){
         res.status(403).json({
             code:403,

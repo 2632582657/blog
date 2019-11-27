@@ -1,23 +1,24 @@
 <template>
-  <div id="app" class>
-    <img
-      @click="topback"
-      v-show="scrolltop>1000"
-      src="./assets/images/gotop.png"
-      width="40"
-      height="40"
-      class="topback cur"
-      alt
-    />
+  <div id="app" :style="`background-image: url(${BG_URL+bg_index}.jpg)`">
+    <div v-if="!this.$route.meta.showHeader" class="switchTheme cur text-white" @click="switchBG()">
+      <i class=" fa fa-snowflake-o mr-1"></i>
+      <span>切换背景</span>
+    </div>
+    <!-- 返回顶部图标 -->
+    <img @click="topback" v-show="scrolltop>1000" src="./assets/images/gotop.png" width="40" height="40" class="topback cur" />
     <Header v-if="!this.$route.meta.showHeader"  :isShowDrawer=isShowDrawer @showHeader=showHeader></Header>
+    <!-- 遮罩 -->
     <div class="mask" v-if="isShowDrawer" @click="hideMask()">
     </div>
+
     <transition name="component-fade" mode="out-in">
-        <router-view :class="!this.$route.meta.showHeader? 'pt-5 pt-sm-5 pt-md-0 pt-lg-0 pt-xl-0' : ''"/>
-      </transition>
+      <router-view :class="!this.$route.meta.showHeader? 'pt-5 pt-sm-5 pt-md-0 pt-lg-0 pt-xl-0' : ''"/>
+    </transition>
+
     <Footer v-if="!this.$route.meta.showHeader" ></Footer>
     <div v-if="!this.$route.meta.showHeader" style="width:100%;height:128px;z-index:-1"></div>
-    <aplayer v-if="!this.$route.meta.showHeader" :audio="audio" :lrcType="3" :listFolded='true' fixed />
+    <!-- 音乐播放器 -->
+    <aplayer class=" text-left" v-if="!this.$route.meta.showHeader" :audio="audio" :lrcType="3" :listFolded='true' fixed />
   </div>
 </template>
 
@@ -29,14 +30,7 @@ export default {
     return {
       scrolltop: 0,
       isShowDrawer:false,
-       audio: [
-        // {
-        //   name: '东西（Cover：林俊呈）',
-        //   artist: '纳豆',
-        //   url: 'https://cdn.moefe.org/music/mp3/thing.mp3',
-        //   cover: 'https://p1.music.126.net/5zs7IvmLv7KahY3BFzUmrg==/109951163635241613.jpg?param=300y300', // prettier-ignore
-        //   lrc: 'https://cdn.moefe.org/music/lrc/thing.lrc',
-        // },
+      audio: [
         // {
         //   name: '东西（Cover：林俊呈）',
         //   artist: '纳豆',
@@ -44,24 +38,20 @@ export default {
         //   cover: 'https://p1.music.126.net/5zs7IvmLv7KahY3BFzUmrg==/109951163635241613.jpg?param=300y300', // prettier-ignore
         //   lrc: 'https://cdn.moefe.org/music/lrc/thing.lrc',
         // }
-       ]
+      ],
+      bg_index:1
     };
   },
   created() {
     this.setScrollLisener();
     this.setRoute(this.$route.path);
+    this.$http('getAudio',(res)=>{
+      if(res.data.code===200){
+        this.audio=res.data.data
+      }
+    })
   },
   mounted() {
-    // let radioPlayer=this.$('.aplayer-body');
-    // let radioBtn=this.$('.aplayer-miniswitcher');
-    // radioPlayer.css({'left':'-66px','transition' :' all .3s ease'});
-    // console.log(radioBtn)
-    // radioBtn.mouseenter(function(){
-    //   radioPlayer.css({'left':'0'});
-    // })
-    // radioPlayer.mouseleave(function(){
-    //    radioPlayer.css({'left':'-66px'});
-    // })
   },
   watch:{
     $route(route){
@@ -69,6 +59,12 @@ export default {
     }
   },
   methods: {
+    switchBG(){
+      this.bg_index+=1
+      if (this.bg_index > 10) {
+        this.bg_index = 1;
+      }
+    },
     hideMask(){
       this.isShowDrawer=false
     },
@@ -115,14 +111,23 @@ export default {
   margin: 0 auto;
   position: relative;
   min-height: 100%;
-  background: rgba(36, 45, 211, 0.3) url('http://127.0.0.1:81/images/about_img/about_12.jpg') no-repeat center center fixed;
+  background-color: rgba(36, 45, 211, 0.3);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
   background-size:cover;
   .topback {
     position: fixed;
     bottom: 50px;
-    right: 50px;
+    right: 20px;
     z-index: 999;
     transition: all 0.8s;
+  }
+  .switchTheme{
+    position: fixed;
+    bottom: 0px;
+    right: 15px;
+    z-index: 999;
   }
 }
 .component-fade-enter-active, .component-fade-leave-active {

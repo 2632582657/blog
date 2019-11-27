@@ -81,6 +81,12 @@ a:visited {text-decoration: none !important}
     -moz-border-radius: 2em;
     border-radius: 2em
 }
+
+.form-control:focus {
+	box-shadow: none !important;
+	border-color: #0099cc !important;
+  }
+
 .cur{cursor: pointer;}
 
 .f12{

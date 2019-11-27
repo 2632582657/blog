@@ -1,22 +1,39 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from './views/frontEnd/index.vue'
-import Album from './views/frontEnd/album.vue'
-import Study from './views/frontEnd/study.vue'
-import Life from './views/frontEnd/life.vue'
-import FriendChain from './views/frontEnd/friendChain.vue'
-import About from './views/frontEnd/about.vue'
-import Detail from './views/frontEnd/detail.vue'
+// import Index from './views/frontEnd/index.vue'
+// import Album from './views/frontEnd/album.vue'
+// import Study from './views/frontEnd/study.vue'
+// import Life from './views/frontEnd/life.vue'
+// import FriendChain from './views/frontEnd/friendChain.vue'
+// import About from './views/frontEnd/about.vue'
+// import Detail from './views/frontEnd/detail.vue'
+// import AdminLogin from "./views/system/adminLogin.vue"
+// import Admin from "./views/system/admin.vue"
+// import System from "./views/system/system"
+// import Release from "./views/system/release.vue"
+// import Crm from "./views/system/crm.vue"
+// import Arm from "./views/system/arm.vue"
+// import Edit from './views/system/edit.vue'
+// import Cm from "./views/system/cm.vue"
+// import Frm from "./views/system/frm.vue"
+const Index =()=>import('./views/frontEnd/index.vue')
+const Album =()=>import('./views/frontEnd/album.vue')
+const Study =()=>import('./views/frontEnd/study.vue')
+const Life =()=>import('./views/frontEnd/life.vue')
+const FriendChain =()=>import('./views/frontEnd/friendChain.vue')
+const About =()=>import('./views/frontEnd/about.vue')
+const Detail =()=>import('./views/frontEnd/detail.vue')
 // 后台管理
-import AdminLogin from "./views/system/adminLogin.vue"
-import Admin from "./views/system/admin.vue"
-import System from "./views/system/system"
-import Release from "./views/system/release.vue"
-import Crm from "./views/system/crm.vue"
-import Arm from "./views/system/arm.vue"
-import Edit from './views/system/edit.vue'
-import Cm from "./views/system/cm.vue"
-import Frm from "./views/system/frm.vue"
+const AdminLogin =()=>import("./views/system/adminLogin.vue");
+const Admin =()=>import("./views/system/admin.vue");
+const System =()=>import("./views/system/system");
+const Release =()=>import("./views/system/release.vue");
+const Crm =()=>import("./views/system/crm.vue");
+const Arm =()=>import("./views/system/arm.vue");
+const Edit =()=>import('./views/system/edit.vue');
+const Cm =()=>import("./views/system/cm.vue");
+const Frm =()=>import("./views/system/frm.vue");
+const Audio =()=>import("./views/system/audio.vue");
 
 const routerPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -147,6 +164,15 @@ const router= new Router({
           name:"frm",
           path:"frm",
           component:Frm,
+          meta:{
+            showHeader:true,
+            auth:true
+          }
+        },
+        {
+          name:"audio",
+          path:"audio",
+          component:Audio,
           meta:{
             showHeader:true,
             auth:true

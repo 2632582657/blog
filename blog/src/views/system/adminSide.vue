@@ -19,7 +19,8 @@ export default {
         { icon: "fa-folder", title: "管理文章", path: "/admin/arm" },
         { icon: "fa-group ", title: "用户管理", path: "/admin/crm" },
         { icon: "fa-comments", title: "评论管理", path: "/admin/cm" },
-        { icon: "fa-link", title: "友链管理", path: "/admin/frm" }
+        { icon: "fa-link", title: "友链管理", path: "/admin/frm" },
+        { icon: "fa-music", title: "音乐管理", path: "/admin/audio" },
       ],
       navActive:0
     };
@@ -29,6 +30,7 @@ export default {
     this.adminMenu.forEach((item,i)=>{
       if(item.path===this.$route.path){
         this.navActive=i
+        this.$emit('func',this.adminMenu[i].title)
       }
     })
   },

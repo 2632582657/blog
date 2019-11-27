@@ -2,7 +2,7 @@ var query = require('../pool.js');
 var util = require('../utils/util');
 
 getFlink = (req, res) => {
-    // if(req.query.adm){util.needLogin(req,res)}
+    if(req.query.adm){util.needLogin(req,res)}
     let page = req.query.page ? req.query.page : 1;
     if (page < 1) {
         res.status(403).json({
@@ -65,7 +65,6 @@ getFlink = (req, res) => {
                         `
                 let pageObj;
                 await getLink(searchCount, arr, (resultCount) => {
-                    console.log(resultCount)
                     pageObj = resultCount
                 })
                 await getLink(sqlSearch, [...arr, (page - 1) * 10], (result) => {
@@ -101,7 +100,6 @@ getFlink = (req, res) => {
                 `
                 let pageObj;
                 await getLink(sqlCount, [], (resultCount) => {
-                    console.log(resultCount)
                     pageObj = resultCount
                 })
                 if (req.query.adm) {
@@ -136,7 +134,7 @@ getFlink = (req, res) => {
     })();
 }
 getFlinkOfId = (req, res) => {
-    // if (req.query.adm) { util.needLogin(req, res) }
+    if (req.query.adm) { util.needLogin(req, res) }
     if (!req.params.flinkId) {
         res.status(403).json({
             code: 403,
@@ -155,7 +153,7 @@ getFlinkOfId = (req, res) => {
     })
 } 
 updateFlinkOfId=(req,res)=>{
-    console.log(req.body,req.params)
+    util.needLogin(req, res);
     let str='';
     let paramsArr=[]
     for(let key in req.body){
@@ -167,7 +165,6 @@ updateFlinkOfId=(req,res)=>{
     paramsArr.push(req.params.flinkId);
     query(sql,paramsArr,(err,result)=>{
         if(err){util.handleError(res,err)}
-        console.log(result)
         if(result.affectedRows>0){
             res.json({
                 code:200,
@@ -177,7 +174,7 @@ updateFlinkOfId=(req,res)=>{
     })
 }
 updateStatusOfId=(req,res)=>{
-    console.log(req.body)
+    util.needLogin(req, res);
     if (typeof req.body.status !== 'undefined') {
         let sql = `UPDATE sj_f_link SET  status=? WHERE id=?`;
         query(sql,[req.body.status,req.params.flinkId],(err,result)=>{
@@ -193,7 +190,7 @@ updateStatusOfId=(req,res)=>{
     }
 }
 addFlink=(req,res)=>{
-    console.log(req.body)
+    util.needLogin(req, res);
     if(JSON.stringify(req.body)==='{}'){
         res.status(403).json({
             code:200,
@@ -209,8 +206,7 @@ addFlink=(req,res)=>{
     )`;
     query(sql,paramsArr,(err,result)=>{
         if(err){util.handleError(res,err)}
-        let date=new Date().toLocaleString();
-        console.log(date)
+        let date=new Date().Format("yyyy-MM-dd hh:mm:ss");
         if(result.affectedRows>0){
             res.json({
                 code:200,

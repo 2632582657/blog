@@ -72,7 +72,7 @@ export default {
     if (sessionStorage.getItem("count")) {
       let data = JSON.parse(sessionStorage.getItem("count"));
       this.count[0].count = data.articleCount;
-      this.count[1].count = data.albumCount;
+      this.count[1].count = data.albumCount || 0;
       this.count[2].count = data.leaveMsgCount;
       this.count[3].count = data.flinkCount;
       this.cateCount = data.cateCount;

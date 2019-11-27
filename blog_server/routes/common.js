@@ -2,7 +2,8 @@ var query = require('../pool.js');
 var util = require('../utils/util');
 getAllCount=(req,res)=>{
     if(req.query.adm){
-        // util.needLogin(req,res);
+        util.needLogin(req,res);
+        return;
     }
     sqlArticleCount=`SELECT COUNT(id) as count FROM sj_article WHERE category_id IS NOT NULL`;
     sqlLeaveMsgCount=`SELECT COUNT(id) as count FROM sj_comment WHERE article_id=10001`;
@@ -53,8 +54,7 @@ getAllCount=(req,res)=>{
     })()
 }
 getUpRate=(req,res)=>{
-    // util.needLogin(req,res)
-
+    util.needLogin(req,res);
     let dateList = [...Array(7).keys()].map(days => {
         let t = new Date(Date.now() - 86400000 * days);
         let str = `${t.getFullYear()}-${t.getMonth() + 1}-${t.getDate()}`;

@@ -4,9 +4,13 @@ let util = {
     install: Vue => {
         Vue.prototype.ABOUT_URL='http://127.0.0.1:81/images/about_img/about_';
         Vue.prototype.AVATAR_URL='http://127.0.0.1:81/images/avatar_img/avatar_';
+        Vue.prototype.BG_URL='http://127.0.0.1:81/images/bg_img/bg_';
         axios.defaults.baseURL = 'http://api.sjlk.com';
+
+
         axios.defaults.withCredentials = true;
         Vue.prototype.$=$;
+        Vue.prototype.$startTime=new Date('2019-11-10').getTime()
         Vue.prototype.$http = function (url, ...args) {
             var optional = [...args]
             var config = {
@@ -49,16 +53,14 @@ let util = {
                 if (error.response) {
                     if (error.response.status === 401) {
                         alert('登录身份失效，需要重新登录');
-                        // localStorage.removeItem('user');
-                        // this.jump('/adm/login');
+                        localStorage.removeItem('user');
+                        this.$router.push({path:'/adminLogin'});
                     }
                     if (error.response.status === 403) {
                         alert(error.response.data.message);
                     }
-                    // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-                    // console.log(error.response.data);
                     console.log(error.response.status,error.response.data.message);
-                    // console.log(error.response.headers);
+                    // alert('发生了未知错误',error.response.status)
                     if (failed) {
                         failed(error);
                     }
@@ -116,6 +118,7 @@ let util = {
             })
         }
         Vue.prototype.$imageChange = function (e, callback) {
+            console.log(e)
             var file = e.target.files[0];
             if (!file) {
                 return;
@@ -128,10 +131,10 @@ let util = {
                 this.$toast("只能上传jpeg,jpg,png格式的图片");
                 return;
             }
-            if (file.size > 1048576) {
-                this.$toast("只能上传1M以内的图片");
-                return;
-            }
+            // if (file.size > 1048576) {
+            //     this.$toast("只能上传1M以内的图片");
+            //     return;
+            // }
             var reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = function (e) {
@@ -139,7 +142,7 @@ let util = {
             };
         }
         Vue.prototype.$toast = function (msg = '默认提示消息') {
-            if (document.querySelector('#b_toast')) {
+            if (document.querySelector('#v_toast')) {
                 return;
             }
             $("body").append(

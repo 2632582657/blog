@@ -10,15 +10,15 @@
         <a href="#" class="sj_card_name d-block mb-3 font-weight-bold">时间旅客</a>
         <div class="row sj_card_content pt-2">
           <div class="col-4">
-            <p class="num text-info" v-text="count.articleCount"></p>
+            <p class="num text-info" v-text="count.articleCount || 0"></p>
             <p class="text text-secondary">文章</p>
           </div>
-          <div class="col-4" @click="toAlbum()">
-            <p class="num text-info" v-text="count.albumCount"></p>
+          <div class="col-4 cur" @click="toAlbum()">
+            <p class="num text-info" v-text="count.albumCount || 0"></p>
             <p class="text text-secondary">相册</p>
           </div>
-          <div class="col-4">
-            <p class="num text-info" v-text="count.leaveMsgCount"></p>
+          <div class="col-4 cur">
+            <p class="num text-info "  @click="toAbout()" v-text="count.leaveMsgCount || 0"></p>
             <p class="text text-secondary">留言</p>
           </div>
         </div>
@@ -97,12 +97,20 @@ export default {
   methods:{
     toAlbum(){
       this.$router.push({path:'/album'})
+    },
+    toAbout(){
+      this.$router.push({path:'/about'})
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+@media screen and (min-width:768px) and (max-width:991px){
+  .sj_card_avatar{
+    left:8px !important;
+  }
+}
 .sj_card,
 .card {
   &:hover .sj_card_name {

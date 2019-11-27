@@ -3,9 +3,9 @@
         <div class=" row">
           <div class=" col small" style="color:#c5ccd2">
             <div>
-               版权所有 ©2018-2019 <span class="text-white cur" title="站长入口" @click="toAdmin()">时间旅客</span>
+               版权所有 ©2019-{{(new Date().getFullYear())+1}} <span class="text-white cur" title="站长入口" @click="toAdmin()">时间旅客</span>
             </div>
-            <div>本博客已萌萌哒运行了天</div>
+            <div v-text="`本博客已萌萌哒运行了${runTime}天`"></div>
           </div>
         </div>
     </div>
@@ -14,7 +14,11 @@
 <script>
 export default {
   data () {
-    return {}
+    return {
+      runTime:Math.floor((new Date().getTime()-this.$startTime)/86400000)
+    }
+  },
+  created(){
   },
   mounted () {
 

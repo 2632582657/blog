@@ -22,9 +22,6 @@
       </div>
       <div class="form-group">
         <label class="d-block">分类</label>
-        <!-- <select id="inputState" class="form-control" required>
-          <option v-for="(item,i) in cate" :key="i" v-text="item"></option>
-        </select>-->
         <div class="form-check form-check-inline" v-for="(item,i) in cate" :key="i">
           <input
             class="form-check-input"

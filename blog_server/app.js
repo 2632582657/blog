@@ -5,7 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
 var cors = require("cors");
-var bodyParser=require('body-parser');
+var env=require('./utils/env')
+// var bodyParser=require('body-parser');
 var md5 = require('md5');
 
 
@@ -13,19 +14,22 @@ var index = require('./routes/index');
 
 var app = express();
 app.use(cors({
-  origin:["http://www.sjlk.com","http://www.sjlk.com:81"],
+  origin:env.cors,
   credentials:true
 }))
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(bodyParser.urlencoded({extended:false}))
 app.use(logger('dev'));
 app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ limit: '50mb',extended: false }));
+app.use(express.urlencoded({ limit: '50mb', extended: false }));
+
 app.use(cookieParser());
 app.use(session({
   secret:"sjlk",
+  cookie:{
+    maxAge:259200000
+  },
   resave:false,
   saveUninitialized:true
 }))

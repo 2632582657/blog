@@ -46,7 +46,6 @@
             <th scope="col">昵称</th>
             <th scope="col">邮箱</th>
             <th scope="col">头像</th>
-            <th scope="col">网址</th>
             <th scope="col">记录时间</th>
             <th scope="col">状态</th>
             <th scope="col">修改</th>
@@ -58,7 +57,6 @@
             <td v-text="item.name"></td>
             <td v-text="item.email"></td>
             <td v-text="item.avatar"></td>
-            <td v-text="item.address?item.address:'暂无'"></td>
             <td v-text="item.create_time"></td>
             <td :class="item.status?'text-success':'text-warning'">{{item.status? '正常':'黑名单'}}</td>
             <td class="d-flex justify-content-center">
@@ -104,15 +102,6 @@
                   v-model="userInfo.name"
                 />
               </div>
-              <div class="form-group col-6">
-                <label for="message-text" class="col-form-label">网址</label>
-                <input
-                  type="link"
-                  maxlength="64"
-                  class="form-control form-control-sm"
-                  v-model="userInfo.address"
-                />
-              </div>
               <div class="form-group text-left col-6">
                 <label for="recipient-name" class="col-form-label">头像</label>
                 <input
@@ -156,7 +145,6 @@ export default {
       userList: [],
       userInfo: {
         name: "",
-        address: "",
         avatar: 0,
         status: 0
       },

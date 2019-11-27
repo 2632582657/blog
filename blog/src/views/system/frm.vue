@@ -223,7 +223,7 @@ export default {
       if (this.isSearch) {
         this.search(page);
       } else {
-        this.getFlink(page, res => {
+        this.getFlink({page:page}, res => {
           this.flinkList = res.data.flinkList;
           this.result = res.data.page;
           this.isSearch = false;
@@ -356,7 +356,6 @@ export default {
         this.$toast("介绍不符合规范");
         return;
       }
-      console.log(this.isSubmit);
       let result={...this.userInfo};
       if (this.isSubmit) {
         this.$http("addFlink", { method: "post", data: this.userInfo }, res => {

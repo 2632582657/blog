@@ -1,9 +1,10 @@
 var mysql=require("mysql")
+var env=require('./utils/env')
 var pool=mysql.createPool({
     host:"localhost",
     user:"root",
-    password:"",
-    database:"sjlk",
+    password:env.pwd,
+    database:env.database,
     port:3306,
     connectionLimit:20
 })

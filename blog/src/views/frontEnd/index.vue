@@ -1,12 +1,12 @@
 <template>
   <div id="blog_index"  class=" container mt-0 ">
     <div class="row h-100 pt-2">
-      <div class="col-xl-4 col-lg-4 ">
+      <div class="col-xl-4 col-lg-4 col-md-4">
         <Side></Side>
       </div>
-      <div class="col-xl-8 col-lg-8 ">
+      <div class="col-xl-8 col-lg-8 col-md-8">
         <!-- fixed me  轮播自适应图片 -->
-        <div id="carouselExampleIndicators" :class="'carousel slide carousel-fade ' + (articleList.length!==0 ? 'mb-4' : '')"  data-ride="carousel">
+        <div id="carouselExampleIndicators" :class="'carousel slide carousel-fade ' + (articleList.length!==0 ? 'mb-4' : '')"  data-ride="carousel" data-interval="3000">
           <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" :data-slide-to="i" :class="activeIndex===i?'active':''"  v-for="(item,i) in hotList " :key="i"></li>
           </ol>

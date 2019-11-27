@@ -1,9 +1,9 @@
 var query = require('../pool.js');
 var util = require('../utils/util');
 getUser = (req, res) => {
-  console.log(req.query)
   if (req.query.adm) {
-    // util.needLogin(req,res)
+    util.needLogin(req,res);
+    return;
   }
   let page = req.query.page ? req.query.page : 1;
   if (page < 1) {
@@ -37,12 +37,11 @@ getUser = (req, res) => {
     }
     keyStr = keyStr.slice(3);
     let sqlCount = `SELECT COUNT(id) AS count FROM sj_user WHERE ${keyStr}`
-    let sql = `SELECT id, name, email, address, avatar, date_format(create_time,'%Y-%m-%d %H:%i:%S' ) as create_time, status FROM sj_user WHERE ${keyStr}  GROUP BY id ORDER BY create_time DESC LIMIT ?,10`;
+    let sql = `SELECT id, name, email, avatar, date_format(create_time,'%Y-%m-%d %H:%i:%S' ) as create_time, status FROM sj_user WHERE ${keyStr}  GROUP BY id ORDER BY create_time DESC LIMIT ?,10`;
     query(sqlCount, arr, (err, result) => {
       if (err) { util.handleError(res, err) }
       query(sql, [...arr, (page - 1) * 10], (rErr, rResult) => {
         if (rErr) { util.handleError(res, rErr) }
-        console.log(result, rResult)
         res.json({
           code: 200,
           message: 'success',
@@ -58,7 +57,7 @@ getUser = (req, res) => {
     })
   } else {
     let sqlCount = `SELECT COUNT(id) AS count FROM sj_user`
-    let sql = `SELECT id, name, email, address, avatar, date_format(create_time,'%Y-%m-%d %H:%i:%S' ) as create_time, status FROM sj_user  GROUP BY id ORDER BY create_time DESC  LIMIT ?,10`;
+    let sql = `SELECT id, name, email, avatar, date_format(create_time,'%Y-%m-%d %H:%i:%S' ) as create_time, status FROM sj_user  GROUP BY id ORDER BY create_time DESC  LIMIT ?,10`;
     query(sqlCount, (err, result) => {
       if (err) { util.handleError(res, err) }
       query(sql, (page - 1) * 10, (rErr, rResult) => {
@@ -80,7 +79,7 @@ getUser = (req, res) => {
 
 }
 getUserOfId=(req,res)=>{
-  // if(req.query.adm){util.needLogin(req,res)}
+  if(req.query.adm){util.needLogin(req,res);return}
   if(!req.params.userId){
     res.status(403).json({
       code:403,
@@ -88,7 +87,7 @@ getUserOfId=(req,res)=>{
     })
     return;
   }
-  let sql=`SELECT id, name, email, address, avatar, date_format(create_time,'%Y-%m-%d %H:%i:%S' ) as create_time, status FROM sj_user WHERE id=?`;
+  let sql=`SELECT id, name, email, avatar, date_format(create_time,'%Y-%m-%d %H:%i:%S' ) as create_time, status FROM sj_user WHERE id=?`;
   query(sql,req.params.userId,(err,result)=>{
     if(err){util.handleError(res,err)}
     res.json({
@@ -99,6 +98,7 @@ getUserOfId=(req,res)=>{
   })
 }
 updateUserOfId=(req,res)=>{
+  util.needLogin(req,res);
   let str='';
   let paramsArr=[]
   for(let key in req.body){
@@ -109,7 +109,6 @@ updateUserOfId=(req,res)=>{
   let sql= `UPDATE sj_user SET ${str} WHERE id=?`;
   paramsArr.push(req.params.userId);
   query(sql,paramsArr,(err,result)=>{
-    console.log(result)
     if(err){util.handleError(res,err)}
     res.json({
       code:200,

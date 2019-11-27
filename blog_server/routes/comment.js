@@ -1,9 +1,8 @@
 var query = require('../pool.js');
 var util = require('../utils/util');
 getComment = (req, res) => {
-    console.log(req.query);
     if (req.query.adm) {
-        // util.needLogin(req,res)
+        util.needLogin(req,res);
     }
     let page = req.query.page ? req.query.page : 1;
     if (page < 1) {
@@ -126,7 +125,7 @@ getComment = (req, res) => {
     }
 }
 updateStatus = (req, res) => {
-    // util.needLogin();
+    util.needLogin(req,res);
     if (typeof req.body.status !== 'undefined') {
         let sql = `UPDATE sj_comment SET  status=? WHERE id=?`;
         query(sql, [req.body.status, req.params.commentId], (err, result) => {
@@ -139,7 +138,7 @@ updateStatus = (req, res) => {
     }
 }
 deleteCommentOfId = (req, res) => {
-    // util.needLogin();
+    util.needLogin(req,res);
     let sql = `DELETE FROM sj_comment WHERE id=?`;
     query(sql, req.params.commentId, (err, result) => {
         if (err) { util.handleError(res, err); return; }
@@ -150,7 +149,6 @@ deleteCommentOfId = (req, res) => {
     })
 }
 addComment = (req, res) => {
-    console.log(req.body)
     let reg = /^[0-9a-zA-Z_.-]+[@][0-9a-zA-Z_.-]+([.][a-zA-Z]+){1,2}$/;
     if (!reg.test(req.body.email)) {
         res.status(403).json({
