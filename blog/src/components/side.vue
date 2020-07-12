@@ -32,19 +32,18 @@
         </div>
         <div class="py-2">
           <i class="fa fa-fw fa-weixin text-success mr-2"></i>
-          shi2632582657
+          不便透露
         </div>
         <div class="py-2">
           <i class="fa fa-fw fa-envelope text-warning mr-2"></i>
-          2632582657@qq.com
+          MjYzMjU4MjY1N0BxcS5jb20=(自行base)
         </div>
         <div class="py-2">
           <i class="fa fa-fw fa-github mr-2"></i>
-          https://github.com/2632582657
+          <a href="https://github.com/2632582657" target="_blank">https://github.com/2632582657</a>
         </div>
         <div class="py-2">
-          <i class="fa fa-fw mr-2 fa-commenting text-info"></i>
-          帅比一个
+          <i class="fa fa-fw mr-2 fa-commenting text-info"></i>按时吃饭,按时睡觉,做该做的事,见想见的人
         </div>
       </div>
     </div>

@@ -199,7 +199,6 @@ export default {
           "/getArticle?adm=1",
           { params: {search:1,page: page, ...copy}},
           res => {
-            console.log(res.data.data)
             if(res.data.code===200){
                this.articleList = res.data.data.articleInfo;
                this.result = res.data.data.page;

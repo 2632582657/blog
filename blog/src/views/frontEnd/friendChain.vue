@@ -16,8 +16,9 @@
           <ul class="text-info mx-5">
             <li>名称：时间旅客</li>
             <li>邮箱：MjYzMjU4MjY1N0BxcS5jb20=</li>
-            <li>网址：http://shiqinggang.cn</li>
-            <li>介绍：山野一闲人</li>
+            <li>网址：sjlk.vip</li>
+            <li>头像：https://www.sjlk.vip/images/avatar2.jpg</li>
+            <li>介绍：按时吃饭,按时睡觉,做该做的事,见想见的人。</li>
           </ul>
           <h3 class="link_title text-info">友链条件</h3>
           <ul class="text-info mx-5">
@@ -117,7 +118,8 @@ export default {
           border-radius: 5px;
           border-bottom: 1px solid #dfdfdf;
           .visit_btn {
-            display: block;
+            // display: inline-block;
+            width: 48px;
             padding: 0px 10px;
             font-size: 12px;
             border: 1px solid #dfdfdf;

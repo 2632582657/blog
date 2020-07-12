@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :style="`background-image: url(${BG_URL+bg_index}.jpg)`">
+  <div id="app" :style="`background-image: url(${BG_URL+bg_index}.jpg); ${isShowDrawer? 'height:100vh;overflow:hidden;' : ''}`" >
     <div v-if="!this.$route.meta.showHeader" class="switchTheme cur text-white" @click="switchBG()">
       <i class=" fa fa-snowflake-o mr-1"></i>
       <span>切换背景</span>
@@ -12,7 +12,7 @@
     </div>
 
     <transition name="component-fade" mode="out-in">
-      <router-view :class="!this.$route.meta.showHeader? 'pt-5 pt-sm-5 pt-md-0 pt-lg-0 pt-xl-0' : ''"/>
+      <router-view :class="!this.$route.meta.showHeader? 'app_pt pt-md-0 pt-lg-0 pt-xl-0' : ''"/>
     </transition>
 
     <Footer v-if="!this.$route.meta.showHeader" ></Footer>
@@ -94,6 +94,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media screen and (min-width:576px) and (max-width:767px){
+  .app_pt{
+    padding-top: 42px !important;
+  }
+}
+@media screen and(max-width:575px){
+  .app_pt{
+    padding-top: 42px !important ;
+  }
+}
 .mask{
   position: fixed;
   top: 0;
@@ -111,7 +121,7 @@ export default {
   margin: 0 auto;
   position: relative;
   min-height: 100%;
-  background-color: rgba(36, 45, 211, 0.3);
+  background-color: rgb(255, 255, 255,);
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
@@ -128,6 +138,9 @@ export default {
     bottom: 0px;
     right: 15px;
     z-index: 999;
+  }
+  .app_pt{
+    padding-top: 0px;
   }
 }
 .component-fade-enter-active, .component-fade-leave-active {

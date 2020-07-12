@@ -267,7 +267,6 @@ export default {
           if (res.data.code === 200) {
             this.$("#updateBox").modal("hide");
             this.$toast("修改成功");
-            console.log(this.userList[this.userIdIndex]);
             for (let key in this.userList[this.userIdIndex]) {
               if (obj[key]) {
                 this.userList[this.userIdIndex][key] =

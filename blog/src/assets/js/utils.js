@@ -2,10 +2,21 @@ import axios from 'axios';
 import $ from 'jquery';
 let util = {
     install: Vue => {
-        Vue.prototype.ABOUT_URL='http://127.0.0.1:81/images/about_img/about_';
-        Vue.prototype.AVATAR_URL='http://127.0.0.1:81/images/avatar_img/avatar_';
-        Vue.prototype.BG_URL='http://127.0.0.1:81/images/bg_img/bg_';
-        axios.defaults.baseURL = 'http://api.sjlk.com';
+        //线上
+        // Vue.prototype.ABOUT_URL='https://www.sjlk.vip/images/about_img/about_';
+        // Vue.prototype.AVATAR_URL='https://www.sjlk.vip/images/avatar_img/avatar_';
+        // Vue.prototype.BG_URL='https://www.sjlk.vip/images/bg_img/bg_';
+        // axios.defaults.baseURL = 'https://api.sjlk.vip';
+        //线上测试
+        Vue.prototype.ABOUT_URL='https://test.sjlk.vip/images/about_img/about_';
+        Vue.prototype.AVATAR_URL='https://test.sjlk.vip/images/avatar_img/avatar_';
+        Vue.prototype.BG_URL='https://test.sjlk.vip/images/bg_img/bg_';
+        axios.defaults.baseURL = 'https://api.test.sjlk.vip/';
+        //本地测试
+        // Vue.prototype.ABOUT_URL='http://127.0.0.1:81/images/about_img/about_';
+        // Vue.prototype.AVATAR_URL='http://127.0.0.1:81/images/avatar_img/avatar_';
+        // Vue.prototype.BG_URL='http://127.0.0.1:81/images/bg_img/bg_';
+        // axios.defaults.baseURL = 'http://api.sjlk.com';
 
 
         axios.defaults.withCredentials = true;
@@ -45,7 +56,6 @@ let util = {
             }
 
             axios(config).then(resp => {
-                // console.log('111' + resp)
                 if (resp.status === 200) {
                     success(resp);
                 }
@@ -96,6 +106,8 @@ let util = {
             return fmt;
         }
         Vue.prototype.setRoute = function (path) {
+            $('.modal-backdrop').remove();
+            $('body').removeClass('modal-open').css({'padding-right':'0px'});
             var arr = [
                 { path: "/index", title: '时间' },
                 { path: "/album", title: '时间的相册' },
@@ -131,10 +143,10 @@ let util = {
                 this.$toast("只能上传jpeg,jpg,png格式的图片");
                 return;
             }
-            // if (file.size > 1048576) {
-            //     this.$toast("只能上传1M以内的图片");
-            //     return;
-            // }
+            if (file.size > 1048576) {
+                this.$toast("只能上传1M以内的图片");
+                return;
+            }
             var reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = function (e) {

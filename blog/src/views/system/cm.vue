@@ -116,7 +116,6 @@ export default {
   },
   created() {
     this.getComment(null, res => {
-      console.log(res.data);
       this.commentList = res.data.commentList;
       this.result = res.data.page;
       this.isSearch = false;
@@ -128,7 +127,6 @@ export default {
         this.search(page);
       } else {
         this.getComment({page:page}, res => {
-          console.log(res)
           this.commentList = res.data.commentList;
           this.result = res.data.page;
           this.isSearch = false;

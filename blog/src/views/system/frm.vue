@@ -359,7 +359,6 @@ export default {
       let result={...this.userInfo};
       if (this.isSubmit) {
         this.$http("addFlink", { method: "post", data: this.userInfo }, res => {
-          console.log(res);
           if(res.data.code===200){
             result.id=res.data.data.id;
             result.create_time=res.data.data.create_time;
@@ -386,7 +385,8 @@ export default {
 th,
 td {
   min-width: 120px;
-  max-width: 160px;
+  max-width: 150px;
+  word-wrap: break-word;
 }
 #table {
   width: 100%;

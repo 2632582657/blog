@@ -42,7 +42,6 @@ export default {
   },
   methods: {
     handlePageClick(page) {
-      console.log(this.result)
       if (this.result.pageCount > 1 && page >= 1 && page <= this.result.pageCount) { this.$emit('func', page); }
     }
   }

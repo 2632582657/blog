@@ -77,7 +77,6 @@ export default {
   },
   watch:{
     $route(route){
-      console.log(route)
       if(route.query.keyword){
         this.$http('getArticle',{params:{search:1,title:route.query.keyword}},(res)=>{
           if(res.data.code===200){

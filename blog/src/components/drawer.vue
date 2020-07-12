@@ -4,12 +4,12 @@
           <img src="../assets/images/avatar2.jpg">
       </div>
       <p class="nick_name">时间旅客</p>
-      <p class="my_link mb-3">
+      <p class="my_link mb-0">
           <a href="#" class="fa  fa-github " style="color:#333" target="_blank"></a>
       </p>
       <div class="serach_box">
           <form action="" method="get">
-              <input type="text" name="kw" placeholder="搜索...">
+              <input type="text" name="keyword" v-model="keyword" placeholder="搜索..." @keyup.enter="search()">
           </form>
       </div>
       <ul class="m_menu">
@@ -27,17 +27,23 @@
 export default {
     data(){
         return{
-
+            keyword:''
         }
     },
     props:{menuData:Array,isShowDrawer:Boolean,fn:Function},
     mounted(){
         
     },
+    methods:{
+        search(){
+            if(!this.keyword){
+                this.$toast('请输入关键字');
+            }else{
+                this.$router.push({path:'/index',query:{keyword:this.keyword}})
+            }
+        }
+    },
     watch:{
-        isShowDrawer(value){
-            console.log(value)
-        },
         $route(route){
             this.$emit('fn',false)
         }
@@ -67,7 +73,8 @@ export default {
             max-width: 100%;
             height: auto;
             margin: 0 auto;
-            padding: 30px 0 20px;
+            padding: 30px 0 10px;
+            // padding: 30px 0 20px;
             text-align: center;
             img{
                 width: 90px;
@@ -81,7 +88,8 @@ export default {
             font-weight: 900;
             font-family: 'Ubuntu', sans-serif;
             letter-spacing: 1.5px;
-            margin: 10px 0 20px;
+            margin: 10px 0 0px;
+            // margin: 10px 0 20px;
         }
         .my_link{
             width: 100%;
@@ -107,10 +115,12 @@ export default {
             box-sizing: border-box;
             width: 80%;
             margin:0 auto;
+            padding-bottom: 42px;
             li{
                 transition-duration: .25s;
                 display: block;
-                padding: 10px 50px 10px 30px;
+                padding: 0px 50px 0px 30px;
+                // padding: 10px 50px 10px 30px;
                 color: #fff;
                 letter-spacing: .1em;
                 text-align: center;

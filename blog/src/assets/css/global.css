@@ -117,6 +117,13 @@ a:visited {text-decoration: none !important}
 	line-height: 24px !important;
 	word-wrap: break-word;
 }
+.article_content{
+	/* overflow-x: scroll; */
+}
+.article_content div{
+ white-space: pre-wrap;	
+ word-wrap: break-word;
+}
 #blog_card_box .blog_card .card_content .content>p{
 	margin-bottom: 0 !important;
 }

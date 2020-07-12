@@ -183,6 +183,9 @@ const router= new Router({
   ],
   
 })
+router.afterEach((to,from,next)=>{
+  　window,scrollTo(0,0)
+})
 router.beforeEach((to,from,next)=>{
   if(to.meta.auth){
     if(localStorage.getItem('user')){

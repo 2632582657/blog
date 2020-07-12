@@ -21,7 +21,7 @@
                 <i :class="'text-info fa mr-1 '+item.icon"></i>
                 {{item.title}}
               </h5>
-              <p class="card-text f18" v-text="item.count"></p>
+              <p class="card-text f18" v-text="item.count? item.count :0"></p>
             </div>
           </div>
         </div>

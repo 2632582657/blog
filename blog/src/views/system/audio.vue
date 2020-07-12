@@ -177,7 +177,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary" @click="submit()">提交</button>
+            <button type="button" class="btn btn-primary" @click="submit()" :disabled='!isRepeat'>提交</button>
           </div>
         </div>
       </div>
@@ -208,7 +208,8 @@ export default {
       },
       audioList: [],
       isSearch: false, //是否是搜索
-      isHave: true //歌曲是否存在
+      isHave: true,//歌曲是否存在
+      isRepeat:true
     };
   },
   created() {
@@ -277,59 +278,65 @@ export default {
         this.$toast("请上传lrc文件");
       }
     },
-    //todo 上传成功清空文件内容
     submit() {
-      var formData = new FormData();
-      if (this.$refs.audioCover.files.length !== 0) {
-        if (
-          this.$refs.audioCover.files[0].type !== "image/jpeg" &&
-          this.$refs.audioCover.files[0].type !== "image/jpg" &&
-          this.$refs.audioCover.files[0].type !== "image/png"
-        ) {
-          this.$toast("请上传图片格式的封面");
-          return;
-        } else {
-          formData.append("audioCover", this.$refs.audioCover.files[0]);
-        }
-      } else {
-        this.$toast("请上传音乐封面");
-        return;
-      }
-      if (this.$refs.audio.files.length !== 0) {
-        formData.append("audio", this.$refs.audio.files[0]);
-        formData.append("name", this.audio.name);
-        formData.append("author", this.audio.author);
-      } else {
-        this.$toast("请上传音乐文件");
-        return;
-      }
-      if (this.$refs.audioLrc.files.length !== 0) {
-        formData.append("lrc", this.$refs.audioLrc.files[0]);
-      }
-      let result = {
-        name: this.audio.name,
-        author: this.audio.author
-      };
-      if (this.isHave) {
-        this.$http("/audio", { method: "post", data: formData }, res => {
-          if (res.data.code === 200) {
-            result.id = res.data.data.id;
-            result.create_time = res.data.data.create_time;
-            this.audioList.unshift(result);
-            this.$toast("上传成功");
-            this.$("#audioModal").modal("hide");
-            this.$refs.audioCover.value="";
-            this.$refs.audio.value="";
-            this.$refs.audioLrc.value="";
-            this.clearForm();
-
+      if(this.isRepeat){
+        var formData = new FormData();
+        if (this.$refs.audioCover.files.length !== 0) {
+          if (
+            this.$refs.audioCover.files[0].type !== "image/jpeg" &&
+            this.$refs.audioCover.files[0].type !== "image/jpg" &&
+            this.$refs.audioCover.files[0].type !== "image/png"
+          ) {
+            this.$toast("请上传图片格式的封面");
+            return;
           } else {
-            this.$toast(res.data.message);
+            formData.append("audioCover", this.$refs.audioCover.files[0]);
           }
-        });
-      } else {
-        this.$toast("当前歌曲已经存在");
+        } else {
+          this.$toast("请上传音乐封面");
+          return;
+        }
+        if (this.$refs.audio.files.length !== 0) {
+          formData.append("audio", this.$refs.audio.files[0]);
+          formData.append("name", this.audio.name);
+          formData.append("author", this.audio.author);
+        } else {
+          this.$toast("请上传音乐文件");
+          return;
+        }
+        if (this.$refs.audioLrc.files.length !== 0) {
+          formData.append("lrc", this.$refs.audioLrc.files[0]);
+        }
+        let result = {
+          name: this.audio.name,
+          author: this.audio.author
+        };
+        if (this.isHave) {
+          this.isRepeat=false
+          this.$http("/audio", { method: "post", data: formData }, res => {
+            this.isRepeat=true;
+            if (res.data.code === 200) {
+              result.id = res.data.data.id;
+              result.create_time = res.data.data.create_time;
+              this.audioList.unshift(result);
+              this.$toast("上传成功");
+              this.$("#audioModal").modal("hide");
+              this.$refs.audioCover.value="";
+              this.$refs.audio.value="";
+              this.$refs.audioLrc.value="";
+              this.clearForm();
+              
+            } else {
+              this.$toast(res.data.message);
+            }
+          });
+        } else {
+          this.$toast("当前歌曲已经存在");
+        }
+      }else{
+        this.$toast('文件上传中，请勿重复提交')
       }
+      
     },
     search(page = 1) {
       if (!this.keyWords.id && !this.keyWords.name && !this.keyWords.author) {

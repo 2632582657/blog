@@ -2,13 +2,8 @@
   <div id="blog_album" class="container p-0 pt-xl-3">
     <PageHead :componentName="componentName"></PageHead>
     <div class="row album_body m-0 pt-xl-3 pt-lg-3 pt-md-3 pt-3 mb-5 px-3 border-0" :style="ablumList && ablumList.length===0?'min-height:50vh' :''">
-      <div :class="ablumList && ablumList.length===0? 'w-100' : ''">
-        <div
-          v-for="(item,i) in ablumList"
-          :key="i"
-          @click="toDetail(item.id)"
-          class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 mb-3 album_item"
-        >
+      <!-- <div :class="'d-flex'+ablumList && ablumList.length===0? 'w-100' : ''"> -->
+        <div v-for="(item,i) in ablumList" :key="i" @click="toDetail(item.id)" class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 mb-3 album_item">
           <img :src="item.cover" class="w-100 h-100" />
           <div class="album_mask text-left font-weight-bold">
             <p class="m-0">
@@ -42,7 +37,7 @@
             </div>
           </div>
         </div>
-      </div>
+      <!-- </div> -->
 
       <Pagination
         class="w-100"

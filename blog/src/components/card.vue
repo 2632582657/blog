@@ -15,11 +15,8 @@
         <div
           class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 p-0 position-relative h-100 overflow-hidden"
         >
-          <!-- <img src="../assets/images/1000048.jpg" class=" h-100 img_hover" /> -->
-          <div
-            class="img_hover"
-            :style="`background: url(${articleInfo.cover}) no-repeat center center;background-size: cover`"
-          ></div>
+          <img src="../assets/images/timg.gif" :data-src="articleInfo.cover"  class=" h-100 img_hover img_fit" />
+          <!-- <div class="img_hover" :style="`background: url(${articleInfo.cover}) no-repeat center center;background-size: cover`"></div> -->
           <span class="content_tag bg-info" :title="articleInfo.category_name">
             <a href="javascript:;" v-text="articleInfo.category_name"></a>
           </span>
@@ -59,8 +56,32 @@ export default {
   props: {
     articleInfo: Object
   },
-  created() {},
+  mounted(){
+    this.$('.img_hover').each((i,item)=>{
+      if(this.$(item).offset().top <= this.$(window).height() + this.$(window).scrollTop()){
+        this.loadImg(this.$(item))
+      }
+    })
+    this.$(window).on('scroll',()=>{
+      this.start();
+    })
+  },
   methods: {
+    start(){
+      this.$('.img_hover').not('[data-isLoaded]').each((i,item)=>{
+        var $node = this.$(item)
+        if( this.isShow($node) ){
+          this.loadImg($node)
+        }
+      })
+    },
+    loadImg($img){
+      $img.attr('src', $img.attr('data-src'));
+      $img.attr('data-isLoaded', 1)
+    },
+    isShow($node){
+      return $node.offset().top <= this.$(window).height() + this.$(window).scrollTop()
+    },
     toDetail() {
       this.$router.push({
         path: "/detail",
@@ -82,7 +103,7 @@ export default {
   box-shadow: 0 1px 3px rgba(26, 26, 26, 0.1);
   background: #fff;
   position: relative;
-  overflow: hidden;
+  overflow: hidden; 
   border-radius: 4px;
   // min-height: 255px;
   .blog_card {
@@ -111,7 +132,7 @@ export default {
       }
     }
     .card_content {
-      height: 120px !important;
+      height: 115px !important;
       background: #fff;
       border-radius: 4px;
       text-align: left;
@@ -125,8 +146,12 @@ export default {
         width: 100%;
         height: 100%;
       }
+      .img_fit{
+        object-fit:cover
+      }
       .content_tag {
-        max-width: 30%;
+        // max-width: 30%;
+        width: 40px;
         position: absolute;
         left: 8px;
         top: 8px;

@@ -42,6 +42,7 @@
     <button
       class="btn btn-info btn-block btn-sm my-4 col-12 col-xl-2 col-lg-3 col-md-4 text-white"
       @click="submitArticle"
+      :disabled='!isRepeat'
     >提交</button>
   </div>
 </template>
@@ -57,10 +58,10 @@ export default {
       init: {
         language_url: "/tinymce-lang/zh_CN.js",
         language: "zh_CN",
-        plugins: "lists link image paste help wordcount",
+        plugins: "link lists image code table colorpicker textcolor wordcount contextmenu",
         toolbar:
-          // "undo redo |  formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image media table code",
-          "bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent blockquote | undo redo | link unlink image code | removeformat",
+          //  "undo redo |  formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image media table code",
+           "bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent blockquote | undo redo | link unlink image table  code | removeformat",
         branding: false,
         height: 800,
         images_upload_handler: function(blobInfo, success, failure) {
@@ -83,7 +84,8 @@ export default {
         cover: "",
         content: "",
         cate: 10001
-      }
+      },
+      isRepeat:true
     };
   },
   created() {
@@ -101,30 +103,37 @@ export default {
       });
     },
     submitArticle() {
-      if (
-        this.article.title !== "" &&
-        this.article.content !== "" &&
-        this.article.cate !== ""
-      ) {
-        var formData = new FormData();
-        formData.append("title", this.article.title);
-        formData.append("cate", this.article.cate);
-        formData.append("content", this.article.content);
-        if (this.$refs.file.files.length !== 0) {
-          formData.append("cover", this.$refs.file.files[0]);
-        } else {
-          this.$toast("请上传封面");
-          return;
-        }
-        this.$http("release", { method: "post", data: formData }, res => {
-          if (res.data.code === 200) {
-            this.$toast("提交成功");
-            this.$router.push({ path: "/admin/arm" });
+      if(this.isRepeat){
+        if (
+          this.article.title !== "" &&
+          this.article.content !== "" &&
+          this.article.cate !== ""
+        ) {
+          var formData = new FormData();
+          formData.append("title", this.article.title);
+          formData.append("cate", this.article.cate);
+          formData.append("content", this.article.content);
+          if (this.$refs.file.files.length !== 0) {
+            formData.append("cover", this.$refs.file.files[0]);
+          } else {
+            this.$toast("请上传封面");
+            return;
           }
-        });
-      } else {
-        this.$toast("请完善表单");
+          this.isRepeat=false
+          this.$http("release", { method: "post", data: formData }, res => {
+            this.isRepeat=true
+            if (res.data.code === 200) {
+              this.$toast("提交成功");
+              this.$router.push({ path: "/admin/arm" });
+            }
+          });
+        } else {
+          this.$toast("请完善表单");
+        }
+      }else{
+        this.$toast('文件上传中，请勿重复提交')
       }
+      
     }
   },
   components: {

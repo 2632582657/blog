@@ -38,8 +38,8 @@
         <div class="row mx-3">
           <div class="col-6 col-xl-3 col-lg-3 col-md-3 col-sm-3 text-white communication">
             <div class="text-center py-2 rounded border border-info content">
-              <i class="fa fa-github"></i>
-              GitHub
+              <i class="fa fa-github"></i> 
+              <a href="https://github.com/2632582657" target="_blank"> GitHub</a>
             </div>
           </div>
           <div class="col-6 col-xl-3 col-lg-3 col-md-3 col-sm-3 text-white communication">
@@ -60,7 +60,7 @@
                 class="text-danger"
                 href="https://www.wikimoe.com"
                 target="blank"
-              >维基萌</a> ，网站所有内容均由时间一人开发，
+              >维基萌</a>丶<a href="https://shawnzeng.com" target="blank" class="text-danger">诗与酒</a> ，网站所有内容均由时间一人开发，
               本网站仅用作学习交流，无任何商业目的。网站素材均来源于网络，侵删。
               <div>
                 <span class="d-block small mt-1 proof" @click="isSeeProof">{{isSee?"查看":"关闭"}}</span>
@@ -69,7 +69,7 @@
                     <img src="../../assets/images/pingzheng.png" class="proof_img" />
                   </div>
                   <div class="col-12 col-xl-6 col-lg-6 col-md-6">
-                    <img src="../../assets/images/pingzheng.png" class="proof_img" />
+                    <img src="../../assets/images/pingzheng2.png" class="proof_img" />
                   </div>
                 </div>
               </div>
@@ -207,12 +207,19 @@ export default {
       color: #fff;
       background: #0099cc;
     }
+    &:hover .content a{
+      color: #fff;
+    }
     .content {
       color: #0099cc;
       cursor: pointer;
       font-size: 18px;
       font-weight: 400;
       transition: all 0.3s ease;
+      a{
+        color: #0099cc;
+        transition: all 0.3s ease;
+      }
     }
   }
   .proof {
