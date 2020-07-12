@@ -8,15 +8,16 @@ let util = {
         // Vue.prototype.BG_URL='https://www.sjlk.vip/images/bg_img/bg_';
         // axios.defaults.baseURL = 'https://api.sjlk.vip';
         //线上测试
-        Vue.prototype.ABOUT_URL='https://test.sjlk.vip/images/about_img/about_';
-        Vue.prototype.AVATAR_URL='https://test.sjlk.vip/images/avatar_img/avatar_';
-        Vue.prototype.BG_URL='https://test.sjlk.vip/images/bg_img/bg_';
-        axios.defaults.baseURL = 'https://api.test.sjlk.vip/';
+        // Vue.prototype.ABOUT_URL='https://test.sjlk.vip/images/about_img/about_';
+        // Vue.prototype.AVATAR_URL='https://test.sjlk.vip/images/avatar_img/avatar_';
+        // Vue.prototype.BG_URL='https://test.sjlk.vip/images/bg_img/bg_';
+        // axios.defaults.baseURL = 'https://api.test.sjlk.vip/';
         //本地测试
-        // Vue.prototype.ABOUT_URL='http://127.0.0.1:81/images/about_img/about_';
-        // Vue.prototype.AVATAR_URL='http://127.0.0.1:81/images/avatar_img/avatar_';
-        // Vue.prototype.BG_URL='http://127.0.0.1:81/images/bg_img/bg_';
-        // axios.defaults.baseURL = 'http://api.sjlk.com';
+        Vue.prototype.ABOUT_URL='https://cdn.jsdelivr.net/gh/2632582657/blog/blog/public/images/about_img/about_';
+        Vue.prototype.AVATAR_URL='https://cdn.jsdelivr.net/gh/2632582657/blog/blog/public/images/avatar_img/avatar_';
+        Vue.prototype.BG_URL='https://cdn.jsdelivr.net/gh/2632582657/blog/blog/public/images/bg_img/bg_';
+        Vue.prototype.CDN_BASE_URL='https://cdn.jsdelivr.net/gh/2632582657/blog/blog';
+        axios.defaults.baseURL = 'http://api.sjlk.com';
 
 
         axios.defaults.withCredentials = true;

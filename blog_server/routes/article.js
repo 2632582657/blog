@@ -5,18 +5,25 @@ const path = require('path');
 const fs = require('fs');
 
 release = (req, res) => {
+    let reg = /((https|http):\/\/)(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*(\/[a-zA-Z0-9\&%_\./-~-]*)?/;
     util.needLogin(req, res);
-    var data = req.body;
+    let data = req.body;
     if (JSON.stringify(data) == "{}") {
         res.status(500).json({
             code: 500,
             message: "接收文章数据为空"
         })
+        if(reg.test(data.cover)){
+            res.status(500).json({
+                code: 500,
+                message: "封面链接不符合规定"
+            })
+        }
     }
-    let cover = `${env.host}images/${req.file.filename}`;
+    // let cover = `${env.host}images/${req.file.filename}`;
     let sql = `INSERT INTO sj_article (title, category_id, content,cover) VALUES (?,?,?,?)`;
-    let articleArr = [req.body.title, req.body.cate, req.body.content];
-    if (cover) { articleArr.push(cover); }
+    let articleArr = [req.body.title, req.body.cate, req.body.content,req.body.cover];
+    // if (cover) { articleArr.push(cover); }
     query(sql, articleArr, (err, result) => {
         if (err) { util.handleError(res, err); }
         if (result && result.affectedRows > 0) {

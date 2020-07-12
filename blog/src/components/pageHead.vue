@@ -1,6 +1,6 @@
 <template>
   <div class="album_head overflow-hidden">
-    <img src="../assets/images/f_cover.jpg" class="w-100" alt />
+    <img :src="CDN_BASE_URL+'/src/assets/images/f_cover.jpg'" class="w-100" alt />
     <h2 class="z1" v-text="componentName.title"></h2>
     <p class="z1" v-text="componentName.introduce"></p>
   </div>

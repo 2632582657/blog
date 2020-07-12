@@ -102,82 +102,65 @@
                   id="audioName"
                   type="text"
                   class="form-control"
-                  placeholder="根据文件名获取名称"
+                  placeholder="请输入歌曲名称"
                   minlength="1"
                   maxlength="15"
                   required
-                  readonly="true"
                   v-model="audio.name"
+                  @blur="audioChange"
                 />
               </div>
               <div class="form-group">
                 <label for="audioAvatar">歌曲作者</label>
                 <input
-                  id="audioAvatar"
+                  id="audioAuthor"
                   type="text"
                   class="form-control"
-                  placeholder="根据文件名获取作者"
+                  placeholder="请输入作者"
                   minlength="1"
                   maxlength="15"
                   required
-                  readonly="true"
                   v-model="audio.author"
                 />
               </div>
               <div class="form-group">
-                <label class="d-block">歌曲封面</label>
-                <img v-show="true" :src="audio.audioCover" class="cover" width="50%" />
+                <label for="audioAvatar">歌曲封面链接</label>
                 <input
-                  v-show="false"
-                  type="file"
-                  ref="audioCover"
-                  id="customFile"
-                  class
-                  @change="audioCoverChange"
+                  id="audioCover"
+                  type="text"
+                  class="form-control"
+                  placeholder="请输入封面链接"
+                  required
+                  v-model="audio.audioCover"
                 />
-                <label for="customFile" class="text-info d-block cursor_p">选择</label>
               </div>
               <div class="form-group">
-                <label class="d-block">歌曲文件</label>
+                <label for="audioAvatar">歌曲文件链接</label>
                 <input
+                  id="audioFileName"
                   type="text"
-                  readonly="true"
                   class="form-control"
+                  placeholder="请输入歌曲文件链接"
+                  required
                   v-model="audio.audioFileName"
                 />
-                <input
-                  v-show="false"
-                  type="file"
-                  ref="audio"
-                  id="customAudio"
-                  class
-                  @change="audioChange"
-                />
-                <label for="customAudio" class="text-info d-block cursor_p">选择</label>
               </div>
               <div class="form-group">
-                <label class="d-block">歌词文件</label>
+                <label for="audioAvatar">歌词文件链接</label>
                 <input
+                  id="audioLrcName"
                   type="text"
                   class="form-control"
-                  readonly="true"
+                  placeholder="请输入歌曲文件链接"
+                  required
                   v-model="audio.audioLrcName"
                 />
-                <input
-                  v-show="false"
-                  type="file"
-                  ref="audioLrc"
-                  id="customLrc"
-                  class
-                  @change="lrcChange"
-                />
-                <label for="customLrc" class="text-info d-block cursor_p">选择</label>
               </div>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary" @click="submit()" :disabled='!isRepeat'>提交</button>
+            <button type="button" class="btn btn-primary" @click="submit()" :disabled="!isRepeat">提交</button>
           </div>
         </div>
       </div>
@@ -208,8 +191,9 @@ export default {
       },
       audioList: [],
       isSearch: false, //是否是搜索
-      isHave: true,//歌曲是否存在
-      isRepeat:true
+      isHave: true, //歌曲是否存在
+      isRepeat: true,
+      reg: /((https|http):\/\/)(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*(\/[a-zA-Z0-9\&%_\./-~-]*)?/
     };
   },
   created() {
@@ -237,106 +221,72 @@ export default {
         }
       });
     },
-    audioCoverChange(e) {
-      this.$imageChange(e, event => {
-        this.audio.audioCover = event.target.result;
-      });
-    },
     audioChange(e) {
-      if (e.target.files[0] && e.target.files[0].type === "audio/mp3") {
-        this.audio.audioFileName = e.target.files[0]
-          ? e.target.files[0].name
-          : "";
-        let arr = e.target.files[0].name.split("-");
-        this.audio.author = arr[0].trim();
-        this.audio.name = arr[1].slice(0, arr[1].indexOf(".")).trim();
-        var formData = new FormData();
-        formData.append("name", this.audio.name);
-        formData.append("author", this.audio.author);
-        this.$http("/audio", { method: "post", data: formData }, res => {
-          if (res.data.code === 200) {
-            this.isHave = true;
-          } else {
-            this.$toast("当前歌曲已存在");
-            this.isHave = false;
+      if (this.audio.name !== "") {
+        this.$http(
+          "/audio",
+          { method: "post", data: { name: this.audio.name } },
+          res => {
+            if (res.data.code === 200) {
+              this.isHave = true;
+            } else {
+              this.$toast("当前歌曲已存在");
+              this.isHave = false;
+              this.clearForm();
+            }
           }
-        });
+        );
       } else {
-        this.$toast("请上传MP3文件");
+        this.$toast("请请输入歌曲名称");
         return;
       }
     },
-    lrcChange(e) {
-      if (
-        e.target.files[0] &&
-        e.target.files[0].name.lastIndexOf(".lrc") !== -1
-      ) {
-        this.audio.audioLrcName = e.target.files[0]
-          ? e.target.files[0].name
-          : "";
-      } else {
-        this.$toast("请上传lrc文件");
-      }
-    },
     submit() {
-      if(this.isRepeat){
-        var formData = new FormData();
-        if (this.$refs.audioCover.files.length !== 0) {
-          if (
-            this.$refs.audioCover.files[0].type !== "image/jpeg" &&
-            this.$refs.audioCover.files[0].type !== "image/jpg" &&
-            this.$refs.audioCover.files[0].type !== "image/png"
-          ) {
-            this.$toast("请上传图片格式的封面");
+      if (this.isRepeat) {
+        if (
+          this.audio.audioCover !== "" &&
+          this.audio.audioFileName !== "" &&
+          this.audio.name !== "" &&
+          this.audio.author !== ""
+        ) { 
+          if (!this.reg.test(this.audio.audioCover) || !this.reg.test(this.audio.audioFileName)) {
+            this.$toast("表单不符合规范");
             return;
+          }
+          if (this.audio.audioLrcName && !this.reg.test(this.audio.audioLrcName)) {
+            this.$toast("表单不符合规范");
+            return;
+          }
+          let result = {
+            name: this.audio.name,
+            author: this.audio.author
+          };
+          if (this.isHave) {
+            this.isRepeat = false;
+            this.$http("/audio", { method: "post", data: this.audio }, res => {
+              this.isRepeat = true;
+              if (res.data.code === 200) {
+                result.id = res.data.data.id;
+                result.create_time = res.data.data.create_time;
+                this.audioList.unshift(result);
+                this.$toast("上传成功");
+                this.$("#audioModal").modal("hide");
+                this.clearForm();
+              } else {
+                console.log(111);
+                this.$toast(res.data.message);
+                this.isRepeat = true;
+              }
+            });
           } else {
-            formData.append("audioCover", this.$refs.audioCover.files[0]);
+            this.$toast("当前歌曲已经存在");
           }
         } else {
-          this.$toast("请上传音乐封面");
-          return;
+          this.$toast("表单不符合规范");
         }
-        if (this.$refs.audio.files.length !== 0) {
-          formData.append("audio", this.$refs.audio.files[0]);
-          formData.append("name", this.audio.name);
-          formData.append("author", this.audio.author);
-        } else {
-          this.$toast("请上传音乐文件");
-          return;
-        }
-        if (this.$refs.audioLrc.files.length !== 0) {
-          formData.append("lrc", this.$refs.audioLrc.files[0]);
-        }
-        let result = {
-          name: this.audio.name,
-          author: this.audio.author
-        };
-        if (this.isHave) {
-          this.isRepeat=false
-          this.$http("/audio", { method: "post", data: formData }, res => {
-            this.isRepeat=true;
-            if (res.data.code === 200) {
-              result.id = res.data.data.id;
-              result.create_time = res.data.data.create_time;
-              this.audioList.unshift(result);
-              this.$toast("上传成功");
-              this.$("#audioModal").modal("hide");
-              this.$refs.audioCover.value="";
-              this.$refs.audio.value="";
-              this.$refs.audioLrc.value="";
-              this.clearForm();
-              
-            } else {
-              this.$toast(res.data.message);
-            }
-          });
-        } else {
-          this.$toast("当前歌曲已经存在");
-        }
-      }else{
-        this.$toast('文件上传中，请勿重复提交')
+      } else {
+        this.$toast("文件上传中，请勿重复提交");
       }
-      
     },
     search(page = 1) {
       if (!this.keyWords.id && !this.keyWords.name && !this.keyWords.author) {
@@ -363,20 +313,19 @@ export default {
         this.isSearch = false;
       });
     },
-    deleteAudio(i){
-      if(this.audioList[i].id){
-        if(confirm("是否要删除吗")){
-          this.$http(`deleteAudio/${this.audioList[i].id}?adm=1`,(res)=>{
+    deleteAudio(i) {
+      if (this.audioList[i].id) {
+        if (confirm("是否要删除吗")) {
+          this.$http(`deleteAudio/${this.audioList[i].id}?adm=1`, res => {
             if (res.data.code === 200) {
               this.$toast("删除成功");
               this.audioList.splice(i, 1);
             } else {
               this.$toast(res.data.message | "删除失败");
             }
-          })
+          });
         }
       }
-      
     },
     clearForm() {
       this.audio.name = "";

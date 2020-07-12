@@ -15,10 +15,21 @@
         />
       </div>
       <div class="form-group">
-        <label for="exampleInputEmail1" class="d-block">文章封面</label>
+        <!-- <label for="exampleInputEmail1" class="d-block">文章封面</label>
         <img v-show="true" :src="article.cover" class="cover" alt />
         <input v-show="false" type="file" ref="file" id="customFile" class @change="imageChange" />
-        <label for="customFile" class="text-info d-block cursor_p">选择</label>
+        <label for="customFile" class="text-info d-block cursor_p">选择</label> -->
+        <label for="exampleInputEmail1">文章封面</label>
+        <input
+          id="exampleInputEmail1"
+          type="text"
+          class="form-control"
+          placeholder="请输入封面链接"
+          minlength="5"
+          maxlength="100"
+          required
+          v-model="article.cover"
+        />
       </div>
       <div class="form-group">
         <label class="d-block">分类</label>
@@ -99,28 +110,19 @@ export default {
   },
   mounted() {},
   methods: {
-    imageChange(e) {
-      this.$imageChange(e, event => {
-        this.article.cover = event.target.result;
-      });
-    },
     submit() {
       if (
         this.article.title !== "" &&
         this.article.content !== "" &&
-        this.article.cate !== ""
+        this.article.cate !== "" &&
+        this.article.cover !==""
       ) {
-        var formData = new FormData();
+        let formData = new FormData();
         formData.append("id", this.article.id);
         for (let key in this.article) {
           if (this.article[key] !== this.updatedArticle[key]) {
-            if (key !== "cover") {
-              formData.append(key, this.article[key]);
-            }
+            formData.append(key, this.article[key]);
           }
-        }
-        if (this.$refs.file.files.length !== 0) {
-             formData.append("cover", this.$refs.file.files[0]);
         }
         this.$http(`updateArticle/${this.articleId}`,{method:'put',data:formData},(res)=>{
             if(res.data.code===200){

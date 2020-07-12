@@ -4,7 +4,7 @@
       <div class="sj_card_bg"></div>
       <div class="sj_card_body pt-1 position-relative">
         <div class="sj_card_avatar">
-          <img src="../assets/images/avatar2.jpg" width="56" height="56" class="rounded-circle" />
+          <img :src="CDN_BASE_URL+'/src/assets/images/avatar2.jpg'" width="56" height="56" class="rounded-circle" />
           <i class="fa fa-vimeo vimeo"></i>
         </div>
         <a href="#" class="sj_card_name d-block mb-3 font-weight-bold">时间旅客</a>
@@ -119,7 +119,7 @@ export default {
     width: 100%;
     height: 100px;
     max-height: 100px;
-    background: #fff url("../assets/images/1000048.jpg") no-repeat scroll center
+    background: #fff url("https://cdn.jsdelivr.net/gh/2632582657/blog/blog/src/assets/images/1000048.jpg") no-repeat scroll center
       center;
     background-size: cover;
   }

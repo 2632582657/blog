@@ -1,24 +1,40 @@
 <template>
-  <div id="app" :style="`background-image: url(${BG_URL+bg_index}.jpg); ${isShowDrawer? 'height:100vh;overflow:hidden;' : ''}`" >
-    <div v-if="!this.$route.meta.showHeader" class="switchTheme cur text-white" @click="switchBG()">
-      <i class=" fa fa-snowflake-o mr-1"></i>
-      <span>切换背景</span>
-    </div>
+  <div
+    id="app"
+    :style="`background-image: url(${BG_URL+9}.jpg); ${isShowDrawer? 'height:100vh;overflow:hidden;' : ''}`"
+  >
     <!-- 返回顶部图标 -->
-    <img @click="topback" v-show="scrolltop>1000" src="./assets/images/gotop.png" width="40" height="40" class="topback cur" />
-    <Header v-if="!this.$route.meta.showHeader"  :isShowDrawer=isShowDrawer @showHeader=showHeader></Header>
+    <img
+      @click="topback"
+      v-show="scrolltop>1000"
+      src="./assets/images/gotop.png"
+      width="40"
+      height="40"
+      class="topback cur"
+    />
+    <Header
+      v-if="!this.$route.meta.showHeader"
+      :isShowDrawer="isShowDrawer"
+      @showHeader="showHeader"
+    ></Header>
     <!-- 遮罩 -->
-    <div class="mask" v-if="isShowDrawer" @click="hideMask()">
-    </div>
+    <div class="mask" v-if="isShowDrawer" @click="hideMask()"></div>
 
     <transition name="component-fade" mode="out-in">
-      <router-view :class="!this.$route.meta.showHeader? 'app_pt pt-md-0 pt-lg-0 pt-xl-0' : ''"/>
+      <router-view :class="!this.$route.meta.showHeader? 'app_pt pt-md-0 pt-lg-0 pt-xl-0' : ''" />
     </transition>
 
-    <Footer v-if="!this.$route.meta.showHeader" ></Footer>
+    <Footer v-if="!this.$route.meta.showHeader"></Footer>
     <div v-if="!this.$route.meta.showHeader" style="width:100%;height:128px;z-index:-1"></div>
     <!-- 音乐播放器 -->
-    <aplayer class=" text-left" v-if="!this.$route.meta.showHeader" :audio="audio" :lrcType="3" :listFolded='true' fixed />
+    <aplayer
+      class="text-left"
+      v-if="!this.$route.meta.showHeader"
+      :audio="audio"
+      :lrcType="3"
+      :listFolded="true"
+      fixed
+    />
   </div>
 </template>
 
@@ -29,7 +45,7 @@ export default {
   data() {
     return {
       scrolltop: 0,
-      isShowDrawer:false,
+      isShowDrawer: false,
       audio: [
         // {
         //   name: '东西（Cover：林俊呈）',
@@ -38,41 +54,65 @@ export default {
         //   cover: 'https://p1.music.126.net/5zs7IvmLv7KahY3BFzUmrg==/109951163635241613.jpg?param=300y300', // prettier-ignore
         //   lrc: 'https://cdn.moefe.org/music/lrc/thing.lrc',
         // }
-      ],
-      bg_index:1
+      ]
     };
   },
   created() {
     this.setScrollLisener();
     this.setRoute(this.$route.path);
-    this.$http('getAudio',(res)=>{
-      if(res.data.code===200){
-        this.audio=res.data.data
+    this.$http("getAudio", res => {
+      if (res.data.code === 200) {
+        this.audio = res.data.data;
       }
-    })
+    });
   },
   mounted() {
+    this.$(".img_hover").each((i, item) => {
+      if (
+        this.$(item).offset().top <=
+        this.$(window).height() + this.$(window).scrollTop()
+      ) {
+        this.loadImg(this.$(item));
+      }
+    });
+    this.$(window).on("scroll", () => {
+      this.start();
+    });
   },
-  watch:{
-    $route(route){
-      this.setRoute(route.path)
+  watch: {
+    $route(route) {
+      this.setRoute(route.path);
     }
   },
   methods: {
-    switchBG(){
-      this.bg_index+=1
-      if (this.bg_index > 10) {
-        this.bg_index = 1;
-      }
+    start() {
+      this.$(".img_hover")
+        .not("[data-isLoaded]")
+        .each((i, item) => {
+          var $node = this.$(item);
+          if (this.isShow($node)) {
+            this.loadImg($node);
+          }
+        });
     },
-    hideMask(){
-      this.isShowDrawer=false
+    loadImg($img) {
+      $img.attr("src", $img.attr("data-src"));
+      $img.attr("data-isLoaded", 1);
     },
-    showHeader(bool){
-      if(bool===false){
-        this.isShowDrawer=bool
-      }else{
-        this.isShowDrawer=!this.isShowDrawer
+    isShow($node) {
+      return (
+        $node.offset().top <=
+        this.$(window).height() + this.$(window).scrollTop()
+      );
+    },
+    hideMask() {
+      this.isShowDrawer = false;
+    },
+    showHeader(bool) {
+      if (bool === false) {
+        this.isShowDrawer = bool;
+      } else {
+        this.isShowDrawer = !this.isShowDrawer;
       }
     },
     setScrollLisener() {
@@ -94,22 +134,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media screen and (min-width:576px) and (max-width:767px){
-  .app_pt{
+@media screen and (min-width: 576px) and (max-width: 767px) {
+  .app_pt {
     padding-top: 42px !important;
   }
 }
-@media screen and(max-width:575px){
-  .app_pt{
+@media screen and(max-width:575px) {
+  .app_pt {
     padding-top: 42px !important ;
   }
 }
-.mask{
+.mask {
   position: fixed;
   top: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 1050;
   overflow: hidden;
 }
@@ -121,11 +161,11 @@ export default {
   margin: 0 auto;
   position: relative;
   min-height: 100%;
-  background-color: rgb(255, 255, 255,);
+  background-color: rgb(255, 255, 255);
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
-  background-size:cover;
+  background-size: cover;
   .topback {
     position: fixed;
     bottom: 50px;
@@ -133,20 +173,22 @@ export default {
     z-index: 999;
     transition: all 0.8s;
   }
-  .switchTheme{
+  .switchTheme {
     position: fixed;
     bottom: 0px;
     right: 15px;
     z-index: 999;
   }
-  .app_pt{
+  .app_pt {
     padding-top: 0px;
   }
 }
-.component-fade-enter-active, .component-fade-leave-active {
-  transition: opacity .3s ease;
+.component-fade-enter-active,
+.component-fade-leave-active {
+  transition: opacity 0.3s ease;
 }
-.component-fade-enter, .component-fade-leave-to {
+.component-fade-enter,
+.component-fade-leave-to {
   opacity: 0;
 }
 </style>

@@ -15,10 +15,21 @@
         />
       </div>
       <div class="form-group">
-        <label for="exampleInputEmail1" class="d-block">文章封面</label>
+        <!-- <label for="exampleInputEmail1" class="d-block">文章封面</label>
         <img v-show="true" :src="article.cover" class="cover" alt />
         <input v-show="false" type="file" ref="file" id="customFile" class @change="imageChange" />
-        <label for="customFile" class="text-info d-block cursor_p">选择</label>
+        <label for="customFile" class="text-info d-block cursor_p">选择</label>-->
+        <label for="exampleInputEmail1">文章封面</label>
+        <input
+          id="exampleInputEmail1"
+          type="text"
+          class="form-control"
+          placeholder="请输入封面链接"
+          minlength="5"
+          maxlength="100"
+          required
+          v-model="article.cover"
+        />
       </div>
       <div class="form-group">
         <label class="d-block">分类</label>
@@ -42,7 +53,7 @@
     <button
       class="btn btn-info btn-block btn-sm my-4 col-12 col-xl-2 col-lg-3 col-md-4 text-white"
       @click="submitArticle"
-      :disabled='!isRepeat'
+      :disabled="!isRepeat"
     >提交</button>
   </div>
 </template>
@@ -58,10 +69,11 @@ export default {
       init: {
         language_url: "/tinymce-lang/zh_CN.js",
         language: "zh_CN",
-        plugins: "link lists image code table colorpicker textcolor wordcount contextmenu",
+        plugins:
+          "link lists image code table colorpicker textcolor wordcount contextmenu",
         toolbar:
           //  "undo redo |  formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image media table code",
-           "bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent blockquote | undo redo | link unlink image table  code | removeformat",
+          "bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent blockquote | undo redo | link unlink image table  code | removeformat",
         branding: false,
         height: 800,
         images_upload_handler: function(blobInfo, success, failure) {
@@ -85,7 +97,7 @@ export default {
         content: "",
         cate: 10001
       },
-      isRepeat:true
+      isRepeat: true
     };
   },
   created() {
@@ -97,31 +109,27 @@ export default {
   },
   mounted() {},
   methods: {
-    imageChange(e) {
-      this.$imageChange(e, event => {
-        this.article.cover = event.target.result;
-      });
-    },
+    // imageChange(e) {
+    //   this.$imageChange(e, event => {
+    //     this.article.cover = event.target.result;
+    //   });
+    // },
     submitArticle() {
-      if(this.isRepeat){
+      if (this.isRepeat) {
         if (
           this.article.title !== "" &&
           this.article.content !== "" &&
-          this.article.cate !== ""
+          this.article.cate !== "" &&
+          this.article.cover !== ""
         ) {
           var formData = new FormData();
           formData.append("title", this.article.title);
           formData.append("cate", this.article.cate);
           formData.append("content", this.article.content);
-          if (this.$refs.file.files.length !== 0) {
-            formData.append("cover", this.$refs.file.files[0]);
-          } else {
-            this.$toast("请上传封面");
-            return;
-          }
-          this.isRepeat=false
+          formData.append("cover", this.article.cover);
+          this.isRepeat = false;
           this.$http("release", { method: "post", data: formData }, res => {
-            this.isRepeat=true
+            this.isRepeat = true;
             if (res.data.code === 200) {
               this.$toast("提交成功");
               this.$router.push({ path: "/admin/arm" });
@@ -130,10 +138,9 @@ export default {
         } else {
           this.$toast("请完善表单");
         }
-      }else{
-        this.$toast('文件上传中，请勿重复提交')
+      } else {
+        this.$toast("文件上传中，请勿重复提交");
       }
-      
     }
   },
   components: {

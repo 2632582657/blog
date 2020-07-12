@@ -100,8 +100,7 @@ export default {
 #admin_login {
   width: 100%;
   height: 100vh;
-  background: url("../../assets/images/1000048.jpg") no-repeat center;
-  background-size: cover;
+  background: transparent;
   position: relative;
   .admin_tip {
     color: #fff;
