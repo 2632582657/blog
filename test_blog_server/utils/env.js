@@ -8,7 +8,7 @@ module.exports={
     host:'https://api.test.sjlk.vip/',
     pwd:'shijian',
     database:'test_sjlk',
-    cors:['https://test.sjlk.vip']
+    cors:['https://test.sjlk.vip/']
     //本地测试
     // host:'http://127.0.0.1:3000/',
     // pwd:'',

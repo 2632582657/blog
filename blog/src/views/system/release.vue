@@ -19,9 +19,9 @@
         <img v-show="true" :src="article.cover" class="cover" alt />
         <input v-show="false" type="file" ref="file" id="customFile" class @change="imageChange" />
         <label for="customFile" class="text-info d-block cursor_p">选择</label>-->
-        <label for="exampleInputEmail1">文章封面</label>
+        <label for="exampleInputEmail2">文章封面</label>
         <input
-          id="exampleInputEmail1"
+          id="exampleInputEmail2"
           type="text"
           class="form-control"
           placeholder="请输入封面链接"
@@ -60,7 +60,7 @@
 
 <script>
 import Editor from "@tinymce/tinymce-vue";
-import AdminSide from "../system/adminSide";
+
 export default {
   name: "release",
   data() {
@@ -76,10 +76,10 @@ export default {
           "bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent blockquote | undo redo | link unlink image table  code | removeformat",
         branding: false,
         height: 800,
-        images_upload_handler: function(blobInfo, success, failure) {
-          var file = blobInfo.blob();
-          var reader = new FileReader();
-          reader.onloadend = function() {
+        images_upload_handler: (blobInfo, success, failure) => {
+          let file = blobInfo.blob();
+          let reader = new FileReader();
+          reader.onloadend = () => {
             if (reader.result.length > 1048576) {
               alert("error");
               return;
@@ -122,7 +122,7 @@ export default {
           this.article.cate !== "" &&
           this.article.cover !== ""
         ) {
-          var formData = new FormData();
+          let formData = new FormData();
           formData.append("title", this.article.title);
           formData.append("cate", this.article.cate);
           formData.append("content", this.article.content);
@@ -144,7 +144,6 @@ export default {
     }
   },
   components: {
-    AdminSide,
     Editor
   }
 };

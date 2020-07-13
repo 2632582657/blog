@@ -15,11 +15,8 @@
         <div
           class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5 p-0 position-relative h-100 overflow-hidden"
         >
-          <img
-            src="../assets/images/timg.gif"
-            :data-src="articleInfo.cover"
-            class="h-100 img_hover img_fit"
-          />
+          <img class="h-100 img_hover img_fit" v-lazy="articleInfo.cover"/>
+          <!-- <img src="../assets/images/timg.gif" :data-src="articleInfo.cover" class="h-100 img_hover img_fit"/> -->
           <!-- <div class="img_hover" :style="`background: url(${articleInfo.cover}) no-repeat center center;background-size: cover`"></div> -->
           <span class="content_tag bg-info" :title="articleInfo.category_name">
             <a href="javascript:;" v-text="articleInfo.category_name"></a>
@@ -60,40 +57,7 @@ export default {
   props: {
     articleInfo: Object
   },
-  mounted() {
-    // this.$(".img_hover").each((i, item) => {
-    //   if (
-    //     this.$(item).offset().top <=
-    //     this.$(window).height() + this.$(window).scrollTop()
-    //   ) {
-    //     this.loadImg(this.$(item));
-    //   }
-    // });
-    // this.$(window).on("scroll", () => {
-    //   this.start();
-    // });
-  },
   methods: {
-    // start() {
-    //   this.$(".img_hover")
-    //     .not("[data-isLoaded]")
-    //     .each((i, item) => {
-    //       var $node = this.$(item);
-    //       if (this.isShow($node)) {
-    //         this.loadImg($node);
-    //       }
-    //     });
-    // },
-    // loadImg($img) {
-    //   $img.attr("src", $img.attr("data-src"));
-    //   $img.attr("data-isLoaded", 1);
-    // },
-    // isShow($node) {
-    //   return (
-    //     $node.offset().top <=
-    //     this.$(window).height() + this.$(window).scrollTop()
-    //   );
-    // },
     toDetail() {
       this.$router.push({
         path: "/detail",

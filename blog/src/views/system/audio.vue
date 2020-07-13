@@ -170,6 +170,7 @@
 
 <script>
 import Pagination from "@/components/pagination.vue";
+
 export default {
   name: "radio",
   data() {
@@ -204,10 +205,10 @@ export default {
   },
   methods: {
     func(page) {
-      if (isSearch) {
+      if (this.isSearch) {
         this.search(page);
       } else {
-        this.getAudio({ page: page }, res => {
+        this.getAudio({ page }, res => {
           this.audioList = res.data.audioList;
           this.result = res.data.page;
           this.isSearch = false;
@@ -215,7 +216,7 @@ export default {
       }
     },
     getAudio(params, callback) {
-      this.$http("getAudio?adm=1", { params: params }, res => {
+      this.$http("getAudio?adm=1", { params }, res => {
         if (res.data.code === 200) {
           callback(res.data);
         }
@@ -248,12 +249,18 @@ export default {
           this.audio.audioFileName !== "" &&
           this.audio.name !== "" &&
           this.audio.author !== ""
-        ) { 
-          if (!this.reg.test(this.audio.audioCover) || !this.reg.test(this.audio.audioFileName)) {
+        ) {
+          if (
+            !this.reg.test(this.audio.audioCover) ||
+            !this.reg.test(this.audio.audioFileName)
+          ) {
             this.$toast("表单不符合规范");
             return;
           }
-          if (this.audio.audioLrcName && !this.reg.test(this.audio.audioLrcName)) {
+          if (
+            this.audio.audioLrcName &&
+            !this.reg.test(this.audio.audioLrcName)
+          ) {
             this.$toast("表单不符合规范");
             return;
           }
@@ -299,7 +306,7 @@ export default {
             delete copy[key];
           }
         }
-        this.getAudio({ search: 1, page: page, ...copy }, res => {
+        this.getAudio({ search: 1, page, ...copy }, res => {
           this.audioList = res.data.audioList;
           this.result = res.data.page;
           this.isSearch = true;
@@ -321,7 +328,7 @@ export default {
               this.$toast("删除成功");
               this.audioList.splice(i, 1);
             } else {
-              this.$toast(res.data.message | "删除失败");
+              this.$toast(res.data.message || "删除失败");
             }
           });
         }

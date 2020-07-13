@@ -31,6 +31,7 @@
 import Pagination from "@/components/pagination.vue";
 import Card from "../../components/card";
 import Side from "../../components/side";
+
 export default {
   name: "study",
   data() {
@@ -47,13 +48,13 @@ export default {
   },
   methods: {
     func(page) {
-      this.getStudy({ page: page, cateId: 10002 }, res => {
+      this.getStudy({ page, cateId: 10002 }, res => {
         this.studyList = res.data.articleInfo;
         this.result = res.data.page;
       });
     },
     getStudy(params, callback) {
-      this.$http("getArticle", { params: params }, res => {
+      this.$http("getArticle", { params }, res => {
         if (res.data.code === 200) {
           callback(res.data);
         }

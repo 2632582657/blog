@@ -42,7 +42,6 @@ var imageFilter = function(req, file, cb){
   }
 }
 
-
 var upload = multer({ 
   storage: storage,
   fileFilter:imageFilter,
@@ -126,7 +125,7 @@ router.post('/addFlink',(req,res)=>{
   flink.addFlink(req,res)
 })
 //音乐模块
-router.post('/audio',upload.any(),(req,res)=>{
+router.post('/audio',(req,res)=>{
   audio.addAudio(req,res)
 })
 router.get('/getAudio',(req,res)=>{

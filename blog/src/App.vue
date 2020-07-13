@@ -41,20 +41,13 @@
 <script>
 import Header from "@/components/header.vue";
 import Footer from "@/components/footer.vue";
+
 export default {
   data() {
     return {
       scrolltop: 0,
       isShowDrawer: false,
-      audio: [
-        // {
-        //   name: '东西（Cover：林俊呈）',
-        //   artist: '纳豆',
-        //   url: 'https://cdn.moefe.org/music/mp3/thing.mp3',
-        //   cover: 'https://p1.music.126.net/5zs7IvmLv7KahY3BFzUmrg==/109951163635241613.jpg?param=300y300', // prettier-ignore
-        //   lrc: 'https://cdn.moefe.org/music/lrc/thing.lrc',
-        // }
-      ]
+      audio: []
     };
   },
   created() {
@@ -66,45 +59,12 @@ export default {
       }
     });
   },
-  mounted() {
-    this.$(".img_hover").each((i, item) => {
-      if (
-        this.$(item).offset().top <=
-        this.$(window).height() + this.$(window).scrollTop()
-      ) {
-        this.loadImg(this.$(item));
-      }
-    });
-    this.$(window).on("scroll", () => {
-      this.start();
-    });
-  },
   watch: {
     $route(route) {
       this.setRoute(route.path);
     }
   },
   methods: {
-    start() {
-      this.$(".img_hover")
-        .not("[data-isLoaded]")
-        .each((i, item) => {
-          var $node = this.$(item);
-          if (this.isShow($node)) {
-            this.loadImg($node);
-          }
-        });
-    },
-    loadImg($img) {
-      $img.attr("src", $img.attr("data-src"));
-      $img.attr("data-isLoaded", 1);
-    },
-    isShow($node) {
-      return (
-        $node.offset().top <=
-        this.$(window).height() + this.$(window).scrollTop()
-      );
-    },
     hideMask() {
       this.isShowDrawer = false;
     },
@@ -116,9 +76,9 @@ export default {
       }
     },
     setScrollLisener() {
-      var that = this;
-      window.onscroll = function() {
-        that.scrolltop =
+      // let that = this;
+      window.onscroll = () => {
+        this.scrolltop =
           document.documentElement.scrollTop || document.body.scrollTop;
       };
     },

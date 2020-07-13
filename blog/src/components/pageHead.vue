@@ -9,20 +9,20 @@
 <script>
 export default {
   name: "pageHead",
-  props:{
-      componentName:Object
+  props: {
+    componentName: Object
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@media screen and(max-width:575px){
-    .album_head{
-        height: 220px !important;
-        img{
-            height: 100%;
-        }
+@media screen and(max-width:575px) {
+  .album_head {
+    height: 220px !important;
+    img {
+      height: 100%;
     }
+  }
 }
 .album_head {
   max-height: 300px;
@@ -48,7 +48,7 @@ export default {
     width: 150%;
     height: 4.375rem;
     // background: #fff;
-    background: rgba(255,255,255,.7);
+    background: rgba(255, 255, 255, 0.7);
     left: -25%;
     bottom: -2rem;
     border-radius: 100%;

@@ -4,7 +4,12 @@
       <div class="sj_card_bg"></div>
       <div class="sj_card_body pt-1 position-relative">
         <div class="sj_card_avatar">
-          <img :src="CDN_BASE_URL+'/src/assets/images/avatar2.jpg'" width="56" height="56" class="rounded-circle" />
+          <img
+            :src="CDN_BASE_URL+'/src/assets/images/avatar2.jpg'"
+            width="56"
+            height="56"
+            class="rounded-circle"
+          />
           <i class="fa fa-vimeo vimeo"></i>
         </div>
         <a href="#" class="sj_card_name d-block mb-3 font-weight-bold">时间旅客</a>
@@ -18,13 +23,13 @@
             <p class="text text-secondary">相册</p>
           </div>
           <div class="col-4 cur">
-            <p class="num text-info "  @click="toAbout()" v-text="count.leaveMsgCount || 0"></p>
+            <p class="num text-info" @click="toAbout()" v-text="count.leaveMsgCount || 0"></p>
             <p class="text text-secondary">留言</p>
           </div>
         </div>
       </div>
     </div>
-    <div  class="card d-xl-block d-lg-block d-none mb-3">
+    <div class="card d-xl-block d-lg-block d-none mb-3">
       <div class="sj_card_body sj_card_info text-left">
         <div class="py-2">
           <i class="fa fa-fw fa-qq text-info mr-2"></i>
@@ -74,40 +79,40 @@
           查看全部...
         </div>
       </div>
-    </div> -->
+    </div>-->
   </div>
 </template>
 
 <script>
 export default {
-  name:"side",
-  data(){
-    return{
-      count:{}
-    }
+  name: "side",
+  data() {
+    return {
+      count: {}
+    };
   },
-  created(){
-    this.$http('getAllCount',(res)=>{
-      if (res.data.code===200) {
-        this.count=res.data.data;
+  created() {
+    this.$http("getAllCount", res => {
+      if (res.data.code === 200) {
+        this.count = res.data.data;
       }
-    })
+    });
   },
-  methods:{
-    toAlbum(){
-      this.$router.push({path:'/album'})
+  methods: {
+    toAlbum() {
+      this.$router.push({ path: "/album" });
     },
-    toAbout(){
-      this.$router.push({path:'/about'})
+    toAbout() {
+      this.$router.push({ path: "/about" });
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@media screen and (min-width:768px) and (max-width:991px){
-  .sj_card_avatar{
-    left:8px !important;
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .sj_card_avatar {
+    left: 8px !important;
   }
 }
 .sj_card,
@@ -119,8 +124,9 @@ export default {
     width: 100%;
     height: 100px;
     max-height: 100px;
-    background: #fff url("https://cdn.jsdelivr.net/gh/2632582657/blog/blog/src/assets/images/1000048.jpg") no-repeat scroll center
-      center;
+    background: #fff
+      url("https://cdn.jsdelivr.net/gh/2632582657/blog/blog/src/assets/images/1000048.jpg")
+      no-repeat scroll center center;
     background-size: cover;
   }
   .sj_card_body {
@@ -139,7 +145,7 @@ export default {
     }
     .sj_card_name {
       transition: all 0.3s linear;
-      letter-spacing: 2px
+      letter-spacing: 2px;
     }
     .sj_card_content {
       p {

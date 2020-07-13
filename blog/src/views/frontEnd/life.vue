@@ -6,7 +6,7 @@
       </div>
       <div class="col-xl-8 col-lg-8 col-md-8 pt-2">
         <!-- 卡片 -->
-        <Card v-for="(item,i) in lifeList" :key="i" :articleInfo=item></Card>
+        <Card v-for="(item,i) in lifeList" :key="i" :articleInfo="item"></Card>
         <div v-if="lifeList && lifeList.length===0">
           <div class="card" style="opacity:.9">
             <div class="card-body text-info">
@@ -15,7 +15,13 @@
             </div>
           </div>
         </div>
-        <Pagination class="w-100" :control={center:1,sm:1} :result="result" @func="func" v-if="lifeList&&lifeList.length!==0" />
+        <Pagination
+          class="w-100"
+          :control="{center:1,sm:1}"
+          :result="result"
+          @func="func"
+          v-if="lifeList&&lifeList.length!==0"
+        />
       </div>
     </div>
   </div>
@@ -25,29 +31,30 @@
 import Card from "../../components/card";
 import Side from "../../components/side";
 import Pagination from "@/components/pagination.vue";
+
 export default {
   name: "life",
-  data(){
-    return{
-      result:{},
-      lifeList:[],
-    }
+  data() {
+    return {
+      result: {},
+      lifeList: []
+    };
   },
-  created(){
-    this.getLife({ page: 1, cateId: 10003 },(res)=>{
+  created() {
+    this.getLife({ page: 1, cateId: 10003 }, res => {
       this.lifeList = res.data.articleInfo;
       this.result = res.data.page;
-    })
+    });
   },
-  methods:{
+  methods: {
     func(page) {
-      this.getLife({ page: page, cateId: 10003 }, res => {
+      this.getLife({ page, cateId: 10003 }, res => {
         this.lifeList = res.data.articleInfo;
         this.result = res.data.page;
       });
     },
-    getLife(params,callback){
-      this.$http("getArticle", { params: params }, res => {
+    getLife(params, callback) {
+      this.$http("getArticle", { params }, res => {
         if (res.data.code === 200) {
           callback(res.data);
         }

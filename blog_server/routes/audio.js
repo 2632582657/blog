@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 
 addAudio = (req, res) => {
-    // util.needLogin(req,res)
+    util.needLogin(req,res)
     let {name,author,audioCover,audioFileName,audioLrcName} = req.body;
     function searchFn(sql, params, fn) {
         return new Promise(function (resolve, reject) {

@@ -18,10 +18,10 @@
         <!-- <label for="exampleInputEmail1" class="d-block">文章封面</label>
         <img v-show="true" :src="article.cover" class="cover" alt />
         <input v-show="false" type="file" ref="file" id="customFile" class @change="imageChange" />
-        <label for="customFile" class="text-info d-block cursor_p">选择</label> -->
-        <label for="exampleInputEmail1">文章封面</label>
+        <label for="customFile" class="text-info d-block cursor_p">选择</label>-->
+        <label for="exampleInputEmail2">文章封面</label>
         <input
-          id="exampleInputEmail1"
+          id="exampleInputEmail2"
           type="text"
           class="form-control"
           placeholder="请输入封面链接"
@@ -56,7 +56,7 @@
 
 <script>
 import Editor from "@tinymce/tinymce-vue";
-import AdminSide from "../system/adminSide";
+
 export default {
   name: "edit",
   data() {
@@ -70,10 +70,10 @@ export default {
           "undo redo |  formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image media table | removeformat",
         branding: false,
         height: 800,
-        images_upload_handler: function(blobInfo, success, failure) {
-          var file = blobInfo.blob();
-          var reader = new FileReader();
-          reader.onloadend = function() {
+        images_upload_handler: (blobInfo, success, failure) => {
+          let file = blobInfo.blob();
+          let reader = new FileReader();
+          reader.onloadend = () => {
             if (reader.result.length > 1048576) {
               alert("error");
               return;
@@ -92,16 +92,16 @@ export default {
         category_id: 10001
       },
       updatedArticle: {},
-      articleId: this.$route.query.articleId | ""
+      articleId: this.$route.query.articleId || ""
     };
   },
   created() {
     this.$http("getCate", res => {
       if (res.data.code === 200) {
         this.cate = res.data.data;
-        this.$http(`getArticle/${this.articleId}?adm=1`, res => {
-          if (res.data.code === 200) {
-            this.article = res.data.data;
+        this.$http(`getArticle/${this.articleId}?adm=1`, resC => {
+          if (resC.data.code === 200) {
+            this.article = resC.data.data;
             this.updatedArticle = { ...this.article };
           }
         });
@@ -115,7 +115,7 @@ export default {
         this.article.title !== "" &&
         this.article.content !== "" &&
         this.article.cate !== "" &&
-        this.article.cover !==""
+        this.article.cover !== ""
       ) {
         let formData = new FormData();
         formData.append("id", this.article.id);
@@ -124,21 +124,27 @@ export default {
             formData.append(key, this.article[key]);
           }
         }
-        this.$http(`updateArticle/${this.articleId}`,{method:'put',data:formData},(res)=>{
-            if(res.data.code===200){
-                this.$toast('修改成功');
-                this.$router.push({ path: "/admin/arm",query:{cate:this.article.category_id}});
-            }else{
-                this.$toast(res.data.message | '修改失败')
+        this.$http(
+          `updateArticle/${this.articleId}`,
+          { method: "put", data: formData },
+          res => {
+            if (res.data.code === 200) {
+              this.$toast("修改成功");
+              this.$router.push({
+                path: "/admin/arm",
+                query: { cate: this.article.category_id }
+              });
+            } else {
+              this.$toast(res.data.message || "修改失败");
             }
-        }) 
+          }
+        );
       } else {
         this.$toast("请完善表单");
       }
     }
   },
   components: {
-    AdminSide,
     Editor
   }
 };

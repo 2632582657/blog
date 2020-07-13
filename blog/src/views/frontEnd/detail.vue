@@ -24,6 +24,7 @@
 <script>
 import Side from "../../components/side";
 import Content from "../../components/content";
+
 export default {
   name: "detail",
   data() {
@@ -32,12 +33,12 @@ export default {
       id: this.$route.query.id
     };
   },
-  created(){
+  created() {
     this.getArticle(this.id, res => {
       this.article = res.data;
     });
   },
-  methods:{
+  methods: {
     getArticle(articleId, callback) {
       this.$http(`/getArticle/${articleId}`, res => {
         if (res.data.code === 200) {

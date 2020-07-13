@@ -89,13 +89,19 @@
         </div>
       </div>
     </div>
-    <Pagination :control={center:1} :result="result" @func="func" v-if="articleList&&articleList.length!==0" />
+    <Pagination
+      :control="{center:1}"
+      :result="result"
+      @func="func"
+      v-if="articleList&&articleList.length!==0"
+    />
   </div>
 </template>
 
 <script>
-import AdminSide from "../system/adminSide";
+// import AdminSide from "../system/adminSide";
 import Pagination from "@/components/pagination.vue";
+
 export default {
   name: "arm", //文章管理
   data() {
@@ -157,7 +163,7 @@ export default {
     getArticleOfCateId(cateId, page, callback) {
       this.$http(
         "/getArticle?adm=1",
-        { params: { cateId: cateId, page: page } },
+        { params: { cateId, page } },
         res => {
           if (res.data.code === 200) {
             callback(res.data);
@@ -168,17 +174,14 @@ export default {
     deleteArticle(i) {
       if (this.articleList[i].category_id) {
         if (confirm("确定要删除吗")) {
-          this.$http(
-            `deleteArticle/${this.articleList[i].id}?adm=1`,
-            res => {
-              if (res.data.code === 200) {
-                this.$toast("删除成功");
-                this.articleList.splice(i, 1);
-              } else {
-                this.$toast(res.data.message | "删除失败");
-              }
+          this.$http(`deleteArticle/${this.articleList[i].id}?adm=1`, res => {
+            if (res.data.code === 200) {
+              this.$toast("删除成功");
+              this.articleList.splice(i, 1);
+            } else {
+              this.$toast(res.data.message || "删除失败");
             }
-          );
+          });
         }
       } else {
         this.$toast("特殊文章无法删除");
@@ -186,22 +189,22 @@ export default {
     },
     search(page = 1) {
       if (!this.keyWords.id && !this.keyWords.title) {
-        this.$toast('请输入关键字');
+        this.$toast("请输入关键字");
         return;
-      }else{
-        let copy={...this.keyWords}
-        for(let key in copy){
-          if(copy[key]===""){
-            delete copy[key]
+      } else {
+        let copy = { ...this.keyWords };
+        for (let key in copy) {
+          if (copy[key] === "") {
+            delete copy[key];
           }
         }
         this.$http(
           "/getArticle?adm=1",
-          { params: {search:1,page: page, ...copy}},
+          { params: { search: 1, page, ...copy } },
           res => {
-            if(res.data.code===200){
-               this.articleList = res.data.data.articleInfo;
-               this.result = res.data.data.page;
+            if (res.data.code === 200) {
+              this.articleList = res.data.data.articleInfo;
+              this.result = res.data.data.page;
             }
           }
         );
@@ -217,7 +220,6 @@ export default {
     }
   },
   components: {
-    AdminSide,
     Pagination
   }
 };

@@ -22,7 +22,7 @@
               v-model="admin.passWord"
             />
             <div class="form-group form-check text-left">
-              <input type="checkbox"  class="form-check-input" v-model="remember" id="exampleCheck1"  />
+              <input type="checkbox" class="form-check-input" v-model="remember" id="exampleCheck1" />
               <label class="form-check-label small text-secondary" for="exampleCheck1">记住密码</label>
             </div>
             <button class="btn btn-info" @click="submit">验证</button>
@@ -42,19 +42,19 @@ export default {
   name: "adminLogin",
   data() {
     return {
-      admin:{
+      admin: {
         userName: "",
-        passWord: "",
+        passWord: ""
       },
-      remember:false
+      remember: false
     };
   },
   created() {
-    if(localStorage.getItem("rememberLogin")){
-      this.admin=JSON.parse(localStorage.getItem("rememberLogin"))
+    if (localStorage.getItem("rememberLogin")) {
+      this.admin = JSON.parse(localStorage.getItem("rememberLogin"));
     }
-    if(localStorage.getItem('remember')){
-      this.remember=true;
+    if (localStorage.getItem("remember")) {
+      this.remember = true;
     }
   },
   methods: {
@@ -75,10 +75,10 @@ export default {
         },
         res => {
           if (res.data.code === 200) {
-            localStorage.setItem('user',JSON.stringify(res.data.data));
-            if(this.remember){
-              localStorage.setItem("rememberLogin",JSON.stringify(this.admin));
-              localStorage.setItem("remember",JSON.stringify(1));
+            localStorage.setItem("user", JSON.stringify(res.data.data));
+            if (this.remember) {
+              localStorage.setItem("rememberLogin", JSON.stringify(this.admin));
+              localStorage.setItem("remember", JSON.stringify(1));
             }
             this.$toast("欢迎站长");
             this.$router.push({ path: "/admin/system" });
@@ -89,8 +89,8 @@ export default {
         }
       );
     },
-    toIndex(){
-      this.$router.push({path:'/index'})
+    toIndex() {
+      this.$router.push({ path: "/index" });
     }
   }
 };

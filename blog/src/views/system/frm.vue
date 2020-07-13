@@ -88,7 +88,12 @@
         <span class="fa fa-warning"></span> 暂无结果
       </div>
     </div>
-    <Pagination :control={center:1} v-if="flinkList&&flinkList.length!==0" :result="result" @func="func" />
+    <Pagination
+      :control="{center:1}"
+      v-if="flinkList&&flinkList.length!==0"
+      :result="result"
+      @func="func"
+    />
     <div
       class="modal fade"
       id="updateBox"
@@ -177,8 +182,9 @@
 </template>
 
 <script>
-import AdminSide from "../system/adminSide";
+// import AdminSide from "../system/adminSide";
 import Pagination from "@/components/pagination.vue";
+
 export default {
   name: "frm", //友链管理
   data() {
@@ -223,7 +229,7 @@ export default {
       if (this.isSearch) {
         this.search(page);
       } else {
-        this.getFlink({page:page}, res => {
+        this.getFlink({ page }, res => {
           this.flinkList = res.data.flinkList;
           this.result = res.data.page;
           this.isSearch = false;
@@ -231,7 +237,7 @@ export default {
       }
     },
     getFlink(params, callback) {
-      this.$http("getFlink?adm=1", { params: params }, res => {
+      this.$http("getFlink?adm=1", { params }, res => {
         if (res.data.code === 200) {
           callback(res.data);
         }
@@ -248,7 +254,7 @@ export default {
             delete copy[key];
           }
         }
-        this.getFlink({ search: 1, page: page, ...copy }, res => {
+        this.getFlink({ search: 1, page, ...copy }, res => {
           this.flinkList = res.data.flinkList;
           this.result = res.data.page;
           this.isSearch = true;
@@ -305,7 +311,7 @@ export default {
       let status = this.flinkList[i].status ? 0 : 1;
       this.$http(
         `updateFlinkStatus/${this.flinkList[i].id}`,
-        { method: "put", data: { status: status } },
+        { method: "put", data: { status } },
         res => {
           if (res.data.code === 200) {
             this.flinkList[i].status = status;
@@ -336,7 +342,11 @@ export default {
         return;
       }
       if (this.userInfo.avatar) {
-        if (this.userInfo.avatar > 15 || this.userInfo.avatar < 1 || this.userInfo.avatar % 1!==0) {
+        if (
+          this.userInfo.avatar > 15 ||
+          this.userInfo.avatar < 1 ||
+          this.userInfo.avatar % 1 !== 0
+        ) {
           this.$toast("默认头像为1-15的整数");
           return;
         }
@@ -356,17 +366,17 @@ export default {
         this.$toast("介绍不符合规范");
         return;
       }
-      let result={...this.userInfo};
+      let result = { ...this.userInfo };
       if (this.isSubmit) {
         this.$http("addFlink", { method: "post", data: this.userInfo }, res => {
-          if(res.data.code===200){
-            result.id=res.data.data.id;
-            result.create_time=res.data.data.create_time;
-            result.status=1;
+          if (res.data.code === 200) {
+            result.id = res.data.data.id;
+            result.create_time = res.data.data.create_time;
+            result.status = 1;
             this.flinkList.unshift(result);
-            this.$toast('添加成功');
+            this.$toast("添加成功");
             this.$("#updateBox").modal("hide");
-            this.isSubmit=false;
+            this.isSubmit = false;
           }
         });
       } else {
@@ -375,7 +385,6 @@ export default {
     }
   },
   components: {
-    AdminSide,
     Pagination
   }
 };

@@ -1,8 +1,11 @@
 module.exports = {
-    // externals:{
-    //   'vue': 'Vue',
-    //   'router': 'VueRouter',
-    //   'vuex':'Vuex'
-    // }
+    configureWebpack:{
+        externals:{
+            'vue':'Vue',
+            'jquery':'$',
+            'axios':'axios',
+            'vue-router':'VueRouter'
+        },
+    },
     productionSourceMap: false
 } 

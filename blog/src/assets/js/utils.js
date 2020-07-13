@@ -1,23 +1,17 @@
-import axios from 'axios';
-import $ from 'jquery';
+// import axios from 'axios';
+// import $ from 'jquery';
 let util = {
     install: Vue => {
-        //线上
-        // Vue.prototype.ABOUT_URL='https://www.sjlk.vip/images/about_img/about_';
-        // Vue.prototype.AVATAR_URL='https://www.sjlk.vip/images/avatar_img/avatar_';
-        // Vue.prototype.BG_URL='https://www.sjlk.vip/images/bg_img/bg_';
-        // axios.defaults.baseURL = 'https://api.sjlk.vip';
-        //线上测试
-        // Vue.prototype.ABOUT_URL='https://test.sjlk.vip/images/about_img/about_';
-        // Vue.prototype.AVATAR_URL='https://test.sjlk.vip/images/avatar_img/avatar_';
-        // Vue.prototype.BG_URL='https://test.sjlk.vip/images/bg_img/bg_';
-        // axios.defaults.baseURL = 'https://api.test.sjlk.vip/';
-        //本地测试
         Vue.prototype.ABOUT_URL='https://cdn.jsdelivr.net/gh/2632582657/blog/blog/public/images/about_img/about_';
         Vue.prototype.AVATAR_URL='https://cdn.jsdelivr.net/gh/2632582657/blog/blog/public/images/avatar_img/avatar_';
         Vue.prototype.BG_URL='https://cdn.jsdelivr.net/gh/2632582657/blog/blog/public/images/bg_img/bg_';
         Vue.prototype.CDN_BASE_URL='https://cdn.jsdelivr.net/gh/2632582657/blog/blog';
-        axios.defaults.baseURL = 'http://api.sjlk.com';
+        //线上
+        // axios.defaults.baseURL = 'https://api.sjlk.vip';
+        //线上测试
+        axios.defaults.baseURL = 'https://api.test.sjlk.vip/';
+        //本地测试
+        // axios.defaults.baseURL = 'http://api.sjlk.com';
 
 
         axios.defaults.withCredentials = true;

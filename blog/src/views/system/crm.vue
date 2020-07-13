@@ -35,7 +35,11 @@
       </div>
       <div class="col px-2 text-left">
         <button @click="search()" class="btn btn-secondary btn-sm text-white rounded">查找</button>
-        <button v-show="isSearch" @click="back()" class="btn btn-secondary btn-sm text-white rounded ml-2">返回</button>
+        <button
+          v-show="isSearch"
+          @click="back()"
+          class="btn btn-secondary btn-sm text-white rounded ml-2"
+        >返回</button>
       </div>
     </div>
     <div id="table">
@@ -74,7 +78,12 @@
         <span class="fa fa-warning"></span> 暂无结果
       </div>
     </div>
-    <Pagination :control={center:1} v-if="userList&&userList.length!==0" :result="result" @func="func" />
+    <Pagination
+      :control="{center:1}"
+      v-if="userList&&userList.length!==0"
+      :result="result"
+      @func="func"
+    />
     <div
       class="modal fade"
       id="updateBox"
@@ -135,8 +144,9 @@
 </template>
 
 <script>
-import AdminSide from "../system/adminSide";
+// import AdminSide from "../system/adminSide";
 import Pagination from "@/components/pagination.vue";
+
 export default {
   name: "crm", //客户管理
   data() {
@@ -177,7 +187,7 @@ export default {
       if (this.isSearch) {
         this.search(page);
       } else {
-        this.getUser({ page: page }, res => {
+        this.getUser({ page }, res => {
           this.userList = res.data.userList;
           this.result = res.data.page;
           this.isSearch = false;
@@ -185,7 +195,7 @@ export default {
       }
     },
     getUser(params, callback) {
-      this.$http("getUser?adm=1", { params: params }, res => {
+      this.$http("getUser?adm=1", { params }, res => {
         if (res.data.code === 200) {
           callback(res.data);
         }
@@ -202,7 +212,7 @@ export default {
             delete copy[key];
           }
         }
-        this.getUser({ search: 1,page:page,...copy }, res => {
+        this.getUser({ search: 1, page, ...copy }, res => {
           this.userList = res.data.userList;
           this.result = res.data.page;
           this.isSearch = true;
@@ -224,7 +234,7 @@ export default {
       });
     },
     submit() {
-      if (!this.userInfo.name ) {
+      if (!this.userInfo.name) {
         this.$toast("用户名不能为空");
         return;
       }
@@ -281,7 +291,6 @@ export default {
     }
   },
   components: {
-    AdminSide,
     Pagination
   }
 };

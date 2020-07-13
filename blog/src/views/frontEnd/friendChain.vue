@@ -27,7 +27,11 @@
           <h3 class="link_title text-info">乐园</h3>
           <div class="container mt-4">
             <div class="row m-0">
-              <div class="col-12 col-xl-4 col-lg-4 col-md-6 px-2 mb-2" v-for="(item,i) in flinkList" :key="i">
+              <div
+                class="col-12 col-xl-4 col-lg-4 col-md-6 px-2 mb-2"
+                v-for="(item,i) in flinkList"
+                :key="i"
+              >
                 <div class="friend_box p-2">
                   <div class="friend_card mb-2 pb-2 d-flex">
                     <img
@@ -41,43 +45,48 @@
                       <a :href="item.address" class="visit_btn" target="_blank">访问</a>
                     </div>
                   </div>
-                  <div class="f14 introduce cur" :title="item.info ? item.info : '这个人很懒~没有介绍哦'" v-text="item.info ? item.info : '这个人很懒~没有介绍哦'"></div>
+                  <div
+                    class="f14 introduce cur"
+                    :title="item.info ? item.info : '这个人很懒~没有介绍哦'"
+                    v-text="item.info ? item.info : '这个人很懒~没有介绍哦'"
+                  ></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Comments :articleId={id:10002}></Comments>
+      <Comments :articleId="{id:10002}"></Comments>
     </div>
   </div>
 </template>
 
 <script>
 import PageHead from "../../components/pageHead";
-import Comments from "../../components/comments"
+import Comments from "../../components/comments";
+
 export default {
   name: "friendChain",
-  data(){
-    return{
-      componentName:{title:"友人",introduce:""},
-      flinkList:[],
-      banFlink:[]
-    }
+  data() {
+    return {
+      componentName: { title: "友人", introduce: "" },
+      flinkList: [],
+      banFlink: []
+    };
   },
-   created(){
-    this.getFlink((res)=>{
-      res.data.forEach((item,i)=>{
-        if(res.data[i].status){
+  created() {
+    this.getFlink(res => {
+      res.data.forEach((item, i) => {
+        if (res.data[i].status) {
           this.flinkList.push(res.data[i]);
-        }else{
-          this.banFlink.push(res.data[i])
+        } else {
+          this.banFlink.push(res.data[i]);
         }
-      })
-    })
+      });
+    });
   },
-  methods:{
-    getFlink(callback){
+  methods: {
+    getFlink(callback) {
       this.$http("getFlink", res => {
         if (res.data.code === 200) {
           callback(res.data);
@@ -96,7 +105,7 @@ export default {
 #friendChain {
   .link_info {
     background: rgba(255, 255, 255, 0.7);
-    .link_bg{
+    .link_bg {
       // background:url("../../assets/images/1.png") no-repeat 100% 0%;
       // background-size: auto 100%;
     }
@@ -113,7 +122,7 @@ export default {
         max-height: 110px;
         border: 1px solid #dfdfdf;
         background: #fff;
-        box-shadow: rgba(0,0,0,.2) 0 0 5px 0;
+        box-shadow: rgba(0, 0, 0, 0.2) 0 0 5px 0;
         .friend_card {
           border-radius: 5px;
           border-bottom: 1px solid #dfdfdf;
@@ -123,15 +132,15 @@ export default {
             padding: 0px 10px;
             font-size: 12px;
             border: 1px solid #dfdfdf;
-            transition: all .3s ease;
-            &:hover{
+            transition: all 0.3s ease;
+            &:hover {
               background: #0099cc;
               color: #fff;
               border: 1px solid #0099cc;
             }
           }
         }
-        .introduce{
+        .introduce {
           white-space: nowrap;
           overflow: hidden;
           line-clamp: 1;

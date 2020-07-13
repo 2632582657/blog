@@ -78,7 +78,7 @@
             <td v-text="item.content"></td>
             <td v-text="item.create_time"></td>
             <td :class="item.status?'text-success':'text-warning'">{{item.status? '正常':'待审核'}}</td>
-            <td class="d-flex justify-content-center ">
+            <td class="d-flex justify-content-center">
               <button
                 :class="'btn mr-2 btn-sm text-white '+(item.status?'btn-success':'btn-warning')"
                 @click="updateStatus(i)"
@@ -92,13 +92,18 @@
         <span class="fa fa-warning"></span> 暂无结果
       </div>
     </div>
-    <Pagination :control={center:1} v-if="commentList&&commentList.length!==0" :result="result" @func="func" />
+    <Pagination
+      :control="{center:1}"
+      v-if="commentList&&commentList.length!==0"
+      :result="result"
+      @func="func"
+    />
   </div>
 </template>
 
 <script>
-import AdminSide from "../system/adminSide";
 import Pagination from "@/components/pagination.vue";
+
 export default {
   name: "cm", //评论管理
   data() {
@@ -126,7 +131,7 @@ export default {
       if (this.isSearch) {
         this.search(page);
       } else {
-        this.getComment({page:page}, res => {
+        this.getComment({ page }, res => {
           this.commentList = res.data.commentList;
           this.result = res.data.page;
           this.isSearch = false;
@@ -141,7 +146,7 @@ export default {
       });
     },
     getComment(params, callback) {
-      this.$http("getComment?adm=1", { params: params }, res => {
+      this.$http("getComment?adm=1", { params }, res => {
         if (res.data.code === 200) {
           callback(res.data);
         }
@@ -163,7 +168,7 @@ export default {
             delete copy[key];
           }
         }
-        this.getComment({ search: 1, page: page, ...copy }, res => {
+        this.getComment({ search: 1, page, ...copy }, res => {
           this.commentList = res.data.commentList;
           this.result = res.data.page;
           this.isSearch = true;
@@ -174,7 +179,7 @@ export default {
       let status = this.commentList[i].status ? 0 : 1;
       this.$http(
         `updateStatus/${this.commentList[i].id}`,
-        { method: "put", data: { status: status } },
+        { method: "put", data: { status } },
         res => {
           if (res.data.code === 200) {
             this.commentList[i].status = status;
@@ -190,7 +195,7 @@ export default {
           if (res.data.code === 200) {
             this.$toast("删除成功");
             this.commentList.splice(i, 1);
-          }else{
+          } else {
             this.$toast("删除失败");
           }
         });
@@ -198,7 +203,6 @@ export default {
     }
   },
   components: {
-    AdminSide,
     Pagination
   }
 };

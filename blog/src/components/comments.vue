@@ -56,9 +56,9 @@
           >发表</button>
         </div>
       </div>
-      <div class="row mx-3 w-100 ">
+      <div class="row mx-3 w-100">
         <div class="col-12 pt-3 px-xl-3 px-lg-3 px-md-3 px-sm-3">
-          <div v-for="(item,i) in commentList" :key="i" class="">
+          <div v-for="(item,i) in commentList" :key="i" class>
             <div
               v-if="!item.parent_id && !item.reply_user_id"
               :class="i>1?'pt-3 comment_border':''"
@@ -111,7 +111,11 @@
                         >回复</span>
                       </div>
                       <div class="ml-5 mb-3 text-primary comment_detail">
-                        <div class="text-info" v-if="citem.user_id!==citem.reply_user_id" v-text="'回复了'+citem.reply_name"></div>
+                        <div
+                          class="text-info"
+                          v-if="citem.user_id!==citem.reply_user_id"
+                          v-text="'回复了'+citem.reply_name"
+                        ></div>
                         <span>{{citem.status?citem.content : '等待站长审核后显示...'}}</span>
                       </div>
                     </div>
@@ -133,6 +137,7 @@
 <script>
 import $ from "jquery";
 import emoji from "../assets/lib/emoji";
+
 export default {
   name: "comments",
   data() {
@@ -150,8 +155,8 @@ export default {
       cur: null
     };
   },
-  props:{
-    articleId:Object
+  props: {
+    articleId: Object
   },
   created() {
     if (localStorage.getItem("commentator")) {
@@ -184,10 +189,9 @@ export default {
       this.comment.replyUserId = replyUserId;
       this.replyName = replyName;
       document.getElementById("myTextarea").focus();
-      
     },
     getComment(articleId, callback) {
-      this.$http("getComment", { params: { articleId: articleId } }, res => {
+      this.$http("getComment", { params: { articleId } }, res => {
         if (res.data.code === 200) {
           callback(res.data);
         } else {
@@ -243,7 +247,7 @@ export default {
         data.replyUserId = this.comment.replyUserId;
       }
       data.articleId = this.articleId.id;
-      this.$http("addComment", { method: "post", data: data }, res => {
+      this.$http("addComment", { method: "post", data }, res => {
         if (res.data.code === 200) {
           alert(res.data.message);
           this.comment.content = "";

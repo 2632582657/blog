@@ -47,8 +47,8 @@
 </template>
 
 <script>
-import AdminSide from "../system/adminSide";
 const echarts = require("echarts");
+
 export default {
   name: "cm",
   data() {
@@ -81,15 +81,15 @@ export default {
       this.$http("getAllCount?adm=1", res => {
         if (res.data.code === 200) {
           sessionStorage.setItem("count", JSON.stringify(res.data.data));
-          let data = res.data.data;
+          let { data } = res.data;
           this.count[0].count = data.articleCount;
           this.count[1].count = data.albumCount;
           this.count[2].count = data.leaveMsgCount;
           this.count[3].count = data.flinkCount;
           this.cateCount = data.cateCount;
           this.initCircleChart();
-        }else{
-          this.$toast('未能获取数据')
+        } else {
+          this.$toast("未能获取数据");
         }
       });
     }
@@ -184,9 +184,6 @@ export default {
         }
       });
     }
-  },
-  components: {
-    AdminSide
   }
 };
 </script>

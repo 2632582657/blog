@@ -34,18 +34,18 @@
     </div>
     <Comments :articleId="{id:article.id}" class="p-0"></Comments>
     <div class="modal fade" id="QRcode" tabindex="-1" role="dialog">
-      <div class="modal-dialog  modal-dialog-centered" role="document">
+      <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header p-0 p-2">
-            <h5 class="modal-title " id="exampleModalLabel">请作者吃个鸡腿</h5>
+            <h5 class="modal-title" id="exampleModalLabel">请作者吃个鸡腿</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body  d-flex justify-content-around">
+          <div class="modal-body d-flex justify-content-around">
             <div class="row">
-              <img src="../assets/images/zhifubao_code.jpg" class="col-6" height="100%">
-              <img src="../assets/images/weixin_code.png" class="col-6" height="100%">
+              <img src="../assets/images/zhifubao_code.jpg" class="col-6" height="100%" />
+              <img src="../assets/images/weixin_code.png" class="col-6" height="100%" />
             </div>
           </div>
         </div>
@@ -56,13 +56,14 @@
 
 <script>
 import Comments from "@/components/comments";
+
 export default {
   name: "Content",
   data() {
     return {
       zan: false,
       zanCount: 0,
-      isSupport: null,
+      isSupport: null
     };
   },
   props: {
@@ -132,16 +133,15 @@ export default {
 
 <style lang="scss" scoped>
 .author_box {
-    border-bottom: 1px dashed rgb(153, 162, 170);
-  }
-  .article_content {
-    font: 14px 宋体, arial narrow, HELVETICA !important;
-    line-height: 1.5;
-    // overflow-x: scroll;
-  }
-  .article_handle {
-    border-top: 1px solid #dddcdb;
-    box-shadow: #999 2px 2px 3px;
-  }
-
+  border-bottom: 1px dashed rgb(153, 162, 170);
+}
+.article_content {
+  font: 14px 宋体, arial narrow, HELVETICA !important;
+  line-height: 1.5;
+  // overflow-x: scroll;
+}
+.article_handle {
+  border-top: 1px solid #dddcdb;
+  box-shadow: #999 2px 2px 3px;
+}
 </style>

@@ -5,7 +5,6 @@ const path = require('path');
 const fs = require('fs');
 
 release = (req, res) => {
-    let reg = /((https|http):\/\/)(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*(\/[a-zA-Z0-9\&%_\./-~-]*)?/;
     util.needLogin(req, res);
     let data = req.body;
     if (JSON.stringify(data) == "{}") {

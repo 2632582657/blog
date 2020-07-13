@@ -6,6 +6,7 @@ const fs = require('fs');
 
 addAudio = (req, res) => {
     util.needLogin(req,res)
+    let {name,author,audioCover,audioFileName,audioLrcName} = req.body;
     function searchFn(sql, params, fn) {
         return new Promise(function (resolve, reject) {
             query(sql, params, (err, result) => {
@@ -21,35 +22,40 @@ addAudio = (req, res) => {
     if (JSON.stringify(req.body) == "{}") {
         res.status(500).json({
             code: 500,
-            message: "接收文章数据为空"
+            message: "接收数据为空"
         });
         return;
+    }else{
+        if(audioCover && audioFileName){
+            if(!reg.test(audioCover) || !reg.test(audioFileName)){
+                res.status(500).json({
+                    code: 500,
+                    message: "链接不符合规范"
+                });
+                return
+            }
+        }
+        if(audioLrcName){
+            if(!reg.test(audioLrcName)){
+                res.status(500).json({
+                    code: 500,
+                    message: "链接不符合规范"
+                });
+                return
+            }
+        }
     }
-    let audioCover = "";
-    let audio = "";
-    let lrc = "";
-    req.files.forEach((item, i) => {
-        if (item.fieldname === 'audioCover') {
-            audioCover = `${env.host}audio/audioCover/${item.filename}`;
-        }
-        if (item.fieldname === 'audio') {
-            audio = `${env.host}audio/audio/${item.filename}`;
-        }
-        if (item.fieldname === 'lrc') {
-            lrc = `${env.host}audio/lrc/${item.filename}`;
-        }
-    })
-    let sql = `SELECT id, name, author FROM sj_audio WHERE name LIKE ? AND author LIKE ?`;
-    let addSql = `INSERT INTO sj_audio(name, author, audio_cover, audio ${lrc!=="" ? ',audio_lrc' : ''}) VALUES (?,?,?,?${lrc!=="" ? ',?' : ''})`
-    let paramsArr = [req.body.name, req.body.author, audioCover, audio]
-    if(lrc!==""){paramsArr.push(lrc);}
+    let sql = `SELECT id, name, author FROM sj_audio WHERE name LIKE ?`;
+    let addSql = `INSERT INTO sj_audio(name, author, audio_cover, audio ${audioLrcName ? ',audio_lrc' : ''}) VALUES (?,?,?,?${audioLrcName ? ',?' : ''})`
+    let paramsArr = [name, author, audioCover, audioFileName]
+    if(audioLrcName){paramsArr.push(audioLrcName);}
     (async function () {
         try {
             let searchResult = null
-            await searchFn(sql, [`%${req.body.name}%`, `%${req.body.author}%`], (result) => {
+            await searchFn(sql, [`%${name}%`], (result) => {
                 searchResult = result
             })
-            if (req.files.length === 0) {
+            if (!audioFileName) {
                 if (searchResult && searchResult.length > 0) {
                     res.json({
                         code: 403,

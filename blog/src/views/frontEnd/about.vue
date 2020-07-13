@@ -88,6 +88,7 @@
 
 <script>
 import Comments from "../../components/comments";
+
 export default {
   name: "about",
   data() {
