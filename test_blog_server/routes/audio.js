@@ -25,25 +25,6 @@ addAudio = (req, res) => {
             message: "接收数据为空"
         });
         return;
-    }else{
-        if(audioCover && audioFileName){
-            if(!reg.test(audioCover) || !reg.test(audioFileName)){
-                res.status(500).json({
-                    code: 500,
-                    message: "链接不符合规范"
-                });
-                return
-            }
-        }
-        if(audioLrcName){
-            if(!reg.test(audioLrcName)){
-                res.status(500).json({
-                    code: 500,
-                    message: "链接不符合规范"
-                });
-                return
-            }
-        }
     }
     let sql = `SELECT id, name, author FROM sj_audio WHERE name LIKE ?`;
     let addSql = `INSERT INTO sj_audio(name, author, audio_cover, audio ${audioLrcName ? ',audio_lrc' : ''}) VALUES (?,?,?,?${audioLrcName ? ',?' : ''})`

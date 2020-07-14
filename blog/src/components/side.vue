@@ -5,7 +5,7 @@
       <div class="sj_card_body pt-1 position-relative">
         <div class="sj_card_avatar">
           <img
-            :src="CDN_BASE_URL+'/src/assets/images/avatar2.jpg'"
+            src="https://cdn.jsdelivr.net/gh/2632582657/blog/blog/src/assets/images/avatar2.jpg"
             width="56"
             height="56"
             class="rounded-circle"

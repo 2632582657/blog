@@ -193,8 +193,7 @@ export default {
       audioList: [],
       isSearch: false, //是否是搜索
       isHave: true, //歌曲是否存在
-      isRepeat: true,
-      reg: /((https|http):\/\/)(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*(\/[a-zA-Z0-9\&%_\./-~-]*)?/
+      isRepeat: true
     };
   },
   created() {
@@ -250,27 +249,23 @@ export default {
           this.audio.name !== "" &&
           this.audio.author !== ""
         ) {
-          if (
-            !this.reg.test(this.audio.audioCover) ||
-            !this.reg.test(this.audio.audioFileName)
-          ) {
-            this.$toast("表单不符合规范");
-            return;
-          }
-          if (
-            this.audio.audioLrcName &&
-            !this.reg.test(this.audio.audioLrcName)
-          ) {
-            this.$toast("表单不符合规范");
-            return;
-          }
+          console.log(111);
+          let data = {
+            ...this.audio,
+            audioCover: `${this.CDN_MUSIC_URL}/cover/${this.audio.audioCover}`,
+            audioFileName: `${this.CDN_MUSIC_URL}/audio/${this.audio.audioFileName}`,
+            audioLrcName:
+              this.audio.audioLrcName !== ""
+                ? `${this.CDN_MUSIC_URL}/lrc/${this.audio.audioLrcName}`
+                : ""
+          };
           let result = {
             name: this.audio.name,
             author: this.audio.author
           };
           if (this.isHave) {
             this.isRepeat = false;
-            this.$http("/audio", { method: "post", data: this.audio }, res => {
+            this.$http("/audio", { method: "post", data }, res => {
               this.isRepeat = true;
               if (res.data.code === 200) {
                 result.id = res.data.data.id;
@@ -280,7 +275,6 @@ export default {
                 this.$("#audioModal").modal("hide");
                 this.clearForm();
               } else {
-                console.log(111);
                 this.$toast(res.data.message);
                 this.isRepeat = true;
               }

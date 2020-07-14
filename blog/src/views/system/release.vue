@@ -126,7 +126,7 @@ export default {
           formData.append("title", this.article.title);
           formData.append("cate", this.article.cate);
           formData.append("content", this.article.content);
-          formData.append("cover", this.article.cover);
+          formData.append("cover", this.CDN_COVER_URL + this.article.cover);
           this.isRepeat = false;
           this.$http("release", { method: "post", data: formData }, res => {
             this.isRepeat = true;

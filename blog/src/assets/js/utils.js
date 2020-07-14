@@ -5,13 +5,14 @@ let util = {
         Vue.prototype.ABOUT_URL='https://cdn.jsdelivr.net/gh/2632582657/blog/blog/public/images/about_img/about_';
         Vue.prototype.AVATAR_URL='https://cdn.jsdelivr.net/gh/2632582657/blog/blog/public/images/avatar_img/avatar_';
         Vue.prototype.BG_URL='https://cdn.jsdelivr.net/gh/2632582657/blog/blog/public/images/bg_img/bg_';
-        Vue.prototype.CDN_BASE_URL='https://cdn.jsdelivr.net/gh/2632582657/blog/blog';
+        Vue.prototype.CDN_MUSIC_URL='https://cdn.jsdelivr.net/gh/2632582657/sj_cdn/music';
+        Vue.prototype.CDN_COVER_URL='https://cdn.jsdelivr.net/gh/2632582657/sj_cdn/blog_v1_cdn/images/';
         //线上
         // axios.defaults.baseURL = 'https://api.sjlk.vip';
         //线上测试
-        axios.defaults.baseURL = 'https://api.test.sjlk.vip/';
+        // axios.defaults.baseURL = 'https://api.test.sjlk.vip/';
         //本地测试
-        // axios.defaults.baseURL = 'http://api.sjlk.com';
+        axios.defaults.baseURL = 'http://api.sjlk.com';
 
 
         axios.defaults.withCredentials = true;
